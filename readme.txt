@@ -199,6 +199,11 @@ Gross Profit only subtracts the wholesale product cost (COGS) from your selling 
 = Is this plugin completely free? =
 Yes, 100% free and open-source under the GNU General Public License v2 (GPL-2.0).
 
+== About the Developer & Brand Ownership ==
+MarketPulse (https://usemarketpulse.com) is an e-commerce intelligence brand owned and engineered by NexForge AI (https://nexforgehq.com). NexForge AI is a specialized software product lab building high-performance, bloat-free tools for WooCommerce store owners. 
+
+For technical support, custom integrations, or store audits, visit https://usemarketpulse.com or contact hello@nexforgehq.com.
+
 ---
 
 == Screenshots ==

@@ -66,7 +66,7 @@ Revenue is vanity; **profit is sanity**. Most Cost of Goods plugins for WooComme
 
 ## 👨‍💻 Developed by NexForge AI
 
-Crafted with ❤️ by the team at **[NexForge AI](https://usemarketpulse.com)** — creators of **[MarketPulse](https://usemarketpulse.com)**, the real-time competitor price intelligence and automated repricing platform for modern e-commerce merchants.
+Crafted with ❤️ by **[NexForge AI](https://nexforgehq.com)**. **MarketPulse** (https://usemarketpulse.com) is our flagship brand and product suite dedicated to automated profit tracking, competitor price intelligence, and dynamic margin optimization for modern e-commerce merchants.
 
 ---
 
