@@ -1,7 +1,7 @@
 === Simple Cost of Goods & Profit Tracker for WooCommerce ===
 Contributors: nexforge, usemarketpulse
 Donate link: https://usemarketpulse.com
-Tags: cost of goods, cogs, profit, profit margin, profit tracker, woocommerce profit, net profit, gateway fee, expense tracker
+Tags: cost of goods, cogs, profit margin, profit, net profit
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
@@ -11,7 +11,7 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Lightweight, high-performance Cost of Goods Sold (COGS) and true net profit margin tracker for WooCommerce. Track real profit per product and order with operating expenses, gateway fee auto-detection, interactive SVG charts, and 100% HPOS compatibility.
+Lightweight Cost of Goods Sold (COGS) and true net profit tracker for WooCommerce. Track real profits with gateway fees, expenses, and SVG charts.
 
 == Description ==
 

@@ -984,6 +984,22 @@ class SCOGS_Reports {
         $actual_bar_pct  = $opt_profit > 0 ? min( 100, max( 15, round( ( $net_prof / $opt_profit ) * 100 ) ) ) : 40;
         $leaked_bar_pct  = 100 - $actual_bar_pct;
         $gain_pct        = $net_prof > 0 ? round( ( $leak_amount / $net_prof ) * 100 ) : 100;
+
+        // Fetch 1 sample published product to personalize the competitor radar
+        $sample_product = null;
+        if ( function_exists( 'wc_get_products' ) ) {
+            $sample_list = wc_get_products( array(
+                'limit'   => 1,
+                'status'  => 'publish',
+                'orderby' => 'total_sales',
+                'order'   => 'DESC',
+            ) );
+            if ( ! empty( $sample_list ) ) {
+                $sample_product = $sample_list[0];
+            }
+        }
+
+        $signup_plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=audit_widget&utm_campaign=claim_free_audit';
         ?>
         <div class="scogs-audit-card">
             <!-- Top Header with live pulsing dot -->
@@ -1006,16 +1022,57 @@ class SCOGS_Reports {
                         <?php esc_html_e( 'on the Table This Period', 'simple-cost-of-goods-for-woocommerce' ); ?>
                     </h2>
                     <p class="scogs-audit-sub">
-                        <?php esc_html_e( 'By keeping product prices static while competitors adjust prices 24/7, your store routinely misses high-margin surges during rival stockouts and loses checkout conversions to competitor undercutting.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        <?php esc_html_e( 'Static pricing quietly drains margin. When competitors undercut, your paid ad traffic buys from rival stores. When competitors sell out, you forfeit lucrative surge profits.', 'simple-cost-of-goods-for-woocommerce' ); ?>
                     </p>
                 </div>
 
                 <div class="scogs-audit-stat-card">
                     <span class="scogs-stat-label"><?php esc_html_e( 'ESTIMATED UNCAPTURED MARGIN', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
                     <span class="scogs-stat-number scogs-leak-danger-text" id="scogs-card-loss">&minus;<?php echo wc_price( $leak_amount ); ?></span>
-                    <span class="scogs-stat-foot"><?php esc_html_e( 'Pure cash lost to manual static pricing', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-stat-foot"><?php esc_html_e( 'Pure cash missed without automated dynamic pricing', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
                 </div>
             </div>
+
+            <?php if ( $sample_product ) : ?>
+            <!-- Live Catalog Sample Vulnerability Radar -->
+            <div class="scogs-radar-box">
+                <div class="scogs-radar-top">
+                    <div class="scogs-radar-title-wrap">
+                        <span class="dashicons dashicons-visibility scogs-radar-icon"></span>
+                        <strong><?php esc_html_e( 'Live Catalog Sample Vulnerability Radar', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
+                    </div>
+                    <span class="scogs-radar-pill"><?php esc_html_e( 'Real Store Product Sample', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                </div>
+                <div class="scogs-radar-grid">
+                    <div class="scogs-radar-prod-col">
+                        <span class="scogs-radar-label"><?php esc_html_e( 'Audited Product:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        <strong class="scogs-radar-name" title="<?php echo esc_attr( $sample_product->get_name() ); ?>">
+                            <?php echo esc_html( wp_trim_words( $sample_product->get_name(), 8, '...' ) ); ?>
+                        </strong>
+                        <span class="scogs-radar-price-tag">
+                            <?php esc_html_e( 'Current Price:', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            <strong><?php echo wc_price( (float) $sample_product->get_price() ); ?></strong>
+                        </span>
+                    </div>
+                    <div class="scogs-radar-alerts-col">
+                        <div class="scogs-radar-alert-chip scogs-alert-undercut">
+                            <span class="dashicons dashicons-arrow-down-alt"></span>
+                            <div>
+                                <strong><?php esc_html_e( 'Undercut Risk:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
+                                <?php esc_html_e( 'If competitors drop prices by ~5%, checkout conversions drop up to 35%.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            </div>
+                        </div>
+                        <div class="scogs-radar-alert-chip scogs-alert-surge">
+                            <span class="dashicons dashicons-arrow-up-alt"></span>
+                            <div>
+                                <strong><?php esc_html_e( 'Surge Opportunity:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
+                                <?php esc_html_e( 'When rivals sell out, AI can safely lift your price by +10% to +18% with zero lost sales.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
 
             <!-- Visual Profit Gap Comparison Graphic -->
             <div class="scogs-visual-gap-card">
@@ -1085,30 +1142,24 @@ class SCOGS_Reports {
                     <div class="scogs-pillar-icon" style="background:#fee2e2; color:#ef4444;">
                         <span class="dashicons dashicons-arrow-down-alt"></span>
                     </div>
-                    <h4><?php esc_html_e( '1. The Competitor Stockout Trap', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                    <p><?php esc_html_e( 'When your competitors run out of stock or hike prices, shoppers rush to buy from you. With static pricing, you sell out at standard low markup, forfeiting +15% to +30% in pure surge margins.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <h4><?php esc_html_e( '1. Bounced Ad Traffic', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                    <p><?php esc_html_e( 'When rivals drop prices by even a fraction, up to 40% of your paid Facebook and Google ad clicks bounce to competitor checkouts.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
                 </div>
 
                 <div class="scogs-pillar-card">
                     <div class="scogs-pillar-icon" style="background:#fef3c7; color:#d97706;">
                         <span class="dashicons dashicons-money-alt"></span>
                     </div>
-                    <h4><?php esc_html_e( '2. Wasted Ad Spend on Undercut Items', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                    <p>
-                        <?php
-                        $sample_drop = wp_strip_all_tags( wc_price( 30 ) );
-                        /* translators: %s: formatted sample price drop */
-                        printf( esc_html__( 'When a competitor drops an item price by just %s, your checkout conversion drops up to 40%%. You pay for Facebook/Google ads, but rival sellers capture the customer.', 'simple-cost-of-goods-for-woocommerce' ), esc_html( $sample_drop ) );
-                        ?>
-                    </p>
+                    <h4><?php esc_html_e( '2. Missed Stockout Surges', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                    <p><?php esc_html_e( 'When competitor inventory sells out, static pricing gives away +15% to +25% in instant premium profit surges from urgent buyers.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
                 </div>
 
                 <div class="scogs-pillar-card">
                     <div class="scogs-pillar-icon" style="background:#dbeafe; color:#2563eb;">
                         <span class="dashicons dashicons-shield"></span>
                     </div>
-                    <h4><?php esc_html_e( '3. Zero Profit Margin Floor Guard', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                    <p><?php esc_html_e( 'Wholesale supplier costs and gateway fees rise over time. Without automated AI guardrails strictly enforcing your minimum COGS margin floor, you unknowingly sell products at a loss.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <h4><?php esc_html_e( '3. 100% Margin Floor Guard', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                    <p><?php esc_html_e( 'MarketPulse strictly honors your purchase COGS. Wholesale costs rise, but AI ensures you never sell at a loss.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
                 </div>
             </div>
 
@@ -1117,17 +1168,17 @@ class SCOGS_Reports {
                 <div class="scogs-cta-left">
                     <div class="scogs-cta-tagline">
                         <strong><?php esc_html_e( 'Stop Leaving Cash on the Table Every Single Day', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
-                        <p><?php esc_html_e( 'MarketPulse monitors 100+ marketplaces 24/7 and automatically adjusts your WooCommerce prices while strictly guarding your minimum profit floor.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                        <p><?php esc_html_e( 'Activate your free 24-Hour Competitor & Profit Audit with MarketPulse. See exactly where competitors are undercutting your sales and start auto-optimizing.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
                     </div>
                     <div class="scogs-trust-items">
-                        <span><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( 'Never sells below your set COGS floor', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                        <span><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( '24/7 Competitor Price Tracking', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                        <span><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( 'Connects in 60 seconds with WooCommerce', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        <span><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( '100% Free Signup', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        <span><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( 'No Credit Card Required', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        <span><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( 'Connects in 60s with WooCommerce', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
                     </div>
                 </div>
                 <div class="scogs-cta-right">
-                    <a href="https://usemarketpulse.com?utm_source=cogs_plugin&utm_medium=visual_loss_audit&utm_campaign=stop_the_leak" target="_blank" class="button button-primary scogs-audit-btn">
-                        <?php esc_html_e( 'Stop The Leak: Activate MarketPulse AI Repricer &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <a href="<?php echo esc_url( $signup_plan_url ); ?>" target="_blank" class="button button-primary scogs-audit-btn">
+                        <?php esc_html_e( 'Claim Free Store Audit & Plan Access &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
                     </a>
                 </div>
             </div>

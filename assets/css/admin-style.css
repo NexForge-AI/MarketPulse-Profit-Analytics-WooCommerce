@@ -541,6 +541,137 @@
     margin-top: 4px;
 }
 
+/* Live Personalized Catalog Vulnerability Radar */
+.scogs-radar-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #2563eb;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 18px;
+}
+
+.scogs-radar-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.scogs-radar-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #1e293b;
+}
+
+.scogs-radar-icon {
+    color: #2563eb;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.scogs-radar-pill {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.scogs-radar-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 16px;
+    align-items: center;
+}
+
+@media (max-width: 900px) {
+    .scogs-radar-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.scogs-radar-prod-col {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.scogs-radar-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.scogs-radar-name {
+    font-size: 13px;
+    color: #0f172a;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.scogs-radar-price-tag {
+    font-size: 12px;
+    color: #334155;
+    margin-top: 2px;
+}
+
+.scogs-radar-alerts-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 650px) {
+    .scogs-radar-alerts-col {
+        grid-template-columns: 1fr;
+    }
+}
+
+.scogs-radar-alert-chip {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.scogs-alert-undercut {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+}
+
+.scogs-alert-undercut .dashicons {
+    color: #dc2626;
+    margin-top: 2px;
+}
+
+.scogs-alert-surge {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+}
+
+.scogs-alert-surge .dashicons {
+    color: #16a34a;
+    margin-top: 2px;
+}
+
 /* Visual Profit Gap Comparison Graphic */
 .scogs-visual-gap-card {
     background: #f8fafc;

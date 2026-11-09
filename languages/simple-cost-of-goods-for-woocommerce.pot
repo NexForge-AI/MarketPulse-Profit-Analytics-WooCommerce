@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-09T09:41:39+00:00\n"
+"POT-Creation-Date: 2026-11-09T10:33:23+00:00\n"
 "PO-Revision-Date: \n"
 "Language: en\n"
 
@@ -49,7 +49,7 @@ msgstr ""
 msgid "Captured Margin"
 msgstr ""
 
-#: includes/class-cogs-dashboard.php:174 includes/class-cogs-reports.php:950
+#: includes/class-cogs-dashboard.php:174 includes/class-cogs-reports.php:1093
 msgid "Leaking"
 msgstr ""
 
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Other Miscellaneous Expenses"
 msgstr ""
 
-#: includes/class-cogs-expenses.php:181 includes/class-cogs-expenses.php:205 includes/class-cogs-reports.php:518
+#: includes/class-cogs-expenses.php:181 includes/class-cogs-expenses.php:205 includes/class-cogs-reports.php:518 includes/class-cogs-reports.php:548
 msgid "Unauthorized user."
 msgstr ""
 
@@ -169,7 +169,7 @@ msgstr ""
 msgid "Item Profit:"
 msgstr ""
 
-#: includes/class-cogs-order.php:284 includes/class-cogs-reports.php:792 includes/class-cogs-reports.php:840
+#: includes/class-cogs-order.php:284 includes/class-cogs-reports.php:878 includes/class-cogs-reports.php:926
 msgid "Net Profit"
 msgstr ""
 
@@ -525,156 +525,188 @@ msgstr ""
 msgid "Import Products from CSV &rarr;"
 msgstr ""
 
-#: includes/class-cogs-reports.php:643
+#: includes/class-cogs-reports.php:729
 msgid "No product sales recorded in this date range."
 msgstr ""
 
-#: includes/class-cogs-reports.php:658
+#: includes/class-cogs-reports.php:744
 msgid "Product"
 msgstr ""
 
-#: includes/class-cogs-reports.php:659
+#: includes/class-cogs-reports.php:745
 msgid "Sold"
 msgstr ""
 
-#: includes/class-cogs-reports.php:660 includes/class-cogs-reports.php:836
+#: includes/class-cogs-reports.php:746 includes/class-cogs-reports.php:922
 msgid "Revenue"
 msgstr ""
 
-#: includes/class-cogs-reports.php:661
+#: includes/class-cogs-reports.php:747
 msgid "Profit"
 msgstr ""
 
-#: includes/class-cogs-reports.php:673
+#: includes/class-cogs-reports.php:759
 msgid "margin"
 msgstr ""
 
-#: includes/class-cogs-reports.php:787
+#: includes/class-cogs-reports.php:873
 msgid "Sales, Cost & Profit Daily Trend"
 msgstr ""
 
-#: includes/class-cogs-reports.php:790
+#: includes/class-cogs-reports.php:876
 msgid "Gross Revenue"
 msgstr ""
 
-#: includes/class-cogs-reports.php:791
+#: includes/class-cogs-reports.php:877
 msgid "Total COGS"
 msgstr ""
 
-#: includes/class-cogs-reports.php:838
+#: includes/class-cogs-reports.php:924
 msgid "COGS"
 msgstr ""
 
-#: includes/class-cogs-reports.php:875
+#: includes/class-cogs-reports.php:961
 msgid "No sales recorded in this period yet. Placed orders will automatically appear here."
 msgstr ""
 
-#: includes/class-cogs-reports.php:907
+#: includes/class-cogs-reports.php:1009
 msgid "LIVE STORE AUDIT: ESTIMATED PROFIT LEAK"
 msgstr ""
 
-#: includes/class-cogs-reports.php:910
+#: includes/class-cogs-reports.php:1012
 msgid "Based on standard e-commerce static vs dynamic pricing benchmarks"
 msgstr ""
 
-#: includes/class-cogs-reports.php:918
+#: includes/class-cogs-reports.php:1020
 msgid "You Left an Estimated"
 msgstr ""
 
-#: includes/class-cogs-reports.php:920
+#: includes/class-cogs-reports.php:1022
 msgid "on the Table This Period"
 msgstr ""
 
-#: includes/class-cogs-reports.php:923
-msgid "By keeping product prices static while competitors adjust prices 24/7, your store routinely misses high-margin surges during rival stockouts and loses checkout conversions to competitor undercutting."
+#: includes/class-cogs-reports.php:1025
+msgid "Static pricing quietly drains margin. When competitors undercut, your paid ad traffic buys from rival stores. When competitors sell out, you forfeit lucrative surge profits."
 msgstr ""
 
-#: includes/class-cogs-reports.php:928
+#: includes/class-cogs-reports.php:1030
 msgid "ESTIMATED UNCAPTURED MARGIN"
 msgstr ""
 
-#: includes/class-cogs-reports.php:930
-msgid "Pure cash lost to manual static pricing"
+#: includes/class-cogs-reports.php:1032
+msgid "Pure cash missed without automated dynamic pricing"
 msgstr ""
 
-#: includes/class-cogs-reports.php:936
-msgid "Visual Profit Leak Analysis (Actual Take-Home vs. Potential)"
-msgstr ""
-
-#: includes/class-cogs-reports.php:942
-msgid "Your Actual Net Profit:"
-msgstr ""
-
-#: includes/class-cogs-reports.php:947
-msgid "Captured"
-msgstr ""
-
-#: includes/class-cogs-reports.php:958
-msgid "Potential Profit with MarketPulse AI Repricer:"
-msgstr ""
-
-#: includes/class-cogs-reports.php:963
-msgid "Fully Optimized (+"
-msgstr ""
-
-#: includes/class-cogs-reports.php:963
-msgid "more cash in bank)"
-msgstr ""
-
-#: includes/class-cogs-reports.php:974
-msgid "Simulate Your Dynamic Repricing Gain:"
-msgstr ""
-
-#: includes/class-cogs-reports.php:976
-msgid "Repricing Margin Lift"
-msgstr ""
-
-#: includes/class-cogs-reports.php:1002
-msgid "1. The Competitor Stockout Trap"
-msgstr ""
-
-#: includes/class-cogs-reports.php:1003
-msgid "When your competitors run out of stock or hike prices, shoppers rush to buy from you. With static pricing, you sell out at standard low markup, forfeiting +15% to +30% in pure surge margins."
-msgstr ""
-
-#: includes/class-cogs-reports.php:1010
-msgid "2. Wasted Ad Spend on Undercut Items"
-msgstr ""
-
-#: includes/class-cogs-reports.php:1015
-msgid "When a competitor drops an item price by just %s, your checkout conversion drops up to 40%%. You pay for Facebook/Google ads, but rival sellers capture the customer."
-msgstr ""
-
-#: includes/class-cogs-reports.php:1024
-msgid "3. Zero Profit Margin Floor Guard"
-msgstr ""
-
-#: includes/class-cogs-reports.php:1025
-msgid "Wholesale supplier costs and gateway fees rise over time. Without automated AI guardrails strictly enforcing your minimum COGS margin floor, you unknowingly sell products at a loss."
-msgstr ""
-
-#: includes/class-cogs-reports.php:1033
-msgid "Stop Leaving Cash on the Table Every Single Day"
-msgstr ""
-
-#: includes/class-cogs-reports.php:1034
-msgid "MarketPulse monitors 100+ marketplaces 24/7 and automatically adjusts your WooCommerce prices while strictly guarding your minimum profit floor."
-msgstr ""
-
-#: includes/class-cogs-reports.php:1037
-msgid "Never sells below your set COGS floor"
-msgstr ""
-
-#: includes/class-cogs-reports.php:1038
-msgid "24/7 Competitor Price Tracking"
-msgstr ""
-
-#: includes/class-cogs-reports.php:1039
-msgid "Connects in 60 seconds with WooCommerce"
+#: includes/class-cogs-reports.php:1042
+msgid "Live Catalog Sample Vulnerability Radar"
 msgstr ""
 
 #: includes/class-cogs-reports.php:1044
-msgid "Stop The Leak: Activate MarketPulse AI Repricer &rarr;"
+msgid "Real Store Product Sample"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1048
+msgid "Audited Product:"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1053
+msgid "Current Price:"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1061
+msgid "Undercut Risk:"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1062
+msgid "If competitors drop prices by ~5%, checkout conversions drop up to 35%."
+msgstr ""
+
+#: includes/class-cogs-reports.php:1068
+msgid "Surge Opportunity:"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1069
+msgid "When rivals sell out, AI can safely lift your price by +10% to +18% with zero lost sales."
+msgstr ""
+
+#: includes/class-cogs-reports.php:1079
+msgid "Visual Profit Leak Analysis (Actual Take-Home vs. Potential)"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1085
+msgid "Your Actual Net Profit:"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1090
+msgid "Captured"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1101
+msgid "Potential Profit with MarketPulse AI Repricer:"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1106
+msgid "Fully Optimized (+"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1106
+msgid "more cash in bank)"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1117
+msgid "Simulate Your Dynamic Repricing Gain:"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1119
+msgid "Repricing Margin Lift"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1145
+msgid "1. Bounced Ad Traffic"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1146
+msgid "When rivals drop prices by even a fraction, up to 40% of your paid Facebook and Google ad clicks bounce to competitor checkouts."
+msgstr ""
+
+#: includes/class-cogs-reports.php:1153
+msgid "2. Missed Stockout Surges"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1154
+msgid "When competitor inventory sells out, static pricing gives away +15% to +25% in instant premium profit surges from urgent buyers."
+msgstr ""
+
+#: includes/class-cogs-reports.php:1161
+msgid "3. 100% Margin Floor Guard"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1162
+msgid "MarketPulse strictly honors your purchase COGS. Wholesale costs rise, but AI ensures you never sell at a loss."
+msgstr ""
+
+#: includes/class-cogs-reports.php:1170
+msgid "Stop Leaving Cash on the Table Every Single Day"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1171
+msgid "Activate your free 24-Hour Competitor & Profit Audit with MarketPulse. See exactly where competitors are undercutting your sales and start auto-optimizing."
+msgstr ""
+
+#: includes/class-cogs-reports.php:1174
+msgid "100% Free Signup"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1175
+msgid "No Credit Card Required"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1176
+msgid "Connects in 60s with WooCommerce"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1181
+msgid "Claim Free Store Audit & Plan Access &rarr;"
 msgstr ""
 
 #: includes/class-cogs-settings.php:36
