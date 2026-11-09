@@ -113,6 +113,45 @@
                 $badge.empty();
             }
         });
+
+        // 4. Interactive Profit Leak Simulator Slider
+        $(document).on('input change', '#scogs-interactive-slider', function () {
+            const $slider = $(this);
+            const pct = parseFloat($slider.val()) || 12;
+            const rev = parseFloat($slider.data('revenue')) || 0;
+            const currentProfit = parseFloat($slider.data('profit')) || 0;
+            const symbol = currencySymbol || ($slider.data('currency') ? $slider.data('currency') : '$');
+
+            const leaked = Math.round(rev * (pct / 100) * 100) / 100;
+            const optProfit = Math.round((currentProfit + leaked) * 100) / 100;
+
+            function formatPrice(val) {
+                return symbol + val.toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+            }
+
+            $('#scogs-slider-val').text(pct);
+            $('#scogs-headline-loss').html('&minus;' + formatPrice(leaked));
+            $('#scogs-card-loss').html('&minus;' + formatPrice(leaked));
+            $('#scogs-label-optimized').text(formatPrice(optProfit));
+
+            const total = optProfit > 0 ? optProfit : 1;
+            let actualPct = Math.min(100, Math.max(15, Math.round((currentProfit / total) * 100)));
+            let leakedPct = 100 - actualPct;
+
+            $('#scogs-bar-actual-fill').css('width', actualPct + '%');
+            $('#scogs-bar-leaked-fill').css('width', leakedPct + '%');
+
+            $('#scogs-bar-actual-pct-text').text(actualPct);
+            $('#scogs-bar-leaked-pct-text').text(leakedPct);
+
+            if (currentProfit > 0) {
+                const gainPct = Math.round((leaked / currentProfit) * 100);
+                $('#scogs-gain-pct').text(gainPct);
+            }
+        });
     });
 })(jQuery);
 

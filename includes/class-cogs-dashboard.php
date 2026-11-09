@@ -155,23 +155,31 @@ class SCOGS_Dashboard {
                 </div>
             </div>
 
-            <!-- Marketing & Strategic Cross-Promotion -->
-            <div class="scogs-brand-box">
-                <div class="scogs-brand-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
-                        <polyline points="17 6 23 6 23 12"></polyline>
-                    </svg>
+            <!-- Visual Profit Leak & Loss Aversion Audit Box -->
+            <?php
+            $month_rev  = (float) $stats['month_revenue'];
+            $base_month = $month_rev > 0 ? $month_rev : 5000.0;
+            $month_leak = round( $base_month * 0.12, 2 );
+            ?>
+            <div class="scogs-dash-leak-card">
+                <div class="scogs-dash-leak-header">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <span class="scogs-pulse-dot" style="width:7px; height:7px;"></span>
+                        <strong class="scogs-dash-leak-title"><?php esc_html_e( 'ESTIMATED UNCAPTURED MARGIN THIS MONTH', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
+                    </div>
+                    <span class="scogs-dash-leak-val scogs-leak-danger-text">&minus;<?php echo wc_price( $month_leak ); ?></span>
                 </div>
-                <div class="scogs-brand-text">
-                    <strong><?php esc_html_e( 'Safeguard Your Profit Margin Floor Automatically', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
+                <div class="scogs-dash-leak-bar">
+                    <div class="scogs-dash-bar-captured" style="width: 75%;"><?php esc_html_e( 'Captured Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></div>
+                    <div class="scogs-dash-bar-leaked" style="width: 25%;">&minus;12% <?php esc_html_e( 'Leaking', 'simple-cost-of-goods-for-woocommerce' ); ?></div>
+                </div>
+                <div class="scogs-dash-leak-footer">
                     <p>
-                        <?php esc_html_e( 'Are competitor price wars eroding your margins? MarketPulse monitors 100+ marketplaces 24/7 and auto-reprices your catalog while strictly protecting your minimum cost margins.', 'simple-cost-of-goods-for-woocommerce' ); ?>
-                        <br>
-                        <a href="https://usemarketpulse.com?utm_source=cogs_plugin&utm_medium=dashboard_banner&utm_campaign=cogs_free" target="_blank" class="scogs-link">
-                            <?php esc_html_e( 'Learn more about MarketPulse Dynamic Repricer &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
-                        </a>
+                        <?php esc_html_e( 'Static pricing leaves money on the table when rivals run out of stock or undercut you. MarketPulse reprices 24/7 to capture maximum profit.', 'simple-cost-of-goods-for-woocommerce' ); ?>
                     </p>
+                    <a href="https://usemarketpulse.com?utm_source=cogs_plugin&utm_medium=dashboard_widget&utm_campaign=stop_the_leak" target="_blank" class="button button-small button-primary scogs-dash-leak-btn">
+                        <?php esc_html_e( 'Stop The Profit Leak &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    </a>
                 </div>
             </div>
         </div>

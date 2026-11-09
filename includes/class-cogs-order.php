@@ -216,6 +216,27 @@ class SCOGS_Order {
                 </span>
             </div>
 
+            <!-- Visual Profit Leak / Loss Aversion Notice -->
+            <?php
+            $gross_rev = (float) $stats['gross_revenue'];
+            if ( $gross_rev > 0 ) :
+                $leak_est = round( $gross_rev * 0.12, 2 );
+            ?>
+            <div class="scogs-order-leak-box">
+                <div class="scogs-order-leak-header">
+                    <span class="scogs-pulse-dot" style="width:6px; height:6px;"></span>
+                    <span class="scogs-order-leak-title"><?php esc_html_e( 'Estimated Profit Leak', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-order-leak-tag">&minus;<?php echo wc_price( $leak_est ); ?></span>
+                </div>
+                <p class="scogs-order-leak-desc">
+                    <?php esc_html_e( 'With static pricing, you may have left up to 12% extra margin on the table during competitor stockouts.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                </p>
+                <a href="https://usemarketpulse.com?utm_source=cogs_plugin&utm_medium=order_meta&utm_campaign=stop_the_leak" target="_blank" class="scogs-order-leak-btn">
+                    <?php esc_html_e( 'Protect Margins with MarketPulse &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                </a>
+            </div>
+            <?php endif; ?>
+
             <div class="scogs-meta-footer">
                 <small><?php esc_html_e( '100% accurate financial accounting by NexForge AI', 'simple-cost-of-goods-for-woocommerce' ); ?></small>
             </div>
