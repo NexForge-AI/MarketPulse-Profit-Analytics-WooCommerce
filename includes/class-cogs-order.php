@@ -27,6 +27,8 @@ class SCOGS_Order {
         add_action( 'woocommerce_order_status_completed', array( __CLASS__, 'on_order_paid' ), 10, 2 );
         add_action( 'woocommerce_order_status_cancelled', array( __CLASS__, 'on_order_invalidated' ), 10, 2 );
         add_action( 'woocommerce_order_status_refunded', array( __CLASS__, 'on_order_invalidated' ), 10, 2 );
+        add_action( 'woocommerce_order_refunded', array( __CLASS__, 'on_order_refund_created' ), 10, 2 );
+        add_action( 'woocommerce_order_partially_refunded', array( __CLASS__, 'on_order_refund_created' ), 10, 2 );
 
         // Save actual courier shipping cost
         add_action( 'woocommerce_process_shop_order_meta', array( __CLASS__, 'save_order_custom_meta' ) );
@@ -98,6 +100,20 @@ class SCOGS_Order {
      * Invalidate cached report transients when an order is cancelled or refunded
      */
     public static function on_order_invalidated( $order_id, $order = null ) {
+        SCOGS_Reports::flush_cache();
+    }
+
+    /**
+     * Invalidate report cache and recalculate order metrics on refund creation
+     *
+     * @param int $order_id  Parent Order ID
+     * @param int $refund_id Refund ID
+     */
+    public static function on_order_refund_created( $order_id, $refund_id = 0 ) {
+        $order = wc_get_order( $order_id );
+        if ( $order && is_a( $order, 'WC_Order' ) && ! is_a( $order, 'WC_Order_Refund' ) ) {
+            SCOGS_Calculations::calculate_order_financials( $order, true );
+        }
         SCOGS_Reports::flush_cache();
     }
 

@@ -20,15 +20,22 @@ class SCOGS_Calculations {
             $order = wc_get_order( $order );
         }
 
-        if ( ! $order ) {
+        if ( ! $order || ! is_a( $order, 'WC_Order' ) || is_a( $order, 'WC_Order_Refund' ) || ( method_exists( $order, 'get_type' ) && 'shop_order' !== $order->get_type() ) ) {
             return self::get_empty_financials();
         }
 
-        // Fast path: If read-only mode and saved metadata already exists, read directly without re-calculating or saving
+        // Fully refunded orders contribute zero revenue and zero profit
+        if ( method_exists( $order, 'get_status' ) && 'refunded' === $order->get_status() ) {
+            return self::get_empty_financials();
+        }
+
+        $refunded_total = method_exists( $order, 'get_total_refunded' ) ? (float) $order->get_total_refunded() : 0.0;
+
+        // Fast path: If read-only mode and saved metadata already exists (and no refunds exist), read directly without re-calculating or saving
         $saved_profit = $order->get_meta( SCOGS_Order::META_ORDER_PROFIT, true );
         $saved_cogs   = $order->get_meta( SCOGS_Order::META_ORDER_COST, true );
 
-        if ( ! $save && '' !== $saved_profit && false !== $saved_profit && '' !== $saved_cogs && false !== $saved_cogs ) {
+        if ( ! $save && $refunded_total <= 0 && '' !== $saved_profit && false !== $saved_profit && '' !== $saved_cogs && false !== $saved_cogs ) {
             $gross_revenue          = (float) $order->get_subtotal();
             $discount_total         = (float) $order->get_discount_total();
             $total_cogs             = (float) $saved_cogs;
@@ -70,7 +77,7 @@ class SCOGS_Calculations {
             );
         }
 
-        // 1. Gross Revenue = Total product prices sold (before discount/tax/shipping deductions)
+        // 1. Gross Revenue = Total product prices sold (accounting for item-level refunds)
         $gross_revenue = 0.0;
         $total_cogs    = 0.0;
         $items         = $order->get_items();
@@ -80,11 +87,16 @@ class SCOGS_Calculations {
                 continue;
             }
 
-            $qty = (int) $item->get_quantity();
+            $qty          = (int) $item->get_quantity();
+            $refunded_qty = method_exists( $order, 'get_qty_refunded_for_item' ) ? abs( (int) $order->get_qty_refunded_for_item( $item_id ) ) : 0;
+            $net_qty      = max( 0, $qty - $refunded_qty );
 
             // Product sale price at purchase
-            $subtotal       = (float) $item->get_subtotal();
-            $gross_revenue += $subtotal;
+            $subtotal          = (float) $item->get_subtotal();
+            $refunded_subtotal = method_exists( $order, 'get_total_refunded_for_item' ) ? abs( (float) $order->get_total_refunded_for_item( $item_id ) ) : 0.0;
+            $net_subtotal      = max( 0.0, $subtotal - $refunded_subtotal );
+
+            $gross_revenue += $net_subtotal;
 
             // Unit cost snapshot
             $unit_cost = $item->get_meta( SCOGS_Order::META_ITEM_COST, true );
@@ -95,7 +107,19 @@ class SCOGS_Calculations {
                 $item->save();
             }
 
-            $total_cogs += ( (float) $unit_cost * $qty );
+            $total_cogs += ( (float) $unit_cost * $net_qty );
+        }
+
+        // Handle general/arbitrary order refunds if not covered by item-level refunds
+        if ( $refunded_total > 0 && $gross_revenue > 0 ) {
+            $item_refunds_sum = 0.0;
+            foreach ( $items as $item_id => $item ) {
+                $item_refunds_sum += method_exists( $order, 'get_total_refunded_for_item' ) ? abs( (float) $order->get_total_refunded_for_item( $item_id ) ) : 0.0;
+            }
+            $arbitrary_refund = max( 0.0, $refunded_total - $item_refunds_sum );
+            if ( $arbitrary_refund > 0 ) {
+                $gross_revenue = max( 0.0, $gross_revenue - $arbitrary_refund );
+            }
         }
 
         // Discounts given
@@ -106,12 +130,15 @@ class SCOGS_Calculations {
         $gross_margin = $gross_revenue > 0 ? ( $gross_profit / $gross_revenue ) * 100 : 0.0;
 
         // 3. Payment Gateway Fee Auto-detection
-        $payment_method = $order->get_payment_method();
-        $order_total    = (float) $order->get_total();
-        $gateway_fee    = SCOGS_Gateways::calculate_fee( $payment_method, $order_total );
+        $payment_method = method_exists( $order, 'get_payment_method' ) ? $order->get_payment_method() : '';
+        $order_total    = method_exists( $order, 'get_total' ) ? (float) $order->get_total() : 0.0;
+        $net_order_total = max( 0.0, $order_total - $refunded_total );
+        $gateway_fee    = SCOGS_Gateways::calculate_fee( $payment_method, $net_order_total );
 
         // 4. Shipping Deficit / Surplus
-        $customer_paid_shipping = (float) $order->get_shipping_total();
+        $customer_paid_shipping = method_exists( $order, 'get_shipping_total' ) ? (float) $order->get_shipping_total() : 0.0;
+        $shipping_refunded      = method_exists( $order, 'get_total_shipping_refunded' ) ? abs( (float) $order->get_total_shipping_refunded() ) : 0.0;
+        $customer_paid_shipping = max( 0.0, $customer_paid_shipping - $shipping_refunded );
         $actual_courier_cost    = $order->get_meta( '_cogs_actual_shipping_cost', true );
         $shipping_deficit       = 0.0;
 

@@ -893,6 +893,7 @@ class SCOGS_Reports {
         }
 
         $orders = wc_get_orders( array(
+            'type'         => 'shop_order',
             'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
             'status'       => array( 'wc-processing', 'wc-completed' ),
             'limit'        => 1000,
@@ -943,6 +944,7 @@ class SCOGS_Reports {
 
         if ( false === $product_stats || ! is_array( $product_stats ) ) {
             $orders = wc_get_orders( array(
+                'type'         => 'shop_order',
                 'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
                 'status'       => array( 'wc-processing', 'wc-completed' ),
                 'limit'        => 500,
@@ -1068,6 +1070,7 @@ class SCOGS_Reports {
 
         // Fetch orders in date range
         $orders = wc_get_orders( array(
+            'type'         => 'shop_order',
             'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
             'status'       => array( 'wc-processing', 'wc-completed' ),
             'limit'        => 1000,

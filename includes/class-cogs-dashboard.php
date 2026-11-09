@@ -53,6 +53,7 @@ class SCOGS_Dashboard {
 
         // Orders today
         $today_orders = wc_get_orders( array(
+            'type'         => 'shop_order',
             'date_created' => $today_start . '...' . $today_end,
             'status'       => $statuses,
             'limit'        => 100,
@@ -81,6 +82,7 @@ class SCOGS_Dashboard {
 
         // Orders this month
         $month_orders = wc_get_orders( array(
+            'type'         => 'shop_order',
             'date_created' => '>=' . $month_start,
             'status'       => $statuses,
             'limit'        => 500,

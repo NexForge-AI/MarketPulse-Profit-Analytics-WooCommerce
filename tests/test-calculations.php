@@ -30,7 +30,23 @@ if ( ! function_exists( 'get_option' ) ) {
     }
 }
 
+if ( ! class_exists( 'SCOGS_Order' ) ) {
+    class SCOGS_Order {
+        const META_ITEM_COST    = '_cogs_item_cost';
+        const META_ORDER_COST   = '_cogs_order_cost';
+        const META_ORDER_PROFIT = '_cogs_order_profit';
+        const META_ORDER_MARGIN = '_cogs_order_margin';
+    }
+}
+
+if ( ! function_exists( 'wc_get_order' ) ) {
+    function wc_get_order( $id ) {
+        return false;
+    }
+}
+
 require_once dirname( __DIR__ ) . '/includes/class-cogs-gateways.php';
+require_once dirname( __DIR__ ) . '/includes/class-cogs-calculations.php';
 
 class SCOGS_Calculation_Tests {
 
@@ -50,6 +66,7 @@ class SCOGS_Calculation_Tests {
         $this->test_gross_profit_formula();
         $this->test_shipping_deficit_calculation();
         $this->test_true_net_profit_waterfall();
+        $this->test_refund_object_safety();
 
         echo "\n--------------------------------------------------------\n";
         echo "Test Results: {$this->passed} Passed, {$this->failed} Failed\n";
@@ -142,6 +159,13 @@ class SCOGS_Calculation_Tests {
 
         $this->assert_equals( 64.22, $true_net_profit, 'True Net Profit Waterfall: $120 rev - $50 cogs - $3.78 fee - $2 deficit = $64.22' );
         $this->assert_equals( 53.517, round( $net_margin, 3 ), 'Net Profit Margin % = (64.22 / 120) * 100 = 53.517%' );
+    }
+
+    private function test_refund_object_safety() {
+        // Passing null or non-order object safely returns zero metrics without throwing fatal error
+        $empty = SCOGS_Calculations::calculate_order_financials( null, false );
+        $this->assert_equals( 0.0, $empty['gross_revenue'], 'Safety: Non-order object returns 0 revenue safely' );
+        $this->assert_equals( 0.0, $empty['gross_profit'], 'Safety: Non-order object returns 0 profit safely' );
     }
 }
 
