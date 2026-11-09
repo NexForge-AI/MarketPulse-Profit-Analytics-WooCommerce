@@ -341,57 +341,168 @@ class SCOGS_Reports {
     /**
      * TAB 3: Payment Gateway Fee Rules
      */
+    /**
+     * TAB 3: Payment Gateway Fee Rules
+     */
     private static function render_gateways_tab() {
-        $gateways = SCOGS_Gateways::get_available_gateways();
-        $rules    = SCOGS_Gateways::get_rules();
+        $installed_gateways = SCOGS_Gateways::get_available_gateways();
+        $presets            = SCOGS_Gateways::get_default_presets();
+        $rules              = SCOGS_Gateways::get_rules();
+        $currency           = get_woocommerce_currency_symbol();
         ?>
         <div class="scogs-gateways-wrap">
-            <div class="scogs-form-card" style="max-width: 900px;">
-                <h3><?php esc_html_e( 'Payment Gateway Fee Auto-Detection', 'simple-cost-of-goods-for-woocommerce' ); ?></h3>
-                <p class="description">
-                    <?php esc_html_e( 'Configure the percentage and fixed transaction fees deducted by your payment processors (e.g. bKash, SSLCommerz, Stripe, PayPal). The plugin automatically subtracts these transaction fees to reveal True Net Profit.', 'simple-cost-of-goods-for-woocommerce' ); ?>
-                </p>
+            <div class="scogs-form-card" style="max-width: 960px;">
+                <?php if ( isset( $_GET['saved'] ) ) : ?>
+                    <div class="notice notice-success is-dismissible" style="margin: 0 0 16px 0;">
+                        <p><strong><?php esc_html_e( 'Payment gateway fee rules saved successfully. Net profits will automatically reflect these deductions.', 'simple-cost-of-goods-for-woocommerce' ); ?></strong></p>
+                    </div>
+                <?php endif; ?>
+
+                <div class="scogs-table-header-flex">
+                    <div>
+                        <h3><?php esc_html_e( 'Payment Gateway Fee Auto-Detection & Deductions', 'simple-cost-of-goods-for-woocommerce' ); ?></h3>
+                        <p class="description" style="margin: 4px 0 0 0;">
+                            <?php esc_html_e( 'Configure the percentage and fixed transaction fees charged by your payment processors. These fees are automatically deducted from order gross revenues to calculate True Net Profit.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        </p>
+                    </div>
+                </div>
 
                 <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
                     <?php wp_nonce_field( 'scogs_save_gateways_nonce' ); ?>
                     <input type="hidden" name="action" value="scogs_save_gateway_rules">
 
-                    <table class="wp-list-table widefat fixed striped" style="margin-top:14px;">
+                    <!-- Section 1: Detected Gateways -->
+                    <div class="scogs-gateway-section-title">
+                        <span class="dashicons dashicons-admin-plugins" style="color:#2563eb;"></span>
+                        <?php esc_html_e( 'Detected WooCommerce Payment Methods', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    </div>
+                    <p class="scogs-gateway-section-sub">
+                        <?php esc_html_e( 'These payment methods are currently registered or active in your store checkout.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    </p>
+
+                    <table class="wp-list-table widefat fixed striped">
                         <thead>
                             <tr>
                                 <th><?php esc_html_e( 'Payment Gateway', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
-                                <th style="width: 140px;"><?php esc_html_e( 'Percentage Fee (%)', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
-                                <th style="width: 140px;"><?php esc_html_e( 'Fixed Fee', 'simple-cost-of-goods-for-woocommerce' ); ?> (<?php echo esc_html( get_woocommerce_currency_symbol() ); ?>)</th>
+                                <th style="width: 170px;"><?php esc_html_e( 'Percentage Fee (%)', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
+                                <th style="width: 170px;"><?php esc_html_e( 'Fixed Fee', 'simple-cost-of-goods-for-woocommerce' ); ?> (<?php echo esc_html( $currency ); ?>)</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ( $gateways as $gateway_id => $data ) : 
-                                $rule_percent = isset( $rules[ $gateway_id ]['percent'] ) ? $rules[ $gateway_id ]['percent'] : 0.0;
-                                $rule_fixed   = isset( $rules[ $gateway_id ]['fixed'] ) ? $rules[ $gateway_id ]['fixed'] : 0.0;
+                            <?php 
+                            $installed_keys = array();
+                            foreach ( $installed_gateways as $gateway_id => $data ) : 
+                                $installed_keys[] = $gateway_id;
+                                $rule_percent     = isset( $rules[ $gateway_id ]['percent'] ) ? $rules[ $gateway_id ]['percent'] : 0.0;
+                                $rule_fixed       = isset( $rules[ $gateway_id ]['fixed'] ) ? $rules[ $gateway_id ]['fixed'] : 0.0;
                             ?>
                             <tr>
                                 <td>
                                     <strong><?php echo esc_html( $data['title'] ); ?></strong>
                                     <code><?php echo esc_html( $gateway_id ); ?></code>
-                                    <?php if ( ! $data['enabled'] ) : ?>
+                                    <?php if ( $data['enabled'] ) : ?>
+                                        <span class="scogs-badge scogs-badge-green"><?php esc_html_e( 'Active', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                                    <?php else : ?>
                                         <span class="scogs-badge" style="background:#f1f5f9; color:#94a3b8;"><?php esc_html_e( 'Inactive', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <input type="number" step="0.01" min="0" name="gateways[<?php echo esc_attr( $gateway_id ); ?>][percent]" value="<?php echo esc_attr( $rule_percent ); ?>" style="width:100px;"> %
+                                    <div class="scogs-input-group">
+                                        <input type="number" step="0.01" min="0" name="gateways[<?php echo esc_attr( $gateway_id ); ?>][percent]" value="<?php echo esc_attr( $rule_percent ); ?>">
+                                        <span class="scogs-input-addon">%</span>
+                                    </div>
                                 </td>
                                 <td>
-                                    <input type="number" step="0.01" min="0" name="gateways[<?php echo esc_attr( $gateway_id ); ?>][fixed]" value="<?php echo esc_attr( $rule_fixed ); ?>" style="width:100px;">
+                                    <div class="scogs-input-group">
+                                        <span class="scogs-input-addon addon-prefix"><?php echo esc_html( $currency ); ?></span>
+                                        <input type="number" step="0.01" min="0" name="gateways[<?php echo esc_attr( $gateway_id ); ?>][fixed]" value="<?php echo esc_attr( $rule_fixed ); ?>">
+                                    </div>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
 
-                    <p style="margin-top: 16px;">
-                        <button type="submit" class="button button-primary"><?php esc_html_e( 'Save Gateway Rules', 'simple-cost-of-goods-for-woocommerce' ); ?></button>
+                    <!-- Section 2: Mobile Banking & Popular Presets -->
+                    <div class="scogs-gateway-section-title" style="margin-top:28px;">
+                        <span class="dashicons dashicons-money-alt" style="color:#059669;"></span>
+                        <?php esc_html_e( 'Mobile Banking & Popular Gateway Rules', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    </div>
+                    <p class="scogs-gateway-section-sub">
+                        <?php esc_html_e( 'Standard pre-configured fee rules for popular merchant gateways. When orders are processed via any matching gateway plugin, these fee percentages will automatically apply.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    </p>
+
+                    <table class="wp-list-table widefat fixed striped">
+                        <thead>
+                            <tr>
+                                <th><?php esc_html_e( 'Gateway / Processor', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
+                                <th style="width: 170px;"><?php esc_html_e( 'Percentage Fee (%)', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
+                                <th style="width: 170px;"><?php esc_html_e( 'Fixed Fee', 'simple-cost-of-goods-for-woocommerce' ); ?> (<?php echo esc_html( $currency ); ?>)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                            foreach ( $presets as $preset_key => $preset ) :
+                                if ( in_array( $preset_key, $installed_keys, true ) ) {
+                                    continue; // Already displayed in Installed table
+                                }
+                                $rule_percent = isset( $rules[ $preset_key ]['percent'] ) ? $rules[ $preset_key ]['percent'] : $preset['percent'];
+                                $rule_fixed   = isset( $rules[ $preset_key ]['fixed'] ) ? $rules[ $preset_key ]['fixed'] : $preset['fixed'];
+                            ?>
+                            <tr>
+                                <td>
+                                    <strong><?php echo esc_html( $preset['title'] ); ?></strong>
+                                    <code><?php echo esc_html( $preset_key ); ?></code>
+                                    <span class="scogs-badge scogs-badge-blue"><?php esc_html_e( 'Preset Rule', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                                </td>
+                                <td>
+                                    <div class="scogs-input-group">
+                                        <input type="number" step="0.01" min="0" name="gateways[<?php echo esc_attr( $preset_key ); ?>][percent]" value="<?php echo esc_attr( $rule_percent ); ?>">
+                                        <span class="scogs-input-addon">%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="scogs-input-group">
+                                        <span class="scogs-input-addon addon-prefix"><?php echo esc_html( $currency ); ?></span>
+                                        <input type="number" step="0.01" min="0" name="gateways[<?php echo esc_attr( $preset_key ); ?>][fixed]" value="<?php echo esc_attr( $rule_fixed ); ?>">
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+
+                    <p style="margin-top: 20px;">
+                        <button type="submit" class="button button-primary button-large"><?php esc_html_e( 'Save All Gateway Rules', 'simple-cost-of-goods-for-woocommerce' ); ?></button>
                     </p>
                 </form>
+
+                <!-- Section 3: Add Custom Gateway Rule Form -->
+                <div style="margin-top: 32px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+                    <h4 style="margin: 0 0 6px 0; font-size: 13px; font-weight:700;">
+                        <?php esc_html_e( 'Add Custom Payment Gateway Rule', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    </h4>
+                    <p class="scogs-gateway-section-sub">
+                        <?php esc_html_e( 'Using an unlisted gateway? Enter its WooCommerce gateway ID (e.g. upay, square, razorpay) to automatically apply fees.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    </p>
+                    <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
+                        <?php wp_nonce_field( 'scogs_save_gateways_nonce' ); ?>
+                        <input type="hidden" name="action" value="scogs_save_gateway_rules">
+                        <input type="text" name="custom_gateway_id" placeholder="<?php esc_attr_e( 'Gateway ID (e.g. upay)', 'simple-cost-of-goods-for-woocommerce' ); ?>" required style="width: 180px; height: 30px;">
+                        
+                        <div class="scogs-input-group">
+                            <input type="number" step="0.01" min="0" name="custom_gateway_percent" placeholder="0.00" value="0.00">
+                            <span class="scogs-input-addon">%</span>
+                        </div>
+
+                        <div class="scogs-input-group">
+                            <span class="scogs-input-addon addon-prefix"><?php echo esc_html( $currency ); ?></span>
+                            <input type="number" step="0.01" min="0" name="custom_gateway_fixed" placeholder="0.00" value="0.00">
+                        </div>
+
+                        <button type="submit" class="button button-secondary"><?php esc_html_e( '+ Add Rule', 'simple-cost-of-goods-for-woocommerce' ); ?></button>
+                    </form>
+                </div>
             </div>
         </div>
         <?php
@@ -498,8 +609,19 @@ class SCOGS_Reports {
 
         if ( isset( $_POST['gateways'] ) && is_array( $_POST['gateways'] ) ) {
             SCOGS_Gateways::save_rules( $_POST['gateways'] );
-            self::flush_cache();
         }
+
+        // Custom gateway rule added?
+        if ( ! empty( $_POST['custom_gateway_id'] ) ) {
+            $custom_id  = sanitize_key( $_POST['custom_gateway_id'] );
+            $custom_pct = isset( $_POST['custom_gateway_percent'] ) ? (float) wc_format_decimal( $_POST['custom_gateway_percent'] ) : 0.0;
+            $custom_fix = isset( $_POST['custom_gateway_fixed'] ) ? (float) wc_format_decimal( $_POST['custom_gateway_fixed'] ) : 0.0;
+            if ( ! empty( $custom_id ) ) {
+                SCOGS_Gateways::save_single_rule( $custom_id, $custom_pct, $custom_fix );
+            }
+        }
+
+        self::flush_cache();
 
         wp_safe_redirect( admin_url( 'admin.php?page=scogs-analytics&tab=gateways&saved=1' ) );
         exit;

@@ -65,10 +65,10 @@ Crafted with care by the engineering team at **[NexForge AI](https://usemarketpu
 The plugin snapshots line-item costs at checkout. Your historical orders will always preserve the exact cost at the time they were purchased, so historical profit analytics will never be distorted.
 
 = Can I configure payment gateway fees for local gateways like bKash or SSLCommerz? =
-Yes! Navigate to **WooCommerce &rarr; Profit Analytics &rarr; Payment Gateway Fees** to configure exact percentage and fixed fees per gateway.
+Yes! Navigate to **WooCommerce &rarr; MarketPulse Profit Analytics &rarr; Payment Gateway Fees** to configure exact percentage and fixed fees per gateway.
 
 = Can I track non-product overhead expenses like Facebook Ads and hosting? =
-Yes! Use the **Operating Expenses** tab inside Profit Analytics to record overhead expenses and deduct them from your store's gross profit.
+Yes! Use the **Operating Expenses** tab inside MarketPulse Profit Analytics to record overhead expenses and deduct them from your store's gross profit.
 
 = Can I bulk update costs with CSV? =
 Yes! The plugin hooks into WooCommerce's native Product CSV Importer and Exporter, adding `Cost of Goods (COGS)` and `Supplier` columns.
@@ -90,7 +90,7 @@ Yes, 100% free and open-source under the GPL-2.0 license.
 
 = 1.0.0 =
 * Initial public open-source release.
-* Unified Profit Analytics central hub under `WooCommerce > Profit Analytics`.
+* Unified Profit Analytics central hub under `WooCommerce > MarketPulse Profit Analytics`.
 * Interactive pure SVG daily performance chart (Revenue vs COGS vs Net Profit).
 * Core mathematical calculation engine for True Net Profit and Net Margin %.
 * Payment Gateway Fee auto-detection engine with configurable percentage and fixed fee rules.

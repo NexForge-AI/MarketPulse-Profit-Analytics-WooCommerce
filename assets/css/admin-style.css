@@ -1079,3 +1079,67 @@
     color: #ffffff !important;
 }
 
+/* Gateway input group & section styling */
+.scogs-input-group {
+    display: inline-flex;
+    align-items: stretch;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    background: #ffffff;
+    overflow: hidden;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.scogs-input-group input[type="number"] {
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 2px 8px !important;
+    width: 70px !important;
+    height: 100% !important;
+    font-size: 13px !important;
+    text-align: right;
+    line-height: 28px !important;
+}
+
+.scogs-input-group input[type="number"]:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.scogs-input-addon {
+    background: #f8fafc;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    border-left: 1px solid #cbd5e1;
+}
+
+.scogs-input-addon.addon-prefix {
+    border-left: none;
+    border-right: 1px solid #cbd5e1;
+}
+
+.scogs-gateway-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 24px 0 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.scogs-gateway-section-sub {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0 0 12px 0;
+}
+
+
