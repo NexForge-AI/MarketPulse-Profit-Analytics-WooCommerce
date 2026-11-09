@@ -902,7 +902,7 @@ class SCOGS_Reports {
             }
         }
 
-        return apply_filters( 'marketpulse_cogs_profit_for_woocommerce_report_order_statuses', $default_statuses );
+        return apply_filters( 'scogs_report_order_statuses', $default_statuses );
     }
 
     /**
