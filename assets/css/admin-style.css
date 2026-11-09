@@ -394,3 +394,78 @@
     color: #1e40af;
     max-width: 800px;
 }
+
+/* Daily Trend SVG Chart Card */
+.scogs-chart-card {
+    background: #ffffff;
+    border: 1px solid #c3c4c7;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-top: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.scogs-chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.scogs-chart-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.scogs-chart-title h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.scogs-chart-legend {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.scogs-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.scogs-legend-color {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.scogs-chart-svg-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.scogs-svg-chart {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.scogs-chart-bar {
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+}
+
+.scogs-chart-bar:hover {
+    opacity: 0.8;
+}

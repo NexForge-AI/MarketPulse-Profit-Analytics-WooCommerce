@@ -120,3 +120,4 @@ class SCOGS_Gateways {
         return $list;
     }
 }
+

@@ -158,6 +158,22 @@ final class Simple_Cost_Of_Goods_WooCommerce {
                 array(),
                 SCOGS_VERSION
             );
+
+            wp_enqueue_script(
+                'scogs-admin-script',
+                SCOGS_URL . 'assets/js/admin.js',
+                array( 'jquery' ),
+                SCOGS_VERSION,
+                true
+            );
+
+            wp_localize_script(
+                'scogs-admin-script',
+                'scogsAdminParams',
+                array(
+                    'currency_symbol' => function_exists( 'get_woocommerce_currency_symbol' ) ? get_woocommerce_currency_symbol() : '$',
+                )
+            );
         }
     }
 

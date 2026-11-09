@@ -213,20 +213,22 @@ flowchart LR
 * [x] Basic order snapshotting and HPOS compatibility.
 * [x] Color-coded badges in order and product admin tables.
 
-### Milestone 2: Mathematical Core & Gateway Fees (Status: 🚀 Next)
-* [ ] Create `class-cogs-calculations.php`: Centralized financial calculation engine implementing the 5 exact mathematical formulas.
-* [ ] Create `class-cogs-gateways.php`: Payment gateway fee rule detector and automated deduction logic.
-* [ ] Add actual courier shipping cost input and deficit calculation in order view.
+### Milestone 2: Mathematical Core & Gateway Fees (Status: ✅ Completed)
+* [x] Create `class-cogs-calculations.php`: Centralized financial calculation engine implementing the 5 exact mathematical formulas.
+* [x] Create `class-cogs-gateways.php`: Payment gateway fee rule detector and automated deduction logic.
+* [x] Add actual courier shipping cost input and deficit calculation in order view.
 
-### Milestone 3: Expense Manager & Supplier Tracking
-* [ ] Create `class-cogs-expenses.php`: Database ledger for business operating costs (Ads, Rent, Server, Salaries).
-* [ ] Add `Supplier` field to products and filter in product table.
+### Milestone 3: Expense Manager & Supplier Tracking (Status: ✅ Completed)
+* [x] Create `class-cogs-expenses.php`: Database ledger for business operating costs (Ads, Rent, Server, Salaries).
+* [x] Add `Supplier` field to products and filter in product table.
+* [x] Add inline Quick Edit auto-population and Bulk Edit support for Cost and Supplier.
 
-### Milestone 4: Unified Analytics Hub & Charts
-* [ ] Create `class-cogs-reports.php`: Dedicated `WooCommerce > Profit Analytics` page with sleek tabs.
-* [ ] Implement date filter (Today, 7D, 30D, Custom) and lightweight interactive charts.
-* [ ] Implement Top 5 Profit-Makers and Bottom 5 Margin-Losers leaderboard.
+### Milestone 4: Unified Analytics Hub & Charts (Status: ✅ Completed)
+* [x] Create `class-cogs-reports.php`: Dedicated `WooCommerce > Profit Analytics` page with sleek tabs.
+* [x] Implement date filter (Today, 7D, 30D, Custom) and lightweight interactive pure SVG daily performance charts.
+* [x] Implement Top 5 Profit-Makers and Bottom 5 Margin-Losers leaderboard.
 
-### Milestone 5: CSV Tools & WordPress.org Packaging
-* [ ] Create `class-cogs-csv.php`: WooCommerce Native CSV export/import hooks for COGS and Supplier.
-* [ ] Generate WordPress.org banners, icons, and final packaging.
+### Milestone 5: CSV Tools & WordPress.org Packaging (Status: ✅ Completed)
+* [x] Create `class-cogs-csv.php`: WooCommerce Native CSV export/import hooks for COGS and Supplier.
+* [x] Generate translation template (`languages/simple-cost-of-goods-for-woocommerce.pot`).
+* [x] Update WordPress.org `readme.txt` and `README.md` documentation.

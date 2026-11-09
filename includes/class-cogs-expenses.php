@@ -208,3 +208,4 @@ class SCOGS_Expenses {
         exit;
     }
 }
+

@@ -209,6 +209,9 @@ class SCOGS_Reports {
             </div>
         </div>
 
+        <!-- Daily Financial Trend Chart -->
+        <?php self::render_profit_chart( $start_date, $end_date ); ?>
+
         <!-- Product Profit Leaderboards -->
         <div class="scogs-leaderboard-grid">
             <!-- Top 5 Profit-Makers -->
@@ -630,4 +633,182 @@ class SCOGS_Reports {
         </table>
         <?php
     }
+
+    /**
+     * Render Interactive Daily Trend SVG Chart (Revenue vs COGS vs Net Profit)
+     */
+    private static function render_profit_chart( $start_date, $end_date ) {
+        // Build daily timeline array
+        $start = new DateTime( $start_date );
+        $end   = new DateTime( $end_date );
+        $end->modify( '+1 day' );
+        $interval = new DateInterval( 'P1D' );
+        $period   = new DatePeriod( $start, $interval, $end );
+
+        $daily_data = array();
+        foreach ( $period as $dt ) {
+            $date_str = $dt->format( 'Y-m-d' );
+            $daily_data[ $date_str ] = array(
+                'date'    => $date_str,
+                'label'   => $dt->format( 'M j' ),
+                'revenue' => 0.0,
+                'cogs'    => 0.0,
+                'profit'  => 0.0,
+            );
+        }
+
+        // Fetch orders in date range
+        $orders = wc_get_orders( array(
+            'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
+            'status'       => array( 'wc-processing', 'wc-completed' ),
+            'limit'        => 1000,
+        ) );
+
+        $has_data = false;
+        foreach ( $orders as $order ) {
+            $order_date = $order->get_date_created() ? $order->get_date_created()->date( 'Y-m-d' ) : '';
+            if ( isset( $daily_data[ $order_date ] ) ) {
+                $stats = SCOGS_Calculations::calculate_order_financials( $order );
+                $daily_data[ $order_date ]['revenue'] += (float) $stats['gross_revenue'];
+                $daily_data[ $order_date ]['cogs']    += (float) $stats['total_cogs'];
+                $daily_data[ $order_date ]['profit']  += (float) $stats['net_profit'];
+                if ( $stats['gross_revenue'] > 0 || $stats['total_cogs'] > 0 || $stats['net_profit'] > 0 ) {
+                    $has_data = true;
+                }
+            }
+        }
+
+        // Calculate max scale value
+        $max_val = 0.0;
+        foreach ( $daily_data as $row ) {
+            if ( $row['revenue'] > $max_val ) {
+                $max_val = $row['revenue'];
+            }
+            if ( $row['cogs'] > $max_val ) {
+                $max_val = $row['cogs'];
+            }
+            if ( $row['profit'] > $max_val ) {
+                $max_val = $row['profit'];
+            }
+        }
+        if ( $max_val <= 0 ) {
+            $max_val = 100;
+        }
+        $max_val = ceil( $max_val * 1.15 ); // 15% top headroom
+
+        // Chart SVG dimensions
+        $svg_w       = 1000;
+        $svg_h       = 320;
+        $pad_left    = 70;
+        $pad_right   = 25;
+        $pad_top     = 30;
+        $pad_bottom  = 45;
+        $plot_w      = $svg_w - $pad_left - $pad_right;
+        $plot_h      = $svg_h - $pad_top - $pad_bottom;
+        $baseline_y  = $pad_top + $plot_h;
+
+        $day_count   = count( $daily_data );
+        $slot_w      = $day_count > 0 ? ( $plot_w / $day_count ) : $plot_w;
+        $bar_w       = max( 2, min( 16, ( $slot_w - 6 ) / 3 ) );
+        $currency    = get_woocommerce_currency_symbol();
+        $label_step  = $day_count > 16 ? ceil( $day_count / 12 ) : 1;
+        ?>
+        <div class="scogs-chart-card">
+            <div class="scogs-chart-header">
+                <div class="scogs-chart-title">
+                    <span class="dashicons dashicons-chart-bar" style="color:#2563eb;"></span>
+                    <h3><?php esc_html_e( 'Sales, Cost & Profit Daily Trend', 'simple-cost-of-goods-for-woocommerce' ); ?></h3>
+                </div>
+                <div class="scogs-chart-legend">
+                    <span class="scogs-legend-item"><span class="scogs-legend-color" style="background:#3b82f6;"></span> <?php esc_html_e( 'Gross Revenue', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-legend-item"><span class="scogs-legend-color" style="background:#f59e0b;"></span> <?php esc_html_e( 'Total COGS', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-legend-item"><span class="scogs-legend-color" style="background:#10b981;"></span> <?php esc_html_e( 'Net Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                </div>
+            </div>
+
+            <div class="scogs-chart-svg-container">
+                <svg viewBox="0 0 <?php echo esc_attr( $svg_w ); ?> <?php echo esc_attr( $svg_h ); ?>" preserveAspectRatio="xMidYMid meet" class="scogs-svg-chart">
+                    <!-- Horizontal Gridlines & Y-Axis Labels -->
+                    <?php
+                    $steps = 4;
+                    for ( $i = 0; $i <= $steps; $i++ ) {
+                        $ratio = $i / $steps;
+                        $y_val = $baseline_y - ( $ratio * $plot_h );
+                        $amt   = round( $max_val * $ratio );
+                        ?>
+                        <line x1="<?php echo esc_attr( $pad_left ); ?>" y1="<?php echo esc_attr( $y_val ); ?>" x2="<?php echo esc_attr( $svg_w - $pad_right ); ?>" y2="<?php echo esc_attr( $y_val ); ?>" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="<?php echo 0 === $i ? 'none' : '4,4'; ?>"></line>
+                        <text x="<?php echo esc_attr( $pad_left - 10 ); ?>" y="<?php echo esc_attr( $y_val + 4 ); ?>" text-anchor="end" font-size="11" fill="#94a3b8">
+                            <?php echo esc_html( $currency . number_format_i18n( $amt ) ); ?>
+                        </text>
+                    <?php } ?>
+
+                    <!-- Baseline X axis -->
+                    <line x1="<?php echo esc_attr( $pad_left ); ?>" y1="<?php echo esc_attr( $baseline_y ); ?>" x2="<?php echo esc_attr( $svg_w - $pad_right ); ?>" y2="<?php echo esc_attr( $baseline_y ); ?>" stroke="#cbd5e1" stroke-width="1.5"></line>
+
+                    <!-- Daily Bars -->
+                    <?php
+                    $idx = 0;
+                    foreach ( $daily_data as $d_key => $day ) {
+                        $group_w   = ( $bar_w * 3 ) + 4;
+                        $slot_x    = $pad_left + ( $idx * $slot_w );
+                        $start_x   = $slot_x + ( ( $slot_w - $group_w ) / 2 );
+
+                        // Bar heights
+                        $h_rev     = $max_val > 0 ? ( $day['revenue'] / $max_val ) * $plot_h : 0;
+                        $h_cogs    = $max_val > 0 ? ( $day['cogs'] / $max_val ) * $plot_h : 0;
+                        $h_prof    = $max_val > 0 ? ( max( 0, $day['profit'] ) / $max_val ) * $plot_h : 0;
+
+                        $y_rev     = $baseline_y - $h_rev;
+                        $y_cogs    = $baseline_y - $h_cogs;
+                        $y_prof    = $baseline_y - $h_prof;
+
+                        $prof_color = $day['profit'] >= 0 ? '#10b981' : '#ef4444';
+                        $tip_text   = sprintf(
+                            "%s\nRevenue: %s%s\nCOGS: -%s%s\nNet Profit: %s%s",
+                            $day['label'],
+                            $currency, number_format( $day['revenue'], 2 ),
+                            $currency, number_format( $day['cogs'], 2 ),
+                            $currency, number_format( $day['profit'], 2 )
+                        );
+                        ?>
+                        <g class="scogs-chart-day-group" data-date="<?php echo esc_attr( $d_key ); ?>">
+                            <!-- Revenue Bar -->
+                            <rect x="<?php echo esc_attr( $start_x ); ?>" y="<?php echo esc_attr( $y_rev ); ?>" width="<?php echo esc_attr( $bar_w ); ?>" height="<?php echo esc_attr( max( 0, $h_rev ) ); ?>" rx="2" fill="#3b82f6" class="scogs-chart-bar">
+                                <title><?php echo esc_attr( $tip_text ); ?></title>
+                            </rect>
+
+                            <!-- COGS Bar -->
+                            <rect x="<?php echo esc_attr( $start_x + $bar_w + 2 ); ?>" y="<?php echo esc_attr( $y_cogs ); ?>" width="<?php echo esc_attr( $bar_w ); ?>" height="<?php echo esc_attr( max( 0, $h_cogs ) ); ?>" rx="2" fill="#f59e0b" class="scogs-chart-bar">
+                                <title><?php echo esc_attr( $tip_text ); ?></title>
+                            </rect>
+
+                            <!-- Profit Bar -->
+                            <rect x="<?php echo esc_attr( $start_x + ( $bar_w * 2 ) + 4 ); ?>" y="<?php echo esc_attr( $y_prof ); ?>" width="<?php echo esc_attr( $bar_w ); ?>" height="<?php echo esc_attr( max( 0, $h_prof ) ); ?>" rx="2" fill="<?php echo esc_attr( $prof_color ); ?>" class="scogs-chart-bar">
+                                <title><?php echo esc_attr( $tip_text ); ?></title>
+                            </rect>
+
+                            <!-- Date Label -->
+                            <?php if ( 0 === ( $idx % $label_step ) || $idx === ( $day_count - 1 ) ) : ?>
+                                <text x="<?php echo esc_attr( $slot_x + ( $slot_w / 2 ) ); ?>" y="<?php echo esc_attr( $baseline_y + 18 ); ?>" text-anchor="middle" font-size="10" fill="#64748b">
+                                    <?php echo esc_html( $day['label'] ); ?>
+                                </text>
+                            <?php endif; ?>
+                        </g>
+                        <?php
+                        $idx++;
+                    }
+                    ?>
+
+                    <?php if ( ! $has_data ) : ?>
+                        <rect x="<?php echo esc_attr( $pad_left + 40 ); ?>" y="<?php echo esc_attr( $pad_top + 60 ); ?>" width="<?php echo esc_attr( $plot_w - 80 ); ?>" height="70" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" opacity="0.95"></rect>
+                        <text x="<?php echo esc_attr( $svg_w / 2 ); ?>" y="<?php echo esc_attr( $pad_top + 100 ); ?>" text-anchor="middle" font-size="13" font-weight="600" fill="#64748b">
+                            <?php esc_html_e( 'No sales recorded in this period yet. Placed orders will automatically appear here.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        </text>
+                    <?php endif; ?>
+                </svg>
+            </div>
+        </div>
+        <?php
+    }
 }
+

@@ -63,16 +63,20 @@ class SCOGS_Dashboard {
         $today_profit  = 0.0;
 
         foreach ( $today_orders as $order ) {
-            $today_revenue += (float) $order->get_total();
-            $order_cost     = $order->get_meta( SCOGS_Order::META_ORDER_COST, true );
-            if ( '' === $order_cost ) {
-                $calc = SCOGS_Order::calculate_order_profit( $order );
-                $today_cost += $calc['cost'];
+            $profit = $order->get_meta( SCOGS_Order::META_ORDER_PROFIT, true );
+            $cogs   = $order->get_meta( SCOGS_Order::META_ORDER_COST, true );
+
+            if ( '' === $profit || '' === $cogs ) {
+                $calc    = SCOGS_Order::calculate_order_profit( $order );
+                $today_revenue += (float) $calc['gross_revenue'];
+                $today_cost    += (float) $calc['total_cogs'];
+                $today_profit  += (float) $calc['net_profit'];
             } else {
-                $today_cost += (float) $order_cost;
+                $today_revenue += (float) $order->get_total();
+                $today_cost    += (float) $cogs;
+                $today_profit  += (float) $profit;
             }
         }
-        $today_profit = $today_revenue - $today_cost;
         $today_margin = $today_revenue > 0 ? ( $today_profit / $today_revenue ) * 100 : 0.0;
 
         // Orders this month
@@ -84,18 +88,23 @@ class SCOGS_Dashboard {
 
         $month_revenue = 0.0;
         $month_cost    = 0.0;
+        $month_profit  = 0.0;
 
         foreach ( $month_orders as $order ) {
-            $month_revenue += (float) $order->get_total();
-            $order_cost     = $order->get_meta( SCOGS_Order::META_ORDER_COST, true );
-            if ( '' === $order_cost ) {
-                $calc = SCOGS_Order::calculate_order_profit( $order );
-                $month_cost += $calc['cost'];
+            $profit = $order->get_meta( SCOGS_Order::META_ORDER_PROFIT, true );
+            $cogs   = $order->get_meta( SCOGS_Order::META_ORDER_COST, true );
+
+            if ( '' === $profit || '' === $cogs ) {
+                $calc     = SCOGS_Order::calculate_order_profit( $order );
+                $month_revenue += (float) $calc['gross_revenue'];
+                $month_cost    += (float) $calc['total_cogs'];
+                $month_profit  += (float) $calc['net_profit'];
             } else {
-                $month_cost += (float) $order_cost;
+                $month_revenue += (float) $order->get_total();
+                $month_cost    += (float) $cogs;
+                $month_profit  += (float) $profit;
             }
         }
-        $month_profit = $month_revenue - $month_cost;
         $month_margin = $month_revenue > 0 ? ( $month_profit / $month_revenue ) * 100 : 0.0;
 
         $stats = array(

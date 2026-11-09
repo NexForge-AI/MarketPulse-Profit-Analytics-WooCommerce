@@ -30,6 +30,10 @@ class SCOGS_Product {
         add_action( 'quick_edit_custom_box', array( __CLASS__, 'render_quick_edit_field' ), 10, 2 );
         add_action( 'woocommerce_product_quick_edit_save', array( __CLASS__, 'save_quick_edit_field' ) );
 
+        // Bulk Edit support
+        add_action( 'woocommerce_product_bulk_edit_start', array( __CLASS__, 'render_bulk_edit_fields' ) );
+        add_action( 'woocommerce_product_bulk_edit_save', array( __CLASS__, 'save_bulk_edit_fields' ) );
+
         // Supplier filter on products table
         add_action( 'restrict_manage_posts', array( __CLASS__, 'render_supplier_filter' ) );
         add_filter( 'parse_query', array( __CLASS__, 'filter_products_by_supplier' ) );
@@ -197,12 +201,14 @@ class SCOGS_Product {
         }
 
         if ( 'scogs_cost' === $column ) {
-            $cost = self::get_product_cost( $product );
+            $cost     = self::get_product_cost( $product );
+            $raw_cost = $product->get_meta( self::META_KEY_COST, true );
             if ( $cost > 0 ) {
                 echo '<span class="scogs-cost-text">' . wc_price( $cost ) . '</span>';
             } else {
                 echo '<span class="scogs-muted">&mdash;</span>';
             }
+            echo '<span class="scogs-raw-cost-data" style="display:none;" data-cost="' . esc_attr( '' !== $raw_cost ? $raw_cost : '' ) . '"></span>';
         }
 
         if ( 'scogs_margin' === $column ) {
@@ -229,6 +235,7 @@ class SCOGS_Product {
             } else {
                 echo '<span class="scogs-muted">&mdash;</span>';
             }
+            echo '<span class="scogs-raw-supplier-data" style="display:none;" data-supplier="' . esc_attr( ! empty( $supplier ) ? $supplier : '' ) . '"></span>';
         }
     }
 
@@ -273,6 +280,43 @@ class SCOGS_Product {
             if ( '' !== $supplier ) {
                 $product->update_meta_data( self::META_KEY_SUPPLIER, $supplier );
             }
+        }
+    }
+
+    /**
+     * Render Cost & Supplier fields in Bulk Edit box
+     */
+    public static function render_bulk_edit_fields() {
+        ?>
+        <div class="inline-edit-group scogs-bulk-edit-row">
+            <label class="alignleft">
+                <span class="title"><?php esc_html_e( 'Cost Price', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="input-text-wrap">
+                    <input type="text" name="<?php echo esc_attr( self::META_KEY_COST ); ?>" class="text wc_input_price" placeholder="<?php esc_attr_e( '— No Change —', 'simple-cost-of-goods-for-woocommerce' ); ?>" value="">
+                </span>
+            </label>
+            <label class="alignleft" style="margin-left:12px;">
+                <span class="title"><?php esc_html_e( 'Supplier', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="input-text-wrap">
+                    <input type="text" name="<?php echo esc_attr( self::META_KEY_SUPPLIER ); ?>" class="text" placeholder="<?php esc_attr_e( '— No Change —', 'simple-cost-of-goods-for-woocommerce' ); ?>" value="">
+                </span>
+            </label>
+        </div>
+        <?php
+    }
+
+    /**
+     * Save Bulk Edit fields
+     */
+    public static function save_bulk_edit_fields( $product ) {
+        if ( isset( $_REQUEST[ self::META_KEY_COST ] ) && '' !== $_REQUEST[ self::META_KEY_COST ] ) {
+            $cost = wc_clean( wp_unslash( $_REQUEST[ self::META_KEY_COST ] ) );
+            $product->update_meta_data( self::META_KEY_COST, wc_format_decimal( $cost ) );
+        }
+
+        if ( isset( $_REQUEST[ self::META_KEY_SUPPLIER ] ) && '' !== $_REQUEST[ self::META_KEY_SUPPLIER ] ) {
+            $supplier = sanitize_text_field( wp_unslash( $_REQUEST[ self::META_KEY_SUPPLIER ] ) );
+            $product->update_meta_data( self::META_KEY_SUPPLIER, $supplier );
         }
     }
 

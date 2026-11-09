@@ -88,3 +88,4 @@ class SCOGS_CSV {
         $product->save();
     }
 }
+

@@ -129,3 +129,4 @@ class SCOGS_Calculations {
         );
     }
 }
+
