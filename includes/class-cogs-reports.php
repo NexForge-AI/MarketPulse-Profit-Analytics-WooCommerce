@@ -470,6 +470,7 @@ class SCOGS_Reports {
     private static function render_suppliers_tab() {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $suppliers = $wpdb->get_results( $wpdb->prepare(
             "SELECT meta_value as supplier_name, COUNT(post_id) as product_count 
              FROM {$wpdb->postmeta} 
@@ -763,14 +764,15 @@ class SCOGS_Reports {
         check_admin_referer( 'scogs_save_gateways_nonce' );
 
         if ( isset( $_POST['gateways'] ) && is_array( $_POST['gateways'] ) ) {
-            SCOGS_Gateways::save_rules( wp_unslash( $_POST['gateways'] ) );
+            $gateways_data = map_deep( wp_unslash( $_POST['gateways'] ), 'sanitize_text_field' );
+            SCOGS_Gateways::save_rules( $gateways_data );
         }
 
         // Custom gateway rule added?
         if ( ! empty( $_POST['custom_gateway_id'] ) ) {
             $custom_id  = sanitize_key( wp_unslash( $_POST['custom_gateway_id'] ) );
-            $custom_pct = isset( $_POST['custom_gateway_percent'] ) ? (float) wc_format_decimal( wp_unslash( $_POST['custom_gateway_percent'] ) ) : 0.0;
-            $custom_fix = isset( $_POST['custom_gateway_fixed'] ) ? (float) wc_format_decimal( wp_unslash( $_POST['custom_gateway_fixed'] ) ) : 0.0;
+            $custom_pct = isset( $_POST['custom_gateway_percent'] ) ? (float) wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['custom_gateway_percent'] ) ) ) : 0.0;
+            $custom_fix = isset( $_POST['custom_gateway_fixed'] ) ? (float) wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['custom_gateway_fixed'] ) ) ) : 0.0;
             if ( ! empty( $custom_id ) ) {
                 SCOGS_Gateways::save_single_rule( $custom_id, $custom_pct, $custom_fix );
             }

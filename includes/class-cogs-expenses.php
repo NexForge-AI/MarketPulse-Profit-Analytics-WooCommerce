@@ -81,6 +81,7 @@ class SCOGS_Expenses {
         global $wpdb;
 
         $table_name = self::get_table_name();
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
         $inserted   = $wpdb->insert(
             $table_name,
             array(
@@ -113,6 +114,7 @@ class SCOGS_Expenses {
     public static function delete_expense( $id ) {
         global $wpdb;
         $table_name = self::get_table_name();
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $deleted    = $wpdb->delete( $table_name, array( 'id' => absint( $id ) ), array( '%d' ) );
 
         if ( class_exists( 'SCOGS_Reports' ) ) {
@@ -135,8 +137,9 @@ class SCOGS_Expenses {
         $table_name = esc_sql( self::get_table_name() );
 
         if ( ! empty( $start_date ) && ! empty( $end_date ) ) {
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             return $wpdb->get_results(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
                 $wpdb->prepare(
                     "SELECT * FROM `{$table_name}` WHERE `expense_date` BETWEEN %s AND %s ORDER BY `expense_date` DESC, `id` DESC",
                     $start_date,
@@ -161,8 +164,9 @@ class SCOGS_Expenses {
         $table_name = esc_sql( self::get_table_name() );
 
         if ( ! empty( $start_date ) && ! empty( $end_date ) ) {
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             $sum = $wpdb->get_var(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
                 $wpdb->prepare(
                     "SELECT SUM(`amount`) FROM `{$table_name}` WHERE `expense_date` BETWEEN %s AND %s",
                     $start_date,
@@ -190,7 +194,7 @@ class SCOGS_Expenses {
         $date     = ! empty( $_POST['expense_date'] ) ? sanitize_text_field( wp_unslash( $_POST['expense_date'] ) ) : current_time( 'Y-m-d' );
         $category = ! empty( $_POST['category'] ) ? sanitize_key( wp_unslash( $_POST['category'] ) ) : 'other';
         $title    = ! empty( $_POST['title'] ) ? sanitize_text_field( wp_unslash( $_POST['title'] ) ) : esc_html__( 'Operating Expense', 'simple-cost-of-goods-for-woocommerce' );
-        $amount   = ! empty( $_POST['amount'] ) ? (float) wc_format_decimal( wp_unslash( $_POST['amount'] ) ) : 0.0;
+        $amount   = ! empty( $_POST['amount'] ) ? (float) wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['amount'] ) ) ) : 0.0;
         $notes    = ! empty( $_POST['notes'] ) ? sanitize_textarea_field( wp_unslash( $_POST['notes'] ) ) : '';
 
         if ( $amount > 0 ) {

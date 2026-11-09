@@ -21,7 +21,7 @@ delete_option( 'scogs_include_tax' );
 
 // Clean up cached transients
 delete_transient( 'scogs_dashboard_stats' );
-// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 $wpdb->query(
     $wpdb->prepare(
         "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",
@@ -31,7 +31,7 @@ $wpdb->query(
 );
 
 // Drop operating expenses table
-$table_expenses = $wpdb->prefix . 'scogs_expenses';
-// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-$wpdb->query( "DROP TABLE IF EXISTS `{$table_expenses}`" );
+$scogs_table_expenses = esc_sql( $wpdb->prefix . 'scogs_expenses' );
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+$wpdb->query( "DROP TABLE IF EXISTS `{$scogs_table_expenses}`" );
 

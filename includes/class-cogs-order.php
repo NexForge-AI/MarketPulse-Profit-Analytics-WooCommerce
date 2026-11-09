@@ -130,7 +130,7 @@ class SCOGS_Order {
         self::$is_saving_order_meta = true;
 
         // phpcs:ignore WordPress.Security.NonceVerification.Missing
-        $cost           = wc_clean( wp_unslash( $_POST['_cogs_actual_shipping_cost'] ) );
+        $cost           = wc_clean( sanitize_text_field( wp_unslash( $_POST['_cogs_actual_shipping_cost'] ) ) );
         $formatted_cost = ( '' === $cost || false === $cost ) ? '' : wc_format_decimal( $cost );
 
         $order->update_meta_data( '_cogs_actual_shipping_cost', $formatted_cost );

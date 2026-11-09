@@ -153,7 +153,7 @@ class SCOGS_Product {
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WooCommerce core prior to firing woocommerce_process_product_meta.
         if ( isset( $_POST[ self::META_KEY_COST ] ) ) {
             // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            $cost = wc_clean( wp_unslash( $_POST[ self::META_KEY_COST ] ) );
+            $cost = wc_clean( sanitize_text_field( wp_unslash( $_POST[ self::META_KEY_COST ] ) ) );
             if ( '' === $cost ) {
                 delete_post_meta( $post_id, self::META_KEY_COST );
             } else {
@@ -219,7 +219,7 @@ class SCOGS_Product {
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WooCommerce core prior to firing woocommerce_save_product_variation.
         if ( isset( $_POST[ self::META_KEY_COST ][ $i ] ) ) {
             // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            $cost = wc_clean( wp_unslash( $_POST[ self::META_KEY_COST ][ $i ] ) );
+            $cost = wc_clean( sanitize_text_field( wp_unslash( $_POST[ self::META_KEY_COST ][ $i ] ) ) );
             if ( '' === $cost ) {
                 delete_post_meta( $variation_id, self::META_KEY_COST );
             } else {
@@ -355,7 +355,7 @@ class SCOGS_Product {
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WordPress core during quick edit.
         if ( isset( $_POST[ self::META_KEY_COST ] ) ) {
             // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            $cost = wc_clean( wp_unslash( $_POST[ self::META_KEY_COST ] ) );
+            $cost = wc_clean( sanitize_text_field( wp_unslash( $_POST[ self::META_KEY_COST ] ) ) );
             if ( '' !== $cost ) {
                 $product->update_meta_data( self::META_KEY_COST, wc_format_decimal( $cost ) );
             } else {
@@ -417,7 +417,7 @@ class SCOGS_Product {
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WooCommerce core during bulk edit.
         if ( isset( $_POST[ self::META_KEY_COST ] ) && '' !== $_POST[ self::META_KEY_COST ] ) {
             // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            $cost = wc_clean( wp_unslash( $_POST[ self::META_KEY_COST ] ) );
+            $cost = wc_clean( sanitize_text_field( wp_unslash( $_POST[ self::META_KEY_COST ] ) ) );
             $product->update_meta_data( self::META_KEY_COST, wc_format_decimal( $cost ) );
             $changed = true;
         }
