@@ -84,6 +84,10 @@ class SCOGS_Product {
                 echo '<span class="scogs-badge ' . esc_attr( $badge_class ) . '">';
                 echo wc_price( $profit ) . ' (' . esc_html( round( $margin, 1 ) ) . '%)';
                 echo '</span>';
+                if ( $margin < 30 ) {
+                    $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_margin&utm_campaign=boost_margin';
+                    echo ' <a href="' . esc_url( $plan_url ) . '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;">⚡ ' . esc_html__( 'Boost margin with MarketPulse &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
+                }
                 echo '</p>';
             }
         }
@@ -221,9 +225,19 @@ class SCOGS_Product {
                 $margin = ( $profit / $price ) * 100;
                 $badge_class = $margin >= 30 ? 'scogs-badge-green' : ( $margin >= 15 ? 'scogs-badge-amber' : 'scogs-badge-red' );
 
+                echo '<div class="scogs-margin-cell-wrap">';
                 echo '<span class="scogs-badge ' . esc_attr( $badge_class ) . '" title="' . esc_attr__( 'Gross Profit: ', 'simple-cost-of-goods-for-woocommerce' ) . wc_price( $profit ) . '">';
                 echo esc_html( round( $margin, 1 ) ) . '%';
                 echo '</span>';
+
+                // If margin is red (<15%) or amber (<30%), display conversion tip to boost margin
+                if ( $margin < 30 ) {
+                    $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_list_margin&utm_campaign=boost_margin';
+                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" class="scogs-margin-boost-tip" title="' . esc_attr__( 'Low margin? Automatically protect COGS & optimize price with MarketPulse AI', 'simple-cost-of-goods-for-woocommerce' ) . '">';
+                    echo '<span class="dashicons dashicons-arrow-up-alt"></span> ' . esc_html__( 'Boost margin with MarketPulse', 'simple-cost-of-goods-for-woocommerce' );
+                    echo '</a>';
+                }
+                echo '</div>';
             } else {
                 echo '<span class="scogs-muted">&mdash;</span>';
             }
