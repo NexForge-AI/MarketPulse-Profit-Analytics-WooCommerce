@@ -124,6 +124,13 @@ final class Simple_Cost_Of_Goods_WooCommerce {
         SCOGS_Reports::init();
         SCOGS_Dashboard::init();
         SCOGS_Settings::init();
+
+        // Auto-create database tables on upgrade or copy without needing re-activation
+        $installed_ver = get_option( 'scogs_version', '0' );
+        if ( version_compare( $installed_ver, SCOGS_VERSION, '<' ) ) {
+            SCOGS_Expenses::create_table();
+            update_option( 'scogs_version', SCOGS_VERSION );
+        }
     }
 
     /**
