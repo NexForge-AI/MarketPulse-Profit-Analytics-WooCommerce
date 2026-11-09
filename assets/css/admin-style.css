@@ -63,6 +63,53 @@
     border-radius: 4px;
     font-size: 11px;
     font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Product & Order List Table Columns (Fix vertical wrapping & breaking) */
+.wp-list-table th.column-scogs_cost,
+.wp-list-table td.column-scogs_cost {
+    width: 90px !important;
+    min-width: 80px !important;
+    text-align: right;
+    white-space: nowrap !important;
+}
+
+.wp-list-table th.column-scogs_margin,
+.wp-list-table td.column-scogs_margin {
+    width: 85px !important;
+    min-width: 75px !important;
+    text-align: center;
+    white-space: nowrap !important;
+}
+
+.wp-list-table th.column-scogs_supplier,
+.wp-list-table td.column-scogs_supplier {
+    width: 120px !important;
+    min-width: 100px !important;
+    white-space: nowrap !important;
+}
+
+.wp-list-table th.column-scogs_supplier a,
+.wp-list-table th.column-scogs_cost a,
+.wp-list-table th.column-scogs_margin a,
+.wp-list-table th.column-scogs_supplier span,
+.wp-list-table th.column-scogs_cost span,
+.wp-list-table th.column-scogs_margin span {
+    white-space: nowrap !important;
+    display: inline-block;
+}
+
+.wp-list-table th.column-scogs_order_profit,
+.wp-list-table td.column-scogs_order_profit {
+    width: 120px !important;
+    min-width: 100px !important;
+    text-align: right;
+    white-space: nowrap !important;
+}
+
+.scogs-order-profit-cell {
+    white-space: nowrap !important;
 }
 
 /* Order Meta Box Card (Waterfall) */

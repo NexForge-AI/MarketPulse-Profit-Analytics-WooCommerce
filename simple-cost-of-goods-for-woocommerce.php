@@ -152,18 +152,21 @@ final class Simple_Cost_Of_Goods_WooCommerce {
         $is_valid = in_array( $screen->id, $valid_screens, true ) || in_array( $screen->post_type, array( 'product', 'shop_order' ), true );
 
         if ( $is_valid ) {
+            $css_ver = file_exists( SCOGS_PATH . 'assets/css/admin-style.css' ) ? filemtime( SCOGS_PATH . 'assets/css/admin-style.css' ) : SCOGS_VERSION;
+            $js_ver  = file_exists( SCOGS_PATH . 'assets/js/admin.js' ) ? filemtime( SCOGS_PATH . 'assets/js/admin.js' ) : SCOGS_VERSION;
+
             wp_enqueue_style(
                 'scogs-admin-style',
                 SCOGS_URL . 'assets/css/admin-style.css',
                 array(),
-                SCOGS_VERSION
+                $css_ver
             );
 
             wp_enqueue_script(
                 'scogs-admin-script',
                 SCOGS_URL . 'assets/js/admin.js',
                 array( 'jquery' ),
-                SCOGS_VERSION,
+                $js_ver,
                 true
             );
 
