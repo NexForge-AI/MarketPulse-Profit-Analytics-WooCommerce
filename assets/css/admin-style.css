@@ -366,15 +366,19 @@ input#_cogs_cost_price.scogs-input-warning {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     padding-bottom: 12px;
     border-bottom: 1px solid #e2e8f0;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
 .scogs-header-left {
     display: flex;
     align-items: center;
     gap: 14px;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 .scogs-header-brand-logo {
@@ -389,18 +393,21 @@ input#_cogs_cost_price.scogs-input-warning {
     flex-shrink: 0;
 }
 
-.scogs-header-title-row {
+.scogs-header-title-wrap {
     display: flex;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
 }
 
-.scogs-header-left h1 {
-    margin: 0;
-    font-size: 22px;
-    font-weight: 700;
-    color: #0f172a;
+.scogs-header-left h1.scogs-header-h1 {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    line-height: 1.25 !important;
+    display: inline-block !important;
 }
 
 .scogs-version-tag {
@@ -411,14 +418,20 @@ input#_cogs_cost_price.scogs-input-warning {
     font-weight: 600;
     padding: 2px 6px;
     border-radius: 4px;
-    margin-left: 2px;
     vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.scogs-header-right {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
 }
 
 .scogs-brand-pill {
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    padding: 5px 12px;
+    padding: 6px 14px;
     border-radius: 20px;
     font-size: 12px;
     color: #64748b;
@@ -426,6 +439,8 @@ input#_cogs_cost_price.scogs-input-warning {
     display: inline-flex;
     align-items: center;
     gap: 7px;
+    white-space: nowrap !important;
+    flex-shrink: 0;
 }
 
 .scogs-brand-pill-logo {
@@ -440,6 +455,13 @@ input#_cogs_cost_price.scogs-input-warning {
     color: #2563eb;
     font-weight: 600;
     text-decoration: none;
+}
+
+/* Ensure WordPress admin notices sit cleanly between header and tabs */
+.scogs-analytics-wrap > .notice,
+.scogs-analytics-wrap > div.updated,
+.scogs-analytics-wrap > div.error {
+    margin: 12px 0 16px 0 !important;
 }
 
 /* Nav Tabs */

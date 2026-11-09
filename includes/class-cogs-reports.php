@@ -46,13 +46,11 @@ class SCOGS_Reports {
             <div class="scogs-header-bar">
                 <div class="scogs-header-left">
                     <img src="<?php echo esc_url( SCOGS_URL . 'assets/images/logo.png' ); ?>" alt="MarketPulse" class="scogs-header-brand-logo" />
-                    <div>
-                        <div class="scogs-header-title-row">
-                            <h1 class="wp-heading-inline">
-                                <?php esc_html_e( 'MarketPulse Profit Analytics & Financial Intelligence', 'simple-cost-of-goods-for-woocommerce' ); ?>
-                            </h1>
-                            <span class="scogs-version-tag">v<?php echo esc_html( SCOGS_VERSION ); ?></span>
-                        </div>
+                    <div class="scogs-header-title-wrap">
+                        <h1 class="wp-heading-inline scogs-header-h1">
+                            <?php esc_html_e( 'MarketPulse Profit Analytics & Financial Intelligence', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        </h1>
+                        <span class="scogs-version-tag">v<?php echo esc_html( SCOGS_VERSION ); ?></span>
                     </div>
                 </div>
                 <div class="scogs-header-right">
@@ -63,6 +61,7 @@ class SCOGS_Reports {
                     </span>
                 </div>
             </div>
+            <hr class="wp-header-end">
 
             <!-- Tab Navigation -->
             <nav class="nav-tab-wrapper scogs-nav-tabs">
