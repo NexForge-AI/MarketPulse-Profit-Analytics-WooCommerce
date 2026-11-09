@@ -29,24 +29,40 @@ class SCOGS_Calculations {
         $saved_cogs   = $order->get_meta( SCOGS_Order::META_ORDER_COST, true );
 
         if ( ! $save && '' !== $saved_profit && false !== $saved_profit && '' !== $saved_cogs && false !== $saved_cogs ) {
-            $gross_revenue    = (float) $order->get_subtotal();
-            $discount_total   = (float) $order->get_discount_total();
-            $total_cogs       = (float) $saved_cogs;
-            $net_profit       = (float) $saved_profit;
-            $net_margin       = (float) $order->get_meta( SCOGS_Order::META_ORDER_MARGIN, true );
-            $gross_profit     = (float) $order->get_meta( '_cogs_gross_profit', true );
-            $gateway_fee      = (float) $order->get_meta( '_cogs_gateway_fee', true );
-            $shipping_deficit = (float) $order->get_meta( '_cogs_shipping_deficit', true );
+            $gross_revenue          = (float) $order->get_subtotal();
+            $discount_total         = (float) $order->get_discount_total();
+            $total_cogs             = (float) $saved_cogs;
+            $customer_paid_shipping = (float) $order->get_shipping_total();
+            $actual_courier_cost    = (float) $order->get_meta( '_cogs_actual_shipping_cost', true );
+
+            // Dynamically calculate shipping deficit from actual courier cost and customer paid shipping
+            $saved_deficit = $order->get_meta( '_cogs_shipping_deficit', true );
+            if ( '' !== $saved_deficit && false !== $saved_deficit ) {
+                $shipping_deficit = (float) $saved_deficit;
+            } elseif ( $actual_courier_cost > $customer_paid_shipping ) {
+                $shipping_deficit = $actual_courier_cost - $customer_paid_shipping;
+            } else {
+                $shipping_deficit = 0.0;
+            }
+
+            $saved_gp     = $order->get_meta( '_cogs_gross_profit', true );
+            $gross_profit = ( '' !== $saved_gp && false !== $saved_gp ) ? (float) $saved_gp : ( $gross_revenue - $discount_total - $total_cogs );
+            $gross_margin = $gross_revenue > 0 ? ( $gross_profit / $gross_revenue ) * 100 : 0.0;
+            $gateway_fee  = (float) $order->get_meta( '_cogs_gateway_fee', true );
+
+            // True net profit accounts for fees and courier deficit
+            $net_profit = $gross_profit - $gateway_fee - $shipping_deficit;
+            $net_margin = $gross_revenue > 0 ? ( $net_profit / $gross_revenue ) * 100 : 0.0;
 
             return array(
                 'gross_revenue'          => $gross_revenue,
                 'discount_total'         => $discount_total,
                 'total_cogs'             => $total_cogs,
                 'gross_profit'           => $gross_profit,
-                'gross_margin'           => $gross_revenue > 0 ? ( $gross_profit / $gross_revenue ) * 100 : 0.0,
+                'gross_margin'           => $gross_margin,
                 'gateway_fee'            => $gateway_fee,
-                'customer_paid_shipping' => (float) $order->get_shipping_total(),
-                'actual_courier_cost'    => (float) $order->get_meta( '_cogs_actual_shipping_cost', true ),
+                'customer_paid_shipping' => $customer_paid_shipping,
+                'actual_courier_cost'    => $actual_courier_cost,
                 'shipping_deficit'       => $shipping_deficit,
                 'net_profit'             => $net_profit,
                 'net_margin'             => $net_margin,

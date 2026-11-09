@@ -102,19 +102,44 @@ class SCOGS_Order {
     }
 
     /**
+     * Re-entrancy guard to prevent recursion during order updates
+     *
+     * @var bool
+     */
+    private static $is_saving_order_meta = false;
+
+    /**
      * Save actual courier shipping cost from Order edit screen
      */
     public static function save_order_custom_meta( $order_id ) {
-        if ( isset( $_POST['_cogs_actual_shipping_cost'] ) ) {
-            $cost = wc_clean( wp_unslash( $_POST['_cogs_actual_shipping_cost'] ) );
-            $order = wc_get_order( $order_id );
-            if ( $order ) {
-                $order->update_meta_data( '_cogs_actual_shipping_cost', '' === $cost ? '' : wc_format_decimal( $cost ) );
-                $order->save();
-                self::calculate_order_profit( $order, true );
-                SCOGS_Reports::flush_cache();
-            }
+        // Prevent recursive saves
+        if ( self::$is_saving_order_meta ) {
+            return;
         }
+
+        if ( ! isset( $_POST['_cogs_actual_shipping_cost'] ) ) {
+            return;
+        }
+
+        $order = wc_get_order( $order_id );
+        if ( ! $order ) {
+            return;
+        }
+
+        self::$is_saving_order_meta = true;
+
+        $cost           = wc_clean( wp_unslash( $_POST['_cogs_actual_shipping_cost'] ) );
+        $formatted_cost = ( '' === $cost || false === $cost ) ? '' : wc_format_decimal( $cost );
+
+        $order->update_meta_data( '_cogs_actual_shipping_cost', $formatted_cost );
+
+        // Calculate and snapshot profit + deficit + margin in one pass
+        SCOGS_Calculations::calculate_order_financials( $order, true );
+
+        // Invalidate report and dashboard caches
+        SCOGS_Reports::flush_cache();
+
+        self::$is_saving_order_meta = false;
     }
 
     /**

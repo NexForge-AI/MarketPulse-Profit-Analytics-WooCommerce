@@ -730,6 +730,11 @@ class SCOGS_Reports {
     public static function flush_cache() {
         global $wpdb;
         delete_transient( 'scogs_dashboard_stats' );
+
+        // Invalidate transient cache version so object cache and memory caches immediately serve fresh data
+        $version = (int) get_option( 'scogs_report_cache_version', 1 );
+        update_option( 'scogs_report_cache_version', $version + 1, false );
+
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery
         $wpdb->query(
             $wpdb->prepare(
@@ -867,7 +872,8 @@ class SCOGS_Reports {
      * Aggregate orders financial metrics between two dates
      */
     private static function get_aggregated_financials( $start_date, $end_date ) {
-        $cache_key = 'scogs_agg_' . md5( $start_date . '_' . $end_date );
+        $v         = (int) get_option( 'scogs_report_cache_version', 1 );
+        $cache_key = 'scogs_agg_' . $v . '_' . md5( $start_date . '_' . $end_date );
         $cached    = get_transient( $cache_key );
         if ( false !== $cached ) {
             return $cached;
@@ -918,7 +924,8 @@ class SCOGS_Reports {
      * Render Top / Lowest products table
      */
     private static function render_top_products_table( $start_date, $end_date, $order_dir = 'DESC' ) {
-        $stats_cache_key = 'scogs_pstats_' . md5( $start_date . '_' . $end_date );
+        $v               = (int) get_option( 'scogs_report_cache_version', 1 );
+        $stats_cache_key = 'scogs_pstats_' . $v . '_' . md5( $start_date . '_' . $end_date );
         $product_stats   = get_transient( $stats_cache_key );
 
         if ( false === $product_stats || ! is_array( $product_stats ) ) {
@@ -1019,7 +1026,8 @@ class SCOGS_Reports {
      * @return array Array with 'data', 'has_data', and 'max_val'
      */
     public static function get_daily_chart_data( $start_date, $end_date ) {
-        $chart_cache_key = 'scogs_chart_' . md5( $start_date . '_' . $end_date );
+        $v               = (int) get_option( 'scogs_report_cache_version', 1 );
+        $chart_cache_key = 'scogs_chart_' . $v . '_' . md5( $start_date . '_' . $end_date );
         $cached_chart    = get_transient( $chart_cache_key );
 
         if ( false !== $cached_chart && is_array( $cached_chart ) && isset( $cached_chart['data'] ) ) {
