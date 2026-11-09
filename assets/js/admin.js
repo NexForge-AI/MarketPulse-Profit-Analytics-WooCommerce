@@ -6,7 +6,31 @@
     'use strict';
 
     $(function () {
-        const currencySymbol = (typeof scogsAdminParams !== 'undefined' && scogsAdminParams.currency_symbol) ? scogsAdminParams.currency_symbol : '';
+        // Universal Dynamic WooCommerce Store Currency Formatter
+        function formatCurrency(amount) {
+            const numDecimals = (typeof scogsAdminParams !== 'undefined' && scogsAdminParams.num_decimals !== undefined) ? parseInt(scogsAdminParams.num_decimals, 10) : 2;
+            const decimalSep  = (typeof scogsAdminParams !== 'undefined' && scogsAdminParams.decimal_sep) ? scogsAdminParams.decimal_sep : '.';
+            const thousandSep = (typeof scogsAdminParams !== 'undefined' && scogsAdminParams.thousand_sep) ? scogsAdminParams.thousand_sep : ',';
+            const symbol      = (typeof scogsAdminParams !== 'undefined' && scogsAdminParams.currency_symbol) ? scogsAdminParams.currency_symbol : '$';
+            const pos         = (typeof scogsAdminParams !== 'undefined' && scogsAdminParams.currency_pos) ? scogsAdminParams.currency_pos : 'left';
+
+            let n = parseFloat(amount) || 0;
+            let parts = n.toFixed(numDecimals).split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSep);
+            let formattedNum = parts.join(decimalSep);
+
+            switch (pos) {
+                case 'right':
+                    return formattedNum + symbol;
+                case 'right_space':
+                    return formattedNum + ' ' + symbol;
+                case 'left_space':
+                    return symbol + ' ' + formattedNum;
+                case 'left':
+                default:
+                    return symbol + formattedNum;
+            }
+        }
 
         // 1. Pre-fill Quick Edit fields from row data
         if (typeof inlineEditPost !== 'undefined') {
@@ -70,7 +94,7 @@
                 }
 
                 const badgeHtml = '<span class="scogs-badge ' + badgeClass + '">' +
-                    currencySymbol + profit.toFixed(2) + ' (' + margin.toFixed(1) + '%)' +
+                    formatCurrency(profit) + ' (' + margin.toFixed(1) + '%)' +
                     '</span>';
 
                 $wrapper.find('.scogs-live-badge-wrap, span.scogs-badge').replaceWith(badgeHtml);
@@ -105,9 +129,9 @@
                 }
 
                 if (!$badge.length) {
-                    $row.find('.scogs-variation-fields').append('<div class="scogs-var-live-margin" style="margin-top:6px; font-size:12px;"><strong>Margin:</strong> <span class="scogs-badge ' + badgeClass + '">' + currencySymbol + profit.toFixed(2) + ' (' + margin.toFixed(1) + '%)</span></div>');
+                    $row.find('.scogs-variation-fields').append('<div class="scogs-var-live-margin" style="margin-top:6px; font-size:12px;"><strong>Margin:</strong> <span class="scogs-badge ' + badgeClass + '">' + formatCurrency(profit) + ' (' + margin.toFixed(1) + '%)</span></div>');
                 } else {
-                    $badge.html('<strong>Margin:</strong> <span class="scogs-badge ' + badgeClass + '">' + currencySymbol + profit.toFixed(2) + ' (' + margin.toFixed(1) + '%)</span>');
+                    $badge.html('<strong>Margin:</strong> <span class="scogs-badge ' + badgeClass + '">' + formatCurrency(profit) + ' (' + margin.toFixed(1) + '%)</span>');
                 }
             } else if ($badge.length) {
                 $badge.empty();
@@ -120,22 +144,14 @@
             const pct = parseFloat($slider.val()) || 12;
             const rev = parseFloat($slider.data('revenue')) || 0;
             const currentProfit = parseFloat($slider.data('profit')) || 0;
-            const symbol = currencySymbol || ($slider.data('currency') ? $slider.data('currency') : '$');
 
             const leaked = Math.round(rev * (pct / 100) * 100) / 100;
             const optProfit = Math.round((currentProfit + leaked) * 100) / 100;
 
-            function formatPrice(val) {
-                return symbol + val.toLocaleString('en-US', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                });
-            }
-
             $('#scogs-slider-val').text(pct);
-            $('#scogs-headline-loss').html('&minus;' + formatPrice(leaked));
-            $('#scogs-card-loss').html('&minus;' + formatPrice(leaked));
-            $('#scogs-label-optimized').text(formatPrice(optProfit));
+            $('#scogs-headline-loss').html('&minus;' + formatCurrency(leaked));
+            $('#scogs-card-loss').html('&minus;' + formatCurrency(leaked));
+            $('#scogs-label-optimized').text(formatCurrency(optProfit));
 
             const total = optProfit > 0 ? optProfit : 1;
             let actualPct = Math.min(100, Math.max(15, Math.round((currentProfit / total) * 100)));

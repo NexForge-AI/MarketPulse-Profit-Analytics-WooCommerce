@@ -770,7 +770,7 @@ class SCOGS_Reports {
                         ?>
                         <line x1="<?php echo esc_attr( $pad_left ); ?>" y1="<?php echo esc_attr( $y_val ); ?>" x2="<?php echo esc_attr( $svg_w - $pad_right ); ?>" y2="<?php echo esc_attr( $y_val ); ?>" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="<?php echo 0 === $i ? 'none' : '4,4'; ?>"></line>
                         <text x="<?php echo esc_attr( $pad_left - 10 ); ?>" y="<?php echo esc_attr( $y_val + 4 ); ?>" text-anchor="end" font-size="11" fill="#94a3b8">
-                            <?php echo esc_html( $currency . number_format_i18n( $amt ) ); ?>
+                            <?php echo esc_html( wp_strip_all_tags( wc_price( $amt, array( 'decimals' => 0 ) ) ) ); ?>
                         </text>
                     <?php } ?>
 
@@ -796,11 +796,14 @@ class SCOGS_Reports {
 
                         $prof_color = $day['profit'] >= 0 ? '#10b981' : '#ef4444';
                         $tip_text   = sprintf(
-                            "%s\nRevenue: %s%s\nCOGS: -%s%s\nNet Profit: %s%s",
+                            "%s\n%s: %s\n%s: -%s\n%s: %s",
                             $day['label'],
-                            $currency, number_format( $day['revenue'], 2 ),
-                            $currency, number_format( $day['cogs'], 2 ),
-                            $currency, number_format( $day['profit'], 2 )
+                            esc_html__( 'Revenue', 'simple-cost-of-goods-for-woocommerce' ),
+                            wp_strip_all_tags( wc_price( $day['revenue'] ) ),
+                            esc_html__( 'COGS', 'simple-cost-of-goods-for-woocommerce' ),
+                            wp_strip_all_tags( wc_price( $day['cogs'] ) ),
+                            esc_html__( 'Net Profit', 'simple-cost-of-goods-for-woocommerce' ),
+                            wp_strip_all_tags( wc_price( $day['profit'] ) )
                         );
                         ?>
                         <g class="scogs-chart-day-group" data-date="<?php echo esc_attr( $d_key ); ?>">
@@ -970,7 +973,13 @@ class SCOGS_Reports {
                         <span class="dashicons dashicons-money-alt"></span>
                     </div>
                     <h4><?php esc_html_e( '2. Wasted Ad Spend on Undercut Items', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                    <p><?php esc_html_e( 'When a competitor drops an item price by just ৳30, your checkout conversion drops up to 40%. You pay for Facebook/Google ads, but rival sellers capture the customer.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <p>
+                        <?php
+                        $sample_drop = wp_strip_all_tags( wc_price( 30 ) );
+                        /* translators: %s: formatted sample price drop */
+                        printf( esc_html__( 'When a competitor drops an item price by just %s, your checkout conversion drops up to 40%%. You pay for Facebook/Google ads, but rival sellers capture the customer.', 'simple-cost-of-goods-for-woocommerce' ), esc_html( $sample_drop ) );
+                        ?>
+                    </p>
                 </div>
 
                 <div class="scogs-pillar-card">

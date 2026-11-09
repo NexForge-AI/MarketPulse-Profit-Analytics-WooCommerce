@@ -182,6 +182,10 @@ final class Simple_Cost_Of_Goods_WooCommerce {
                 'scogsAdminParams',
                 array(
                     'currency_symbol' => function_exists( 'get_woocommerce_currency_symbol' ) ? get_woocommerce_currency_symbol() : '$',
+                    'currency_pos'    => get_option( 'woocommerce_currency_pos', 'left' ),
+                    'decimal_sep'     => function_exists( 'wc_get_price_decimal_separator' ) ? wc_get_price_decimal_separator() : '.',
+                    'thousand_sep'    => function_exists( 'wc_get_price_thousand_separator' ) ? wc_get_price_thousand_separator() : ',',
+                    'num_decimals'    => function_exists( 'wc_get_price_decimals' ) ? wc_get_price_decimals() : 2,
                 )
             );
         }
