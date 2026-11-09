@@ -541,6 +541,92 @@ class SCOGS_Reports {
     }
 
     /**
+     * Handle export of Profit & Loss (P&L) financial summary report to CSV
+     */
+    public static function handle_export_financial_csv() {
+        if ( ! current_user_can( 'manage_woocommerce' ) ) {
+            wp_die( esc_html__( 'Unauthorized user.', 'simple-cost-of-goods-for-woocommerce' ) );
+        }
+
+        check_admin_referer( 'scogs_export_financial_csv_nonce' );
+
+        $start_date = ! empty( $_GET['start_date'] ) ? sanitize_text_field( $_GET['start_date'] ) : current_time( 'Y-m-01' );
+        $end_date   = ! empty( $_GET['end_date'] ) ? sanitize_text_field( $_GET['end_date'] ) : current_time( 'Y-m-d' );
+
+        $order_stats        = self::get_aggregated_financials( $start_date, $end_date );
+        $operating_expenses = SCOGS_Expenses::get_total_expenses( $start_date, $end_date );
+        $true_net_profit    = $order_stats['gross_profit'] - $order_stats['gateway_fees'] - $order_stats['shipping_deficit'] - $operating_expenses;
+        $true_net_margin    = $order_stats['gross_revenue'] > 0 ? ( $true_net_profit / $order_stats['gross_revenue'] ) * 100 : 0.0;
+        $currency           = function_exists( 'get_woocommerce_currency' ) ? get_woocommerce_currency() : 'USD';
+
+        $filename = 'profit-report-' . $start_date . '-to-' . $end_date . '.csv';
+
+        header( 'Content-Type: text/csv; charset=UTF-8' );
+        header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
+        header( 'Pragma: no-cache' );
+        header( 'Expires: 0' );
+
+        $output = fopen( 'php://output', 'w' );
+        // UTF-8 BOM so Microsoft Excel renders all characters cleanly
+        fprintf( $output, chr(0xEF).chr(0xBB).chr(0xBF) );
+
+        // Header info
+        fputcsv( $output, array( get_bloginfo( 'name' ) . ' - Profit & Loss (P&L) Financial Report' ) );
+        fputcsv( $output, array( 'Period', $start_date . ' to ' . $end_date ) );
+        fputcsv( $output, array( 'Currency', $currency ) );
+        fputcsv( $output, array( 'Generated Date', current_time( 'Y-m-d H:i:s' ) ) );
+        fputcsv( $output, array( '' ) );
+
+        // Executive Financial Summary
+        fputcsv( $output, array( '--- EXECUTIVE FINANCIAL SUMMARY ---' ) );
+        fputcsv( $output, array( 'Metric', 'Amount (' . $currency . ')', 'Notes' ) );
+        fputcsv( $output, array( 'Gross Revenue', number_format( $order_stats['gross_revenue'], 2, '.', '' ), $order_stats['order_count'] . ' orders placed' ) );
+        fputcsv( $output, array( 'Discounts', '-' . number_format( $order_stats['discount_total'], 2, '.', '' ), 'Coupon & item discounts' ) );
+        fputcsv( $output, array( 'Total COGS', '-' . number_format( $order_stats['total_cogs'], 2, '.', '' ), 'Product acquisition / manufacture cost' ) );
+        fputcsv( $output, array( 'Gross Profit', number_format( $order_stats['gross_profit'], 2, '.', '' ), number_format( $order_stats['gross_margin'], 1, '.', '' ) . '% Gross Margin' ) );
+        fputcsv( $output, array( 'Payment Gateway Fees', '-' . number_format( $order_stats['gateway_fees'], 2, '.', '' ), 'Transaction processing fees' ) );
+        fputcsv( $output, array( 'Courier Shipping Deficit', '-' . number_format( $order_stats['shipping_deficit'], 2, '.', '' ), 'Out-of-pocket courier costs' ) );
+        fputcsv( $output, array( 'Operating Expenses', '-' . number_format( $operating_expenses, 2, '.', '' ), 'Ads, rent, hosting, salaries' ) );
+        fputcsv( $output, array( 'True Net Profit', number_format( $true_net_profit, 2, '.', '' ), number_format( $true_net_margin, 1, '.', '' ) . '% True Net Margin' ) );
+        fputcsv( $output, array( '' ) );
+
+        // Daily breakdown
+        fputcsv( $output, array( '--- DAILY PERFORMANCE BREAKDOWN ---' ) );
+        fputcsv( $output, array( 'Date', 'Day', 'Gross Revenue (' . $currency . ')', 'Total COGS (' . $currency . ')', 'Estimated Net Profit (' . $currency . ')' ) );
+
+        $daily_stats = self::get_daily_chart_data( $start_date, $end_date );
+        foreach ( $daily_stats as $date_str => $day ) {
+            fputcsv( $output, array(
+                $date_str,
+                $day['label'],
+                number_format( $day['revenue'], 2, '.', '' ),
+                number_format( $day['cogs'], 2, '.', '' ),
+                number_format( $day['profit'], 2, '.', '' ),
+            ) );
+        }
+
+        // Operating expenses list
+        $expenses = SCOGS_Expenses::get_expenses( $start_date, $end_date );
+        if ( ! empty( $expenses ) ) {
+            fputcsv( $output, array( '' ) );
+            fputcsv( $output, array( '--- OPERATING EXPENSES LEDGER ---' ) );
+            fputcsv( $output, array( 'Date', 'Category', 'Expense Title', 'Amount (' . $currency . ')', 'Notes' ) );
+            foreach ( $expenses as $exp ) {
+                fputcsv( $output, array(
+                    $exp->expense_date,
+                    $exp->category,
+                    $exp->title,
+                    number_format( (float) $exp->amount, 2, '.', '' ),
+                    $exp->notes,
+                ) );
+            }
+        }
+
+        fclose( $output );
+        exit;
+    }
+
+    /**
      * Aggregate orders financial metrics between two dates
      */
     private static function get_aggregated_financials( $start_date, $end_date ) {

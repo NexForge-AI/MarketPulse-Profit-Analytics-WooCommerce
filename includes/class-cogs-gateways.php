@@ -147,24 +147,8 @@ class SCOGS_Gateways {
             return 0.0;
         }
 
-        $rules = self::get_rules();
-        $fee   = 0.0;
-
-        // Normalize gateway key (handle variations like 'woocommerce_bkash' -> 'bkash')
-        $matched_key = $payment_method;
-        foreach ( array_keys( $rules ) as $rule_key ) {
-            if ( stripos( $payment_method, $rule_key ) !== false ) {
-                $matched_key = $rule_key;
-                break;
-            }
-        }
-
-        if ( isset( $rules[ $matched_key ] ) ) {
-            $percent = isset( $rules[ $matched_key ]['percent'] ) ? (float) $rules[ $matched_key ]['percent'] : 0.0;
-            $fixed   = isset( $rules[ $matched_key ]['fixed'] ) ? (float) $rules[ $matched_key ]['fixed'] : 0.0;
-
-            $fee = ( $order_total * ( $percent / 100 ) ) + $fixed;
-        }
+        $rule = self::get_gateway_fee_rule( $payment_method );
+        $fee  = ( $order_total * ( $rule['percent'] / 100 ) ) + $rule['fixed'];
 
         return round( max( 0.0, $fee ), 2 );
     }
