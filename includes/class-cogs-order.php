@@ -117,6 +117,7 @@ class SCOGS_Order {
             return;
         }
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WooCommerce core prior to firing woocommerce_process_shop_order_meta.
         if ( ! isset( $_POST['_cogs_actual_shipping_cost'] ) ) {
             return;
         }
@@ -128,6 +129,7 @@ class SCOGS_Order {
 
         self::$is_saving_order_meta = true;
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
         $cost           = wc_clean( wp_unslash( $_POST['_cogs_actual_shipping_cost'] ) );
         $formatted_cost = ( '' === $cost || false === $cost ) ? '' : wc_format_decimal( $cost );
 
@@ -174,42 +176,42 @@ class SCOGS_Order {
             <!-- 1. Gross Revenue -->
             <div class="scogs-metric-row">
                 <span class="scogs-metric-label"><?php esc_html_e( 'Gross Revenue:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                <span class="scogs-metric-value"><?php echo wc_price( $stats['gross_revenue'] ); ?></span>
+                <span class="scogs-metric-value"><?php echo wp_kses_post( wc_price( $stats['gross_revenue'] ) ); ?></span>
             </div>
 
             <!-- Discounts (if any) -->
             <?php if ( $stats['discount_total'] > 0 ) : ?>
             <div class="scogs-metric-row scogs-deduct-row">
                 <span class="scogs-metric-label">&minus; <?php esc_html_e( 'Discounts:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                <span class="scogs-metric-value scogs-cost-text">&minus;<?php echo wc_price( $stats['discount_total'] ); ?></span>
+                <span class="scogs-metric-value scogs-cost-text">&minus;<?php echo wp_kses_post( wc_price( $stats['discount_total'] ) ); ?></span>
             </div>
             <?php endif; ?>
 
             <!-- Total COGS -->
             <div class="scogs-metric-row scogs-deduct-row">
                 <span class="scogs-metric-label">&minus; <?php esc_html_e( 'Total COGS:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                <span class="scogs-metric-value scogs-cost-text">&minus;<?php echo wc_price( $stats['total_cogs'] ); ?></span>
+                <span class="scogs-metric-value scogs-cost-text">&minus;<?php echo wp_kses_post( wc_price( $stats['total_cogs'] ) ); ?></span>
             </div>
 
             <!-- Subtotal: Gross Profit -->
             <div class="scogs-divider"></div>
             <div class="scogs-metric-row scogs-subtotal-row">
                 <span class="scogs-metric-label"><strong><?php esc_html_e( 'Gross Profit:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong></span>
-                <span class="scogs-metric-value"><strong><?php echo wc_price( $stats['gross_profit'] ); ?></strong> (<?php echo esc_html( round( $stats['gross_margin'], 1 ) ); ?>%)</span>
+                <span class="scogs-metric-value"><strong><?php echo wp_kses_post( wc_price( $stats['gross_profit'] ) ); ?></strong> (<?php echo esc_html( round( $stats['gross_margin'], 1 ) ); ?>%)</span>
             </div>
             <div class="scogs-divider"></div>
 
             <!-- 2. Payment Gateway Fee -->
             <div class="scogs-metric-row scogs-deduct-row">
                 <span class="scogs-metric-label">&minus; <?php echo esc_html( $payment_method_title ? $payment_method_title : __( 'Payment Fee', 'simple-cost-of-goods-for-woocommerce' ) ); ?>:</span>
-                <span class="scogs-metric-value scogs-cost-text">&minus;<?php echo wc_price( $stats['gateway_fee'] ); ?></span>
+                <span class="scogs-metric-value scogs-cost-text">&minus;<?php echo wp_kses_post( wc_price( $stats['gateway_fee'] ) ); ?></span>
             </div>
 
             <!-- 3. Shipping Analysis -->
             <div class="scogs-shipping-box">
                 <div class="scogs-metric-row">
                     <span class="scogs-metric-label"><?php esc_html_e( 'Customer Shipping:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                    <span class="scogs-metric-value"><?php echo wc_price( $stats['customer_paid_shipping'] ); ?></span>
+                    <span class="scogs-metric-value"><?php echo wp_kses_post( wc_price( $stats['customer_paid_shipping'] ) ); ?></span>
                 </div>
                 <div class="scogs-metric-row">
                     <label for="_cogs_actual_shipping_cost" class="scogs-metric-label"><?php esc_html_e( 'Actual Courier Cost:', 'simple-cost-of-goods-for-woocommerce' ); ?></label>
@@ -223,7 +225,7 @@ class SCOGS_Order {
                 <?php if ( $stats['shipping_deficit'] > 0 ) : ?>
                 <div class="scogs-metric-row scogs-deduct-row" style="color:#b91c1c;">
                     <span class="scogs-metric-label">&minus; <?php esc_html_e( 'Shipping Deficit:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                    <span class="scogs-metric-value">&minus;<?php echo wc_price( $stats['shipping_deficit'] ); ?></span>
+                    <span class="scogs-metric-value">&minus;<?php echo wp_kses_post( wc_price( $stats['shipping_deficit'] ) ); ?></span>
                 </div>
                 <?php endif; ?>
             </div>
@@ -232,7 +234,7 @@ class SCOGS_Order {
             <div class="scogs-divider" style="border-top:2px solid #cbd5e1;"></div>
             <div class="scogs-metric-row scogs-profit-highlight">
                 <span class="scogs-metric-label"><?php echo $stats['net_profit'] < 0 ? esc_html__( 'True Net Loss:', 'simple-cost-of-goods-for-woocommerce' ) : esc_html__( 'True Net Profit:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                <span class="scogs-metric-value <?php echo $stats['net_profit'] < 0 ? 'scogs-loss-val' : 'scogs-profit-val'; ?>"><?php echo wc_price( $stats['net_profit'] ); ?></span>
+                <span class="scogs-metric-value <?php echo $stats['net_profit'] < 0 ? 'scogs-loss-val' : 'scogs-profit-val'; ?>"><?php echo wp_kses_post( wc_price( $stats['net_profit'] ) ); ?></span>
             </div>
             <div class="scogs-metric-row">
                 <span class="scogs-metric-label"><?php esc_html_e( 'Net Margin:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
@@ -251,7 +253,7 @@ class SCOGS_Order {
                 <div class="scogs-order-leak-header">
                     <span class="scogs-pulse-dot" style="width:6px; height:6px;"></span>
                     <span class="scogs-order-leak-title"><?php esc_html_e( 'Estimated Profit Leak', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                    <span class="scogs-order-leak-tag">&minus;<?php echo wc_price( $leak_est ); ?></span>
+                    <span class="scogs-order-leak-tag">&minus;<?php echo wp_kses_post( wc_price( $leak_est ) ); ?></span>
                 </div>
                 <p class="scogs-order-leak-desc">
                     <?php esc_html_e( 'With static pricing, you may have left up to 12% extra margin on the table during competitor stockouts.', 'simple-cost-of-goods-for-woocommerce' ); ?>
@@ -291,8 +293,8 @@ class SCOGS_Order {
             $margin     = $line_total > 0 ? ( $profit / $line_total ) * 100 : 0.0;
 
             echo '<div class="scogs-item-cost-snippet" style="font-size:11px; color:#50575e; margin-top:4px;">';
-            echo '<strong>' . esc_html__( 'COGS:', 'simple-cost-of-goods-for-woocommerce' ) . '</strong> ' . wc_price( $cost ) . ' &times; ' . esc_html( $qty ) . ' = ' . wc_price( $line_cost );
-            echo ' &bull; <strong>' . esc_html__( 'Item Profit:', 'simple-cost-of-goods-for-woocommerce' ) . '</strong> <span style="color:#059669; font-weight:600;">' . wc_price( $profit ) . '</span> (' . esc_html( round( $margin, 1 ) ) . '%)';
+            echo '<strong>' . esc_html__( 'COGS:', 'simple-cost-of-goods-for-woocommerce' ) . '</strong> ' . wp_kses_post( wc_price( $cost ) ) . ' &times; ' . esc_html( $qty ) . ' = ' . wp_kses_post( wc_price( $line_cost ) );
+            echo ' &bull; <strong>' . esc_html__( 'Item Profit:', 'simple-cost-of-goods-for-woocommerce' ) . '</strong> <span style="color:#059669; font-weight:600;">' . wp_kses_post( wc_price( $profit ) ) . '</span> (' . esc_html( round( $margin, 1 ) ) . '%)';
             echo '</div>';
         }
     }
@@ -357,7 +359,7 @@ class SCOGS_Order {
         $badge_class = $margin >= 30 ? 'scogs-badge-green' : ( $margin >= 15 ? 'scogs-badge-amber' : 'scogs-badge-red' );
 
         echo '<div class="scogs-order-profit-cell">';
-        echo '<span class="scogs-profit-number">' . wc_price( $profit ) . '</span><br>';
+        echo '<span class="scogs-profit-number">' . wp_kses_post( wc_price( $profit ) ) . '</span><br>';
         echo '<span class="scogs-badge ' . esc_attr( $badge_class ) . '" style="font-size:10px; padding:1px 6px;">' . esc_html( round( $margin, 1 ) ) . '% margin</span>';
         echo '</div>';
     }

@@ -11,6 +11,7 @@
  * Text Domain:       simple-cost-of-goods-for-woocommerce
  * Domain Path:       /languages
  * Requires at least: 5.8
+ * Tested up to:   7.1
  * Requires PHP:      7.4
  * WC requires at least: 7.0
  * WC tested up to:   9.4
@@ -28,6 +29,7 @@ define( 'SCOGS_BASENAME', plugin_basename( __FILE__ ) );
 /**
  * Declare High-Performance Order Storage (HPOS) Compatibility
  */
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Third-party hook provided by WooCommerce core.
 add_action( 'before_woocommerce_init', function () {
     if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
         \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
@@ -83,13 +85,6 @@ final class Simple_Cost_Of_Goods_WooCommerce {
             add_action( 'admin_notices', array( $this, 'woocommerce_missing_notice' ) );
             return;
         }
-
-        // Load translations
-        load_plugin_textdomain(
-            'simple-cost-of-goods-for-woocommerce',
-            false,
-            dirname( SCOGS_BASENAME ) . '/languages'
-        );
 
         // Load modules
         $this->includes();

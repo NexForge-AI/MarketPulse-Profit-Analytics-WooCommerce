@@ -43,11 +43,11 @@ class SCOGS_Dashboard {
         }
 
         // Today start/end
-        $today_start = date( 'Y-m-d 00:00:00' );
-        $today_end   = date( 'Y-m-d 23:59:59' );
+        $today_start = gmdate( 'Y-m-d 00:00:00' );
+        $today_end   = gmdate( 'Y-m-d 23:59:59' );
 
         // Month start
-        $month_start = date( 'Y-m-01 00:00:00' );
+        $month_start = gmdate( 'Y-m-01 00:00:00' );
 
         $statuses = array( 'wc-processing', 'wc-completed' );
 
@@ -137,9 +137,9 @@ class SCOGS_Dashboard {
                 <!-- Today Card -->
                 <div class="scogs-dash-card">
                     <span class="scogs-card-title"><?php echo $stats['today_profit'] < 0 ? esc_html__( "Today's Net Loss", 'simple-cost-of-goods-for-woocommerce' ) : esc_html__( "Today's Net Profit", 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                    <span class="scogs-card-value <?php echo $stats['today_profit'] < 0 ? 'scogs-loss-val' : 'scogs-profit-val'; ?>"><?php echo wc_price( $stats['today_profit'] ); ?></span>
+                    <span class="scogs-card-value <?php echo $stats['today_profit'] < 0 ? 'scogs-loss-val' : 'scogs-profit-val'; ?>"><?php echo wp_kses_post( wc_price( $stats['today_profit'] ) ); ?></span>
                     <div class="scogs-card-meta">
-                        <span><?php esc_html_e( 'Revenue:', 'simple-cost-of-goods-for-woocommerce' ); ?> <?php echo wc_price( $stats['today_revenue'] ); ?></span>
+                        <span><?php esc_html_e( 'Revenue:', 'simple-cost-of-goods-for-woocommerce' ); ?> <?php echo wp_kses_post( wc_price( $stats['today_revenue'] ) ); ?></span>
                         <span class="scogs-badge <?php echo $stats['today_profit'] < 0 ? 'scogs-badge-red' : 'scogs-badge-blue'; ?>"><?php echo esc_html( round( $stats['today_margin'], 1 ) ); ?>% <?php esc_html_e( 'Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
                     </div>
                 </div>
@@ -147,9 +147,9 @@ class SCOGS_Dashboard {
                 <!-- Month Card -->
                 <div class="scogs-dash-card">
                     <span class="scogs-card-title"><?php echo $stats['month_profit'] < 0 ? esc_html__( 'This Month Net Loss', 'simple-cost-of-goods-for-woocommerce' ) : esc_html__( 'This Month Net Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                    <span class="scogs-card-value <?php echo $stats['month_profit'] < 0 ? 'scogs-loss-val' : 'scogs-profit-val'; ?>"><?php echo wc_price( $stats['month_profit'] ); ?></span>
+                    <span class="scogs-card-value <?php echo $stats['month_profit'] < 0 ? 'scogs-loss-val' : 'scogs-profit-val'; ?>"><?php echo wp_kses_post( wc_price( $stats['month_profit'] ) ); ?></span>
                     <div class="scogs-card-meta">
-                        <span><?php esc_html_e( 'Revenue:', 'simple-cost-of-goods-for-woocommerce' ); ?> <?php echo wc_price( $stats['month_revenue'] ); ?></span>
+                        <span><?php esc_html_e( 'Revenue:', 'simple-cost-of-goods-for-woocommerce' ); ?> <?php echo wp_kses_post( wc_price( $stats['month_revenue'] ) ); ?></span>
                         <span class="scogs-badge <?php echo $stats['month_profit'] < 0 ? 'scogs-badge-red' : 'scogs-badge-blue'; ?>"><?php echo esc_html( round( $stats['month_margin'], 1 ) ); ?>% <?php esc_html_e( 'Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
                     </div>
                 </div>
@@ -167,7 +167,7 @@ class SCOGS_Dashboard {
                         <span class="scogs-pulse-dot" style="width:7px; height:7px;"></span>
                         <strong class="scogs-dash-leak-title"><?php esc_html_e( 'ESTIMATED UNCAPTURED MARGIN THIS MONTH', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
                     </div>
-                    <span class="scogs-dash-leak-val scogs-leak-danger-text">&minus;<?php echo wc_price( $month_leak ); ?></span>
+                    <span class="scogs-dash-leak-val scogs-leak-danger-text">&minus;<?php echo wp_kses_post( wc_price( $month_leak ) ); ?></span>
                 </div>
                 <div class="scogs-dash-leak-bar">
                     <div class="scogs-dash-bar-captured" style="width: 75%;"><?php esc_html_e( 'Captured Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></div>

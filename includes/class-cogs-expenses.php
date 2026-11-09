@@ -132,10 +132,10 @@ class SCOGS_Expenses {
      */
     public static function get_expenses( $start_date = '', $end_date = '' ) {
         global $wpdb;
-        $table_name = self::get_table_name();
+        $table_name = esc_sql( self::get_table_name() );
 
         if ( ! empty( $start_date ) && ! empty( $end_date ) ) {
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
             return $wpdb->get_results(
                 $wpdb->prepare(
                     "SELECT * FROM `{$table_name}` WHERE `expense_date` BETWEEN %s AND %s ORDER BY `expense_date` DESC, `id` DESC",
@@ -145,7 +145,7 @@ class SCOGS_Expenses {
             );
         }
 
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
         return $wpdb->get_results( "SELECT * FROM `{$table_name}` ORDER BY `expense_date` DESC, `id` DESC LIMIT 100" );
     }
 
@@ -158,10 +158,10 @@ class SCOGS_Expenses {
      */
     public static function get_total_expenses( $start_date = '', $end_date = '' ) {
         global $wpdb;
-        $table_name = self::get_table_name();
+        $table_name = esc_sql( self::get_table_name() );
 
         if ( ! empty( $start_date ) && ! empty( $end_date ) ) {
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
             $sum = $wpdb->get_var(
                 $wpdb->prepare(
                     "SELECT SUM(`amount`) FROM `{$table_name}` WHERE `expense_date` BETWEEN %s AND %s",
@@ -170,7 +170,7 @@ class SCOGS_Expenses {
                 )
             );
         } else {
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
             $sum = $wpdb->get_var( "SELECT SUM(`amount`) FROM `{$table_name}`" );
         }
 
@@ -209,6 +209,7 @@ class SCOGS_Expenses {
             wp_die( esc_html__( 'Unauthorized user.', 'simple-cost-of-goods-for-woocommerce' ) );
         }
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $id = isset( $_GET['id'] ) ? absint( wp_unslash( $_GET['id'] ) ) : 0;
         check_admin_referer( 'scogs_delete_expense_' . $id );
 

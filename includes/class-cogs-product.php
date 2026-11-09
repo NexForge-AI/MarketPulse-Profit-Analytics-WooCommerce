@@ -84,7 +84,7 @@ class SCOGS_Product {
                 echo '<p class="form-field scogs-live-margin">';
                 echo '<label>' . esc_html__( 'Est. Gross Margin', 'simple-cost-of-goods-for-woocommerce' ) . '</label>';
                 echo '<span class="scogs-badge ' . esc_attr( $badge_class ) . '">';
-                echo wc_price( $profit ) . ' (' . esc_html( round( $margin, 1 ) ) . '%)';
+                echo wp_kses_post( wc_price( $profit ) ) . ' (' . esc_html( round( $margin, 1 ) ) . '%)';
                 echo '</span>';
                 if ( $margin < 30 ) {
                     $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_margin&utm_campaign=boost_margin';
@@ -146,8 +146,13 @@ class SCOGS_Product {
      * @param int $post_id
      */
     public static function save_simple_product_meta( $post_id ) {
-        // Save Cost
+        if ( ! current_user_can( 'edit_product', $post_id ) ) {
+            return;
+        }
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WooCommerce core prior to firing woocommerce_process_product_meta.
         if ( isset( $_POST[ self::META_KEY_COST ] ) ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
             $cost = wc_clean( wp_unslash( $_POST[ self::META_KEY_COST ] ) );
             if ( '' === $cost ) {
                 delete_post_meta( $post_id, self::META_KEY_COST );
@@ -156,8 +161,9 @@ class SCOGS_Product {
             }
         }
 
-        // Save Supplier
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
         if ( isset( $_POST[ self::META_KEY_SUPPLIER ] ) ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
             $supplier = sanitize_text_field( wp_unslash( $_POST[ self::META_KEY_SUPPLIER ] ) );
             if ( '' === $supplier ) {
                 delete_post_meta( $post_id, self::META_KEY_SUPPLIER );
@@ -206,7 +212,13 @@ class SCOGS_Product {
      * Save Cost Price & Supplier for Variation
      */
     public static function save_variation_meta( $variation_id, $i ) {
+        if ( ! current_user_can( 'edit_product', $variation_id ) ) {
+            return;
+        }
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WooCommerce core prior to firing woocommerce_save_product_variation.
         if ( isset( $_POST[ self::META_KEY_COST ][ $i ] ) ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
             $cost = wc_clean( wp_unslash( $_POST[ self::META_KEY_COST ][ $i ] ) );
             if ( '' === $cost ) {
                 delete_post_meta( $variation_id, self::META_KEY_COST );
@@ -215,7 +227,9 @@ class SCOGS_Product {
             }
         }
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
         if ( isset( $_POST[ self::META_KEY_SUPPLIER ][ $i ] ) ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
             $supplier = sanitize_text_field( wp_unslash( $_POST[ self::META_KEY_SUPPLIER ][ $i ] ) );
             if ( '' === $supplier ) {
                 delete_post_meta( $variation_id, self::META_KEY_SUPPLIER );
@@ -258,7 +272,7 @@ class SCOGS_Product {
             $cost     = self::get_product_cost( $product );
             $raw_cost = $product->get_meta( self::META_KEY_COST, true );
             if ( $cost > 0 ) {
-                echo '<span class="scogs-cost-text">' . wc_price( $cost ) . '</span>';
+                echo '<span class="scogs-cost-text">' . wp_kses_post( wc_price( $cost ) ) . '</span>';
             } else {
                 echo '<span class="scogs-muted">&mdash;</span>';
             }
@@ -275,7 +289,7 @@ class SCOGS_Product {
                 $badge_class = $margin >= 30 ? 'scogs-badge-green' : ( $margin >= 15 ? 'scogs-badge-amber' : 'scogs-badge-red' );
 
                 echo '<div class="scogs-margin-cell-wrap">';
-                echo '<span class="scogs-badge ' . esc_attr( $badge_class ) . '" title="' . esc_attr__( 'Gross Profit: ', 'simple-cost-of-goods-for-woocommerce' ) . wc_price( $profit ) . '">';
+                echo '<span class="scogs-badge ' . esc_attr( $badge_class ) . '" title="' . esc_attr__( 'Gross Profit: ', 'simple-cost-of-goods-for-woocommerce' ) . esc_attr( wp_strip_all_tags( wc_price( $profit ) ) ) . '">';
                 echo esc_html( round( $margin, 1 ) ) . '%';
                 echo '</span>';
 
@@ -332,10 +346,16 @@ class SCOGS_Product {
      * Save Quick Edit fields
      */
     public static function save_quick_edit_field( $product ) {
+        if ( ! current_user_can( 'edit_products' ) ) {
+            return;
+        }
+
         $changed = false;
 
-        if ( isset( $_REQUEST[ self::META_KEY_COST ] ) ) {
-            $cost = wc_clean( wp_unslash( $_REQUEST[ self::META_KEY_COST ] ) );
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WordPress core during quick edit.
+        if ( isset( $_POST[ self::META_KEY_COST ] ) ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            $cost = wc_clean( wp_unslash( $_POST[ self::META_KEY_COST ] ) );
             if ( '' !== $cost ) {
                 $product->update_meta_data( self::META_KEY_COST, wc_format_decimal( $cost ) );
             } else {
@@ -344,8 +364,10 @@ class SCOGS_Product {
             $changed = true;
         }
 
-        if ( isset( $_REQUEST[ self::META_KEY_SUPPLIER ] ) ) {
-            $supplier = sanitize_text_field( wp_unslash( $_REQUEST[ self::META_KEY_SUPPLIER ] ) );
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if ( isset( $_POST[ self::META_KEY_SUPPLIER ] ) ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            $supplier = sanitize_text_field( wp_unslash( $_POST[ self::META_KEY_SUPPLIER ] ) );
             if ( '' !== $supplier ) {
                 $product->update_meta_data( self::META_KEY_SUPPLIER, $supplier );
             } else {
@@ -386,16 +408,24 @@ class SCOGS_Product {
      * Save Bulk Edit fields
      */
     public static function save_bulk_edit_fields( $product ) {
+        if ( ! current_user_can( 'edit_products' ) ) {
+            return;
+        }
+
         $changed = false;
 
-        if ( isset( $_REQUEST[ self::META_KEY_COST ] ) && '' !== $_REQUEST[ self::META_KEY_COST ] ) {
-            $cost = wc_clean( wp_unslash( $_REQUEST[ self::META_KEY_COST ] ) );
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WooCommerce core during bulk edit.
+        if ( isset( $_POST[ self::META_KEY_COST ] ) && '' !== $_POST[ self::META_KEY_COST ] ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            $cost = wc_clean( wp_unslash( $_POST[ self::META_KEY_COST ] ) );
             $product->update_meta_data( self::META_KEY_COST, wc_format_decimal( $cost ) );
             $changed = true;
         }
 
-        if ( isset( $_REQUEST[ self::META_KEY_SUPPLIER ] ) && '' !== $_REQUEST[ self::META_KEY_SUPPLIER ] ) {
-            $supplier = sanitize_text_field( wp_unslash( $_REQUEST[ self::META_KEY_SUPPLIER ] ) );
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if ( isset( $_POST[ self::META_KEY_SUPPLIER ] ) && '' !== $_POST[ self::META_KEY_SUPPLIER ] ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            $supplier = sanitize_text_field( wp_unslash( $_POST[ self::META_KEY_SUPPLIER ] ) );
             $product->update_meta_data( self::META_KEY_SUPPLIER, $supplier );
             $changed = true;
         }
@@ -416,6 +446,7 @@ class SCOGS_Product {
             return;
         }
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $suppliers = $wpdb->get_col( $wpdb->prepare(
             "SELECT DISTINCT meta_value FROM {$wpdb->postmeta} WHERE meta_key = %s AND meta_value != '' ORDER BY meta_value ASC",
             self::META_KEY_SUPPLIER
@@ -425,6 +456,7 @@ class SCOGS_Product {
             return;
         }
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $current_supplier = isset( $_GET['filter_supplier'] ) ? sanitize_text_field( wp_unslash( $_GET['filter_supplier'] ) ) : '';
         ?>
         <select name="filter_supplier" id="filter_supplier">
@@ -444,7 +476,9 @@ class SCOGS_Product {
     public static function filter_products_by_supplier( $query ) {
         global $pagenow, $typenow;
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         if ( 'edit.php' === $pagenow && 'product' === $typenow && ! empty( $_GET['filter_supplier'] ) ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             $supplier = sanitize_text_field( wp_unslash( $_GET['filter_supplier'] ) );
             $query->query_vars['meta_query'][] = array(
                 'key'     => self::META_KEY_SUPPLIER,
