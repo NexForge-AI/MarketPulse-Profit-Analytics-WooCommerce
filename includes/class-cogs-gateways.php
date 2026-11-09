@@ -168,8 +168,8 @@ class SCOGS_Gateways {
                     continue;
                 }
                 $existing[ $clean_key ] = array(
-                    'percent' => isset( $values['percent'] ) ? (float) wc_format_decimal( $values['percent'] ) : 0.0,
-                    'fixed'   => isset( $values['fixed'] ) ? (float) wc_format_decimal( $values['fixed'] ) : 0.0,
+                    'percent' => isset( $values['percent'] ) ? (float) wc_format_decimal( wp_unslash( $values['percent'] ) ) : 0.0,
+                    'fixed'   => isset( $values['fixed'] ) ? (float) wc_format_decimal( wp_unslash( $values['fixed'] ) ) : 0.0,
                 );
             }
         }

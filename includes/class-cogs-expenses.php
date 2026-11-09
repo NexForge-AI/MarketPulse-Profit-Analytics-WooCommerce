@@ -34,17 +34,17 @@ class SCOGS_Expenses {
         $table_name      = self::get_table_name();
         $charset_collate = $wpdb->get_charset_collate();
 
-        $sql = "CREATE TABLE IF NOT EXISTS `{$table_name}` (
-            `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-            `expense_date` DATE NOT NULL,
-            `category` VARCHAR(50) NOT NULL,
-            `title` VARCHAR(255) NOT NULL,
-            `amount` DECIMAL(10,2) NOT NULL DEFAULT '0.00',
-            `notes` TEXT NULL,
-            `created_at` DATETIME NOT NULL,
-            PRIMARY KEY (`id`),
-            KEY `idx_expense_date` (`expense_date`)
-        ) {$charset_collate};";
+        $sql = "CREATE TABLE $table_name (
+            id bigint(20) unsigned NOT NULL auto_increment,
+            expense_date date NOT NULL,
+            category varchar(50) NOT NULL,
+            title varchar(255) NOT NULL,
+            amount decimal(10,2) NOT NULL default '0.00',
+            notes text NULL,
+            created_at datetime NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_expense_date (expense_date)
+        ) $charset_collate;";
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
         dbDelta( $sql );
@@ -135,6 +135,7 @@ class SCOGS_Expenses {
         $table_name = self::get_table_name();
 
         if ( ! empty( $start_date ) && ! empty( $end_date ) ) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             return $wpdb->get_results(
                 $wpdb->prepare(
                     "SELECT * FROM `{$table_name}` WHERE `expense_date` BETWEEN %s AND %s ORDER BY `expense_date` DESC, `id` DESC",
@@ -144,6 +145,7 @@ class SCOGS_Expenses {
             );
         }
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         return $wpdb->get_results( "SELECT * FROM `{$table_name}` ORDER BY `expense_date` DESC, `id` DESC LIMIT 100" );
     }
 
@@ -159,6 +161,7 @@ class SCOGS_Expenses {
         $table_name = self::get_table_name();
 
         if ( ! empty( $start_date ) && ! empty( $end_date ) ) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             $sum = $wpdb->get_var(
                 $wpdb->prepare(
                     "SELECT SUM(`amount`) FROM `{$table_name}` WHERE `expense_date` BETWEEN %s AND %s",
@@ -167,6 +170,7 @@ class SCOGS_Expenses {
                 )
             );
         } else {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             $sum = $wpdb->get_var( "SELECT SUM(`amount`) FROM `{$table_name}`" );
         }
 
@@ -183,11 +187,11 @@ class SCOGS_Expenses {
 
         check_admin_referer( 'scogs_add_expense_nonce' );
 
-        $date     = ! empty( $_POST['expense_date'] ) ? sanitize_text_field( $_POST['expense_date'] ) : current_time( 'Y-m-d' );
-        $category = ! empty( $_POST['category'] ) ? sanitize_key( $_POST['category'] ) : 'other';
-        $title    = ! empty( $_POST['title'] ) ? sanitize_text_field( $_POST['title'] ) : __( 'Operating Expense', 'simple-cost-of-goods-for-woocommerce' );
-        $amount   = ! empty( $_POST['amount'] ) ? (float) wc_format_decimal( $_POST['amount'] ) : 0.0;
-        $notes    = ! empty( $_POST['notes'] ) ? sanitize_textarea_field( $_POST['notes'] ) : '';
+        $date     = ! empty( $_POST['expense_date'] ) ? sanitize_text_field( wp_unslash( $_POST['expense_date'] ) ) : current_time( 'Y-m-d' );
+        $category = ! empty( $_POST['category'] ) ? sanitize_key( wp_unslash( $_POST['category'] ) ) : 'other';
+        $title    = ! empty( $_POST['title'] ) ? sanitize_text_field( wp_unslash( $_POST['title'] ) ) : esc_html__( 'Operating Expense', 'simple-cost-of-goods-for-woocommerce' );
+        $amount   = ! empty( $_POST['amount'] ) ? (float) wc_format_decimal( wp_unslash( $_POST['amount'] ) ) : 0.0;
+        $notes    = ! empty( $_POST['notes'] ) ? sanitize_textarea_field( wp_unslash( $_POST['notes'] ) ) : '';
 
         if ( $amount > 0 ) {
             self::add_expense( $date, $category, $title, $amount, $notes );
@@ -205,7 +209,7 @@ class SCOGS_Expenses {
             wp_die( esc_html__( 'Unauthorized user.', 'simple-cost-of-goods-for-woocommerce' ) );
         }
 
-        $id = isset( $_GET['id'] ) ? absint( $_GET['id'] ) : 0;
+        $id = isset( $_GET['id'] ) ? absint( wp_unslash( $_GET['id'] ) ) : 0;
         check_admin_referer( 'scogs_delete_expense_' . $id );
 
         if ( $id > 0 ) {

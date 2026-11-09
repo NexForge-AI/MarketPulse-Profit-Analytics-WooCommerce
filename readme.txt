@@ -130,6 +130,21 @@ Crafted with extreme attention to detail by the engineering team at **[NexForge 
 
 ---
 
+== External Services ==
+
+This plugin is developed by NexForge AI and provides optional insights and integration links with the MarketPulse competitor price intelligence & dynamic repricing cloud service (https://usemarketpulse.com).
+
+* **Service Website:** [https://usemarketpulse.com](https://usemarketpulse.com)
+* **Terms of Service:** [https://usemarketpulse.com/terms](https://usemarketpulse.com/terms)
+* **Privacy Policy:** [https://usemarketpulse.com/privacy](https://usemarketpulse.com/privacy)
+
+#### What data is sent to MarketPulse and why:
+* **100% Local Self-Contained Execution:** All Cost of Goods (COGS) tracking, profit calculations, payment gateway fee detections, courier shipping deficit accounting, and P&L financial reports are calculated and stored 100% locally on your WordPress database. The plugin does NOT transmit any customer data, order details, or financial stats to external servers during standard operation.
+* **Optional AI Repricing Connection:** The plugin provides optional outbound administrative links to connect your store with MarketPulse Cloud for automated 24/7 competitor price monitoring. Any store pairing or integration with MarketPulse is strictly voluntary, opt-in, and requires explicit merchant authorization.
+* **Zero Customer Tracking:** The plugin NEVER collects, tracks, or transmits shopper personal data, customer names, addresses, or payment details. 100% GDPR compliant.
+
+---
+
 == Installation ==
 
 ### Automatic Installation (Recommended)

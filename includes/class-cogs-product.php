@@ -88,7 +88,7 @@ class SCOGS_Product {
                 echo '</span>';
                 if ( $margin < 30 ) {
                     $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_margin&utm_campaign=boost_margin';
-                    echo ' <a href="' . esc_url( $plan_url ) . '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;"><img src="' . esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ) . '" class="scogs-btn-brand-icon" alt="" />' . esc_html__( 'Boost margin with MarketPulse &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
+                    echo ' <a href="' . esc_url( $plan_url ) . '" target="_blank" rel="noopener noreferrer" class="scogs-margin-boost-tip" style="margin-left:8px;"><img src="' . esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ) . '" class="scogs-btn-brand-icon" alt="" />' . esc_html__( 'Boost margin with MarketPulse &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
                 }
                 echo '</p>';
 
@@ -103,7 +103,7 @@ class SCOGS_Product {
                     echo esc_html__( 'After payment gateway fees and courier deficits, your net take-home profit is nearly zero.', 'simple-cost-of-goods-for-woocommerce' );
                     echo '</div>';
                     echo '</div>';
-                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" class="scogs-callout-btn"><img src="' . esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ) . '" class="scogs-btn-brand-icon" alt="" />' . esc_html__( 'Protect & Reprice with MarketPulse AI &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
+                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" rel="noopener noreferrer" class="scogs-callout-btn"><img src="' . esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ) . '" class="scogs-btn-brand-icon" alt="" />' . esc_html__( 'Protect & Reprice with MarketPulse AI &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
                     echo '</div>';
                 } elseif ( $margin < 30 ) {
                     $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_alert&utm_campaign=boost_margin';
@@ -116,7 +116,7 @@ class SCOGS_Product {
                     echo esc_html__( 'When competitors run out of stock, automated AI repricing safely lifts prices to 30%+ with zero lost sales.', 'simple-cost-of-goods-for-woocommerce' );
                     echo '</div>';
                     echo '</div>';
-                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" class="scogs-callout-btn"><img src="' . esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ) . '" class="scogs-btn-brand-icon" alt="" />' . esc_html__( 'Optimize Price with MarketPulse &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
+                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" rel="noopener noreferrer" class="scogs-callout-btn"><img src="' . esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ) . '" class="scogs-btn-brand-icon" alt="" />' . esc_html__( 'Optimize Price with MarketPulse &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
                     echo '</div>';
                 }
             } else {
@@ -278,7 +278,7 @@ class SCOGS_Product {
                 // If margin is red (<15%) or amber (<30%), display conversion tip to boost margin
                 if ( $margin < 30 ) {
                     $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_list_margin&utm_campaign=boost_margin';
-                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" class="scogs-margin-boost-tip" title="' . esc_attr__( 'Low margin? Automatically protect COGS & optimize price with MarketPulse AI', 'simple-cost-of-goods-for-woocommerce' ) . '">';
+                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" rel="noopener noreferrer" class="scogs-margin-boost-tip" title="' . esc_attr__( 'Low margin? Automatically protect COGS & optimize price with MarketPulse AI', 'simple-cost-of-goods-for-woocommerce' ) . '">';
                     echo '<span class="dashicons dashicons-arrow-up-alt"></span> ' . esc_html__( 'Boost margin with MarketPulse', 'simple-cost-of-goods-for-woocommerce' );
                     echo '</a>';
                 }
@@ -399,7 +399,7 @@ class SCOGS_Product {
             return;
         }
 
-        $current_supplier = isset( $_GET['filter_supplier'] ) ? sanitize_text_field( $_GET['filter_supplier'] ) : '';
+        $current_supplier = isset( $_GET['filter_supplier'] ) ? sanitize_text_field( wp_unslash( $_GET['filter_supplier'] ) ) : '';
         ?>
         <select name="filter_supplier" id="filter_supplier">
             <option value=""><?php esc_html_e( 'All Suppliers', 'simple-cost-of-goods-for-woocommerce' ); ?></option>
@@ -419,7 +419,7 @@ class SCOGS_Product {
         global $pagenow, $typenow;
 
         if ( 'edit.php' === $pagenow && 'product' === $typenow && ! empty( $_GET['filter_supplier'] ) ) {
-            $supplier = sanitize_text_field( $_GET['filter_supplier'] );
+            $supplier = sanitize_text_field( wp_unslash( $_GET['filter_supplier'] ) );
             $query->query_vars['meta_query'][] = array(
                 'key'     => self::META_KEY_SUPPLIER,
                 'value'   => $supplier,

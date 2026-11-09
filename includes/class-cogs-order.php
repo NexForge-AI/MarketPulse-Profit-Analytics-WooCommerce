@@ -231,7 +231,7 @@ class SCOGS_Order {
                 <p class="scogs-order-leak-desc">
                     <?php esc_html_e( 'With static pricing, you may have left up to 12% extra margin on the table during competitor stockouts.', 'simple-cost-of-goods-for-woocommerce' ); ?>
                 </p>
-                <a href="https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=order_meta&utm_campaign=protect_margins" target="_blank" class="scogs-order-leak-btn">
+                <a href="https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=order_meta&utm_campaign=protect_margins" target="_blank" rel="noopener noreferrer" class="scogs-order-leak-btn">
                     <?php esc_html_e( 'Protect Margins with MarketPulse &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
                 </a>
             </div>

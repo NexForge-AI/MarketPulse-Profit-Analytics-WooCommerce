@@ -177,7 +177,7 @@ class SCOGS_Dashboard {
                     <p>
                         <?php esc_html_e( 'Static pricing leaves money on the table when rivals run out of stock or undercut you. MarketPulse reprices 24/7 to capture maximum profit.', 'simple-cost-of-goods-for-woocommerce' ); ?>
                     </p>
-                    <a href="https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=dashboard_widget&utm_campaign=stop_the_leak" target="_blank" class="button button-small button-primary scogs-dash-leak-btn">
+                    <a href="https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=dashboard_widget&utm_campaign=stop_the_leak" target="_blank" rel="noopener noreferrer" class="button button-small button-primary scogs-dash-leak-btn">
                         <?php esc_html_e( 'Stop The Profit Leak &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
                     </a>
                 </div>

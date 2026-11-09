@@ -39,7 +39,7 @@ class SCOGS_Reports {
             return;
         }
 
-        $active_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'overview';
+        $active_tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'overview';
         ?>
         <div class="wrap scogs-analytics-wrap">
             <!-- Header -->
@@ -57,7 +57,7 @@ class SCOGS_Reports {
                     <span class="scogs-brand-pill">
                         <img src="<?php echo esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ); ?>" alt="" class="scogs-brand-pill-logo" />
                         <?php esc_html_e( 'Powered by', 'simple-cost-of-goods-for-woocommerce' ); ?> 
-                        <a href="https://usemarketpulse.com?utm_source=cogs_plugin&utm_medium=header_link" target="_blank">NexForge AI</a>
+                        <a href="https://usemarketpulse.com?utm_source=cogs_plugin&utm_medium=header_link" target="_blank" rel="noopener noreferrer">NexForge AI</a>
                     </span>
                 </div>
             </div>
@@ -114,7 +114,7 @@ class SCOGS_Reports {
      */
     private static function render_overview_tab() {
         // Parse date filter
-        $range = isset( $_GET['range'] ) ? sanitize_key( $_GET['range'] ) : 'this_month';
+        $range = isset( $_GET['range'] ) ? sanitize_key( wp_unslash( $_GET['range'] ) ) : 'this_month';
         $today = current_time( 'Y-m-d' );
 
         switch ( $range ) {
@@ -135,8 +135,8 @@ class SCOGS_Reports {
                 $end_date   = date( 'Y-m-t', strtotime( 'last day of last month', strtotime( $today ) ) );
                 break;
             case 'custom':
-                $start_date = ! empty( $_GET['start_date'] ) ? sanitize_text_field( $_GET['start_date'] ) : date( 'Y-m-01', strtotime( $today ) );
-                $end_date   = ! empty( $_GET['end_date'] ) ? sanitize_text_field( $_GET['end_date'] ) : $today;
+                $start_date = ! empty( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : date( 'Y-m-01', strtotime( $today ) );
+                $end_date   = ! empty( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : $today;
                 break;
             case 'this_month':
             default:
@@ -691,7 +691,7 @@ class SCOGS_Reports {
                     <h3><?php esc_html_e( 'Ready to take your profitability to the next level?', 'simple-cost-of-goods-for-woocommerce' ); ?></h3>
                     <p><?php esc_html_e( 'Protect your COGS margin floor and beat competitor pricing with MarketPulse AI Repricer.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
                 </div>
-                <a href="<?php echo esc_url( $plan_url ); ?>" target="_blank" class="button button-primary scogs-audit-btn">
+                <a href="<?php echo esc_url( $plan_url ); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary scogs-audit-btn">
                     <?php esc_html_e( 'Claim Free Store Audit & Plan Access &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
                 </a>
             </div>
@@ -705,7 +705,14 @@ class SCOGS_Reports {
     public static function flush_cache() {
         global $wpdb;
         delete_transient( 'scogs_dashboard_stats' );
-        $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_scogs_%' OR option_name LIKE '_transient_timeout_scogs_%'" );
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+        $wpdb->query(
+            $wpdb->prepare(
+                "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",
+                $wpdb->esc_like( '_transient_scogs_' ) . '%',
+                $wpdb->esc_like( '_transient_timeout_scogs_' ) . '%'
+            )
+        );
     }
 
     /**
@@ -719,14 +726,14 @@ class SCOGS_Reports {
         check_admin_referer( 'scogs_save_gateways_nonce' );
 
         if ( isset( $_POST['gateways'] ) && is_array( $_POST['gateways'] ) ) {
-            SCOGS_Gateways::save_rules( $_POST['gateways'] );
+            SCOGS_Gateways::save_rules( wp_unslash( $_POST['gateways'] ) );
         }
 
         // Custom gateway rule added?
         if ( ! empty( $_POST['custom_gateway_id'] ) ) {
-            $custom_id  = sanitize_key( $_POST['custom_gateway_id'] );
-            $custom_pct = isset( $_POST['custom_gateway_percent'] ) ? (float) wc_format_decimal( $_POST['custom_gateway_percent'] ) : 0.0;
-            $custom_fix = isset( $_POST['custom_gateway_fixed'] ) ? (float) wc_format_decimal( $_POST['custom_gateway_fixed'] ) : 0.0;
+            $custom_id  = sanitize_key( wp_unslash( $_POST['custom_gateway_id'] ) );
+            $custom_pct = isset( $_POST['custom_gateway_percent'] ) ? (float) wc_format_decimal( wp_unslash( $_POST['custom_gateway_percent'] ) ) : 0.0;
+            $custom_fix = isset( $_POST['custom_gateway_fixed'] ) ? (float) wc_format_decimal( wp_unslash( $_POST['custom_gateway_fixed'] ) ) : 0.0;
             if ( ! empty( $custom_id ) ) {
                 SCOGS_Gateways::save_single_rule( $custom_id, $custom_pct, $custom_fix );
             }
@@ -748,8 +755,8 @@ class SCOGS_Reports {
 
         check_admin_referer( 'scogs_export_financial_csv_nonce' );
 
-        $start_date = ! empty( $_GET['start_date'] ) ? sanitize_text_field( $_GET['start_date'] ) : current_time( 'Y-m-01' );
-        $end_date   = ! empty( $_GET['end_date'] ) ? sanitize_text_field( $_GET['end_date'] ) : current_time( 'Y-m-d' );
+        $start_date = ! empty( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : current_time( 'Y-m-01' );
+        $end_date   = ! empty( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : current_time( 'Y-m-d' );
 
         $order_stats        = self::get_aggregated_financials( $start_date, $end_date );
         $operating_expenses = SCOGS_Expenses::get_total_expenses( $start_date, $end_date );
@@ -1335,7 +1342,7 @@ class SCOGS_Reports {
                         <span class="dashicons dashicons-shield" style="color:#2563eb;"></span>
                         <span><?php esc_html_e( 'MarketPulse monitors 100+ marketplaces 24/7 to reprice this product automatically while strictly guarding your COGS floor.', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
                     </div>
-                    <a href="<?php echo esc_url( $signup_plan_url ); ?>" target="_blank" class="scogs-battle-action-btn">
+                    <a href="<?php echo esc_url( $signup_plan_url ); ?>" target="_blank" rel="noopener noreferrer" class="scogs-battle-action-btn">
                         <?php esc_html_e( 'Auto-Track & Reprice This Item with MarketPulse AI &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
                     </a>
                 </div>
@@ -1445,7 +1452,7 @@ class SCOGS_Reports {
                     </div>
                 </div>
                 <div class="scogs-cta-right">
-                    <a href="<?php echo esc_url( $signup_plan_url ); ?>" target="_blank" class="button button-primary scogs-audit-btn">
+                    <a href="<?php echo esc_url( $signup_plan_url ); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary scogs-audit-btn">
                         <?php esc_html_e( 'Claim Free Store Audit & Plan Access &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
                     </a>
                 </div>

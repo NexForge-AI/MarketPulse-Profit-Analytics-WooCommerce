@@ -5,7 +5,11 @@
  * @package Simple_Cost_Of_Goods_WooCommerce
  */
 
-defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
+defined( 'ABSPATH' ) || defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
+
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+    exit;
+}
 
 // Clean up plugin options and tables
 global $wpdb;
@@ -17,9 +21,17 @@ delete_option( 'scogs_include_tax' );
 
 // Clean up cached transients
 delete_transient( 'scogs_dashboard_stats' );
-$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_scogs_%' OR option_name LIKE '_transient_timeout_scogs_%'" );
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+$wpdb->query(
+    $wpdb->prepare(
+        "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",
+        $wpdb->esc_like( '_transient_scogs_' ) . '%',
+        $wpdb->esc_like( '_transient_timeout_scogs_' ) . '%'
+    )
+);
 
 // Drop operating expenses table
 $table_expenses = $wpdb->prefix . 'scogs_expenses';
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 $wpdb->query( "DROP TABLE IF EXISTS `{$table_expenses}`" );
 
