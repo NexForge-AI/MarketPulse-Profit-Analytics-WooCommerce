@@ -501,6 +501,20 @@ class SCOGS_Product {
             return (float) $cost;
         }
 
+        // Variation product fallback to parent variable product cost
+        if ( $product->is_type( 'variation' ) ) {
+            $parent_id = $product->get_parent_id();
+            if ( $parent_id ) {
+                $parent_product = wc_get_product( $parent_id );
+                if ( $parent_product ) {
+                    $parent_cost = $parent_product->get_meta( self::META_KEY_COST, true );
+                    if ( '' !== $parent_cost && false !== $parent_cost ) {
+                        return (float) $parent_cost;
+                    }
+                }
+            }
+        }
+
         if ( $product->is_type( 'variable' ) ) {
             $children = $product->get_children();
             if ( ! empty( $children ) ) {

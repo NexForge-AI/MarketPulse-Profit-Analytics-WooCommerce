@@ -882,6 +882,30 @@ class SCOGS_Reports {
     }
 
     /**
+     * Get valid order statuses for financial reports
+     *
+     * Automatically includes standard and custom paid statuses (e.g. wc-processing, wc-completed, wc-delivered)
+     * Filterable via 'marketpulse_cogs_report_order_statuses'
+     *
+     * @return array
+     */
+    public static function get_report_order_statuses() {
+        $default_statuses = array( 'wc-processing', 'wc-completed' );
+
+        if ( function_exists( 'wc_get_is_paid_statuses' ) ) {
+            $paid = wc_get_is_paid_statuses();
+            foreach ( $paid as $status ) {
+                $prefixed = 'wc-' === substr( $status, 0, 3 ) ? $status : 'wc-' . $status;
+                if ( ! in_array( $prefixed, $default_statuses, true ) ) {
+                    $default_statuses[] = $prefixed;
+                }
+            }
+        }
+
+        return apply_filters( 'marketpulse_cogs_report_order_statuses', $default_statuses );
+    }
+
+    /**
      * Aggregate orders financial metrics between two dates
      */
     private static function get_aggregated_financials( $start_date, $end_date ) {
@@ -895,7 +919,7 @@ class SCOGS_Reports {
         $orders = wc_get_orders( array(
             'type'         => 'shop_order',
             'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
-            'status'       => array( 'wc-processing', 'wc-completed' ),
+            'status'       => self::get_report_order_statuses(),
             'limit'        => 1000,
         ) );
 
@@ -946,7 +970,7 @@ class SCOGS_Reports {
             $orders = wc_get_orders( array(
                 'type'         => 'shop_order',
                 'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
-                'status'       => array( 'wc-processing', 'wc-completed' ),
+                'status'       => self::get_report_order_statuses(),
                 'limit'        => 500,
             ) );
 
@@ -1072,7 +1096,7 @@ class SCOGS_Reports {
         $orders = wc_get_orders( array(
             'type'         => 'shop_order',
             'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
-            'status'       => array( 'wc-processing', 'wc-completed' ),
+            'status'       => self::get_report_order_statuses(),
             'limit'        => 1000,
         ) );
 

@@ -49,7 +49,7 @@ class SCOGS_Dashboard {
         // Month start
         $month_start = gmdate( 'Y-m-01 00:00:00' );
 
-        $statuses = array( 'wc-processing', 'wc-completed' );
+        $statuses = SCOGS_Reports::get_report_order_statuses();
 
         // Orders today
         $today_orders = wc_get_orders( array(

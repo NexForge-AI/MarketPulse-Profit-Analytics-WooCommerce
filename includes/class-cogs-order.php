@@ -30,6 +30,14 @@ class SCOGS_Order {
         add_action( 'woocommerce_order_refunded', array( __CLASS__, 'on_order_refund_created' ), 10, 2 );
         add_action( 'woocommerce_order_partially_refunded', array( __CLASS__, 'on_order_refund_created' ), 10, 2 );
 
+        // Invalidate cache when an order is trashed, restored, or deleted (HPOS + Classic)
+        add_action( 'woocommerce_trash_order', array( __CLASS__, 'on_order_invalidated' ), 10, 2 );
+        add_action( 'woocommerce_untrash_order', array( __CLASS__, 'on_order_invalidated' ), 10, 2 );
+        add_action( 'woocommerce_delete_order', array( __CLASS__, 'on_order_invalidated' ), 10, 2 );
+        add_action( 'wp_trash_post', array( __CLASS__, 'on_post_order_invalidated' ), 10, 1 );
+        add_action( 'untrashed_post', array( __CLASS__, 'on_post_order_invalidated' ), 10, 1 );
+        add_action( 'before_delete_post', array( __CLASS__, 'on_post_order_invalidated' ), 10, 1 );
+
         // Save actual courier shipping cost
         add_action( 'woocommerce_process_shop_order_meta', array( __CLASS__, 'save_order_custom_meta' ) );
         add_action( 'woocommerce_update_order', array( __CLASS__, 'save_order_custom_meta' ) );
@@ -101,6 +109,17 @@ class SCOGS_Order {
      */
     public static function on_order_invalidated( $order_id, $order = null ) {
         SCOGS_Reports::flush_cache();
+    }
+
+    /**
+     * Invalidate report cache when a classic post order is trashed, untrashed, or deleted
+     *
+     * @param int $post_id Post ID
+     */
+    public static function on_post_order_invalidated( $post_id ) {
+        if ( 'shop_order' === get_post_type( $post_id ) ) {
+            SCOGS_Reports::flush_cache();
+        }
     }
 
     /**
