@@ -1529,4 +1529,342 @@ input#_cogs_cost_price.scogs-input-warning {
     margin: 0 0 12px 0;
 }
 
+/* ==========================================================================
+   User Guide & Documentation Tab Styles
+   ========================================================================== */
+.scogs-guide-wrap {
+    max-width: 1100px;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.scogs-guide-hero {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 12px;
+    padding: 28px 32px;
+    color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.scogs-guide-hero::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    bottom: -40px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.scogs-hero-pill {
+    display: inline-block;
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(96, 165, 250, 0.4);
+    color: #93c5fd;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+.scogs-guide-hero h2 {
+    color: #ffffff !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    margin: 0 0 10px 0 !important;
+    line-height: 1.3 !important;
+}
+
+.scogs-guide-hero p {
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 800px;
+}
+
+.scogs-guide-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px 28px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.scogs-guide-section-title {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    margin: 0 0 20px 0 !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 12px;
+}
+
+.scogs-guide-section-title .dashicons {
+    color: #2563eb;
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+}
+
+/* 60-Second Steps Grid */
+.scogs-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 860px) {
+    .scogs-steps-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.scogs-step-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.scogs-step-number {
+    width: 32px;
+    height: 32px;
+    background: #2563eb;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25);
+}
+
+.scogs-step-card h4 {
+    margin: 0 0 8px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.scogs-step-card p {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+    flex-grow: 1;
+}
+
+.scogs-step-tag {
+    display: inline-block;
+    align-self: flex-start;
+    background: #ecfdf5;
+    color: #059669;
+    border: 1px solid #a7f3d0;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 12px;
+}
+
+/* Deep Dive Features Grid */
+.scogs-guide-features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 860px) {
+    .scogs-guide-features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.scogs-guide-feature-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.scogs-guide-feature-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.scogs-feat-icon {
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+.scogs-guide-feature-card h4 {
+    margin: 0 0 8px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.scogs-guide-feature-card p {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.5;
+    margin: 0 0 10px 0;
+}
+
+.scogs-guide-feature-card ul {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 12.5px;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.scogs-guide-feature-card li {
+    margin-bottom: 4px;
+}
+
+/* 5 Accounting Formulas */
+.scogs-formula-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.scogs-formula-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border-left: 4px solid #94a3b8;
+}
+
+.scogs-formula-row.scogs-f-highlight {
+    background: #f0fdf4;
+    border-left-color: #10b981;
+}
+
+.scogs-f-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #e2e8f0;
+    color: #334155;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 4px;
+    text-transform: uppercase;
+    min-width: 70px;
+    text-align: center;
+}
+
+.scogs-f-badge.scogs-f-gold {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.scogs-f-name {
+    font-size: 13.5px;
+    color: #334155;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.scogs-f-name strong {
+    color: #0f172a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+/* FAQ Grid */
+.scogs-faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 860px) {
+    .scogs-faq-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.scogs-faq-item {
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #f1f5f9;
+}
+
+.scogs-faq-item h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.4;
+}
+
+.scogs-faq-item p {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+/* Call to action footer banner */
+.scogs-guide-cta-card {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    border-radius: 12px;
+    padding: 24px 28px;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+
+.scogs-gcta-text h3 {
+    margin: 0 0 6px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff !important;
+}
+
+.scogs-gcta-text p {
+    margin: 0;
+    font-size: 13.5px;
+    color: #dbeafe;
+}
+
+.scogs-guide-cta-card .scogs-audit-btn {
+    background: #ffffff !important;
+    color: #1e40af !important;
+    border-color: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+.scogs-guide-cta-card .scogs-audit-btn:hover {
+    background: #f1f5f9 !important;
+    color: #1e3a8a !important;
+    transform: translateY(-1px);
+}
+
+
 

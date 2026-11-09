@@ -72,6 +72,9 @@ class SCOGS_Reports {
                 <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=suppliers' ) ); ?>" class="nav-tab <?php echo 'suppliers' === $active_tab ? 'nav-tab-active' : ''; ?>">
                     <span class="dashicons dashicons-groups"></span> <?php esc_html_e( 'Suppliers & Bulk Tools', 'simple-cost-of-goods-for-woocommerce' ); ?>
                 </a>
+                <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=guide' ) ); ?>" class="nav-tab <?php echo 'guide' === $active_tab ? 'nav-tab-active' : ''; ?>">
+                    <span class="dashicons dashicons-book-alt"></span> <?php esc_html_e( 'User Guide & FAQs', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                </a>
             </nav>
 
             <!-- Tab Contents -->
@@ -86,6 +89,9 @@ class SCOGS_Reports {
                         break;
                     case 'suppliers':
                         self::render_suppliers_tab();
+                        break;
+                    case 'guide':
+                        self::render_guide_tab();
                         break;
                     case 'overview':
                     default:
@@ -496,6 +502,188 @@ class SCOGS_Reports {
                         </a>
                     </div>
                 </div>
+            </div>
+        </div>
+        <?php
+    }
+
+    /**
+     * TAB 5: Interactive User Guide & FAQs
+     */
+    private static function render_guide_tab() {
+        $currency = get_woocommerce_currency_symbol();
+        $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=guide_tab&utm_campaign=claim_free_audit';
+        ?>
+        <div class="scogs-guide-wrap">
+            <!-- Hero Welcome Card -->
+            <div class="scogs-guide-hero">
+                <div class="scogs-hero-content">
+                    <span class="scogs-hero-pill"><?php esc_html_e( 'OFFICIAL DOCUMENTATION & KNOWLEDGEBASE', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <h2><?php esc_html_e( 'How Simple Cost of Goods & Profit Tracker Works', 'simple-cost-of-goods-for-woocommerce' ); ?></h2>
+                    <p>
+                        <?php esc_html_e( 'Welcome! This plugin provides real-time financial transparency for your WooCommerce store by replacing vanity gross revenue with mathematically accurate True Net Profit. Here is everything you need to get started in 60 seconds.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 60-Second Quick Start Steps -->
+            <div class="scogs-guide-card">
+                <h3 class="scogs-guide-section-title">
+                    <span class="dashicons dashicons-clock"></span> <?php esc_html_e( '60-Second Quick Start Guide', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                </h3>
+                <div class="scogs-steps-grid">
+                    <div class="scogs-step-card">
+                        <div class="scogs-step-number">1</div>
+                        <h4><?php esc_html_e( 'Enter Product Costs (COGS)', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                        <p><?php esc_html_e( 'Edit any product or go to Products table. Fill in your wholesale purchase or manufacturing cost in the "Cost Price (COGS)" field.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                        <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=product' ) ); ?>" class="button button-small button-secondary"><?php esc_html_e( 'Go to Products &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?></a>
+                    </div>
+                    <div class="scogs-step-card">
+                        <div class="scogs-step-number">2</div>
+                        <h4><?php esc_html_e( 'Automation Takes Over', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                        <p><?php esc_html_e( 'When orders come in, the plugin locks purchase costs, calculates payment gateway fees, and factors in delivery courier deficits.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                        <span class="scogs-step-tag"><?php esc_html_e( '100% Zero-Config Automatic', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    </div>
+                    <div class="scogs-step-card">
+                        <div class="scogs-step-number">3</div>
+                        <h4><?php esc_html_e( 'Track True Net Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                        <p><?php esc_html_e( 'Visit the Overview tab to view real-time SVG charts, top profit-making items, and generate 1-click audit-ready P&L financial reports.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                        <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview' ) ); ?>" class="button button-small button-primary"><?php esc_html_e( 'View Analytics Hub &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deep Dive Feature Breakdown Grid -->
+            <div class="scogs-guide-features-grid">
+                <!-- Feature 1: Product COGS & Variations -->
+                <div class="scogs-guide-feature-card">
+                    <div class="scogs-feat-icon" style="background:#dbeafe; color:#2563eb;">
+                        <span class="dashicons dashicons-tag"></span>
+                    </div>
+                    <h4><?php esc_html_e( '1. Managing Product Cost Prices', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                    <p><?php esc_html_e( 'You can manage product costs in 4 convenient ways:', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <ul>
+                        <li><strong><?php esc_html_e( 'Single Products:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Enter cost in Product Data > General tab. See instant gross margin % preview.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                        <li><strong><?php esc_html_e( 'Variable Products:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Set distinct costs per variation inside the Variations tab.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                        <li><strong><?php esc_html_e( 'Quick Edit & Bulk Edit:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Update Cost and Supplier directly on the Products list table without opening each page.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                        <li><strong><?php esc_html_e( 'Native CSV Tools:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Use WooCommerce Product CSV Exporter/Importer to update thousands of items in Excel.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                    </ul>
+                </div>
+
+                <!-- Feature 2: Payment Gateways -->
+                <div class="scogs-guide-feature-card">
+                    <div class="scogs-feat-icon" style="background:#fef3c7; color:#d97706;">
+                        <span class="dashicons dashicons-cart"></span>
+                    </div>
+                    <h4><?php esc_html_e( '2. Payment Gateway Commission Auto-Detection', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                    <p><?php esc_html_e( 'Payment processors deduct transaction fees before depositing funds into your bank account. The plugin tracks this automatically:', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <ul>
+                        <li><strong><?php esc_html_e( 'Standard Market Rates Pre-Configured:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Stripe (2.9% + $0.30), PayPal (3.49% + $0.49), bKash (1.5%), Cash on Delivery (0%).', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                        <li><strong><?php esc_html_e( 'Zero Setup Needed:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'You never need to configure anything unless you have custom negotiated volume rates.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                        <li><strong><?php esc_html_e( 'Historical Order Integrity:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Changing rates in settings only affects new orders. Past accounting is permanently protected.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                    </ul>
+                </div>
+
+                <!-- Feature 3: Business Expenses -->
+                <div class="scogs-guide-feature-card">
+                    <div class="scogs-feat-icon" style="background:#fee2e2; color:#dc2626;">
+                        <span class="dashicons dashicons-building"></span>
+                    </div>
+                    <h4><?php esc_html_e( '3. Business Operating Expenses Ledger', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                    <p><?php esc_html_e( 'A store can be gross profit positive while actually losing money due to heavy ad spend and overhead:', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <ul>
+                        <li><strong><?php esc_html_e( 'Track All Overhead:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Log Facebook/Google Ads, store hosting, warehouse rent, packaging supplies, and salaries.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                        <li><strong><?php esc_html_e( 'True Net Profit Calculation:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Operating expenses are subtracted from gross profit across selected date ranges to reveal real take-home cash.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                    </ul>
+                </div>
+
+                <!-- Feature 4: Courier Deficit -->
+                <div class="scogs-guide-feature-card">
+                    <div class="scogs-feat-icon" style="background:#dcfce7; color:#15803d;">
+                        <span class="dashicons dashicons-car"></span>
+                    </div>
+                    <h4><?php esc_html_e( '4. Courier Shipping Deficit Tracking', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                    <p><?php esc_html_e( 'Hidden shipping losses are one of the biggest profit killers for WooCommerce merchants:', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <ul>
+                        <li><strong><?php esc_html_e( 'The Problem:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'You charge customer $5.00 flat shipping, but DHL or Pathao charges you $8.00. You lose $3.00 on delivery.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                        <li><strong><?php esc_html_e( 'The Solution:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Input actual courier cost in the order edit sidebar. The $3.00 deficit is automatically subtracted from order net profit.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Mathematical Core Formulas -->
+            <div class="scogs-guide-card">
+                <h3 class="scogs-guide-section-title">
+                    <span class="dashicons dashicons-calculator"></span> <?php esc_html_e( 'The 5 Standard Accounting Formulas Explained', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                </h3>
+                <div class="scogs-formula-list">
+                    <div class="scogs-formula-row">
+                        <span class="scogs-f-badge">1</span>
+                        <div class="scogs-f-name"><strong><?php esc_html_e( 'Gross Revenue', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> = &sum; (Product Price &times; Quantity Sold)</div>
+                    </div>
+                    <div class="scogs-formula-row">
+                        <span class="scogs-f-badge">2</span>
+                        <div class="scogs-f-name"><strong><?php esc_html_e( 'Total COGS', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> = &sum; (Unit Purchase Cost &times; Quantity Sold)</div>
+                    </div>
+                    <div class="scogs-formula-row">
+                        <span class="scogs-f-badge">3</span>
+                        <div class="scogs-f-name"><strong><?php esc_html_e( 'Gross Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> = Gross Revenue &minus; Order Discounts &minus; Total COGS</div>
+                    </div>
+                    <div class="scogs-formula-row">
+                        <span class="scogs-f-badge">4</span>
+                        <div class="scogs-f-name"><strong><?php esc_html_e( 'Shipping Courier Deficit', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> = Max( 0, Actual Courier Cost &minus; Customer Shipping Paid )</div>
+                    </div>
+                    <div class="scogs-formula-row scogs-f-highlight">
+                        <span class="scogs-f-badge scogs-f-gold">5</span>
+                        <div class="scogs-f-name">
+                            <strong><?php esc_html_e( 'True Net Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> = Gross Profit &minus; Gateway Fees &minus; Shipping Deficit &minus; Operating Expenses
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frequently Asked Questions (FAQ) -->
+            <div class="scogs-guide-card">
+                <h3 class="scogs-guide-section-title">
+                    <span class="dashicons dashicons-editor-help"></span> <?php esc_html_e( 'Frequently Asked Questions (FAQ)', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                </h3>
+                <div class="scogs-faq-grid">
+                    <div class="scogs-faq-item">
+                        <h4><?php esc_html_e( 'Do I need to manually configure payment gateway fees?', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                        <p><?php esc_html_e( 'No. The plugin includes a built-in knowledge base of standard rates for Stripe, PayPal, Square, bKash, and COD. You only need to edit them if you have negotiated custom volume discounts with your processor.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    </div>
+                    <div class="scogs-faq-item">
+                        <h4><?php esc_html_e( 'If I change a product cost price today, will it alter past order profits?', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                        <p><?php esc_html_e( 'Never! When an order is completed, its financials (cost, gateway fees, courier deficit, net profit) are locked permanently into that order’s metadata. Changing prices today will only apply to future orders.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    </div>
+                    <div class="scogs-faq-item">
+                        <h4><?php esc_html_e( 'How do I export financial reports for my accountant or tax filing?', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                        <p><?php esc_html_e( 'Open the Overview & Charts tab, choose your desired date range (e.g. This Month, Last Month, or Custom), and click the "Export P&L (CSV)" button. It generates a UTF-8 financial statement ready for Excel.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    </div>
+                    <div class="scogs-faq-item">
+                        <h4><?php esc_html_e( 'Does this plugin slow down my storefront or customer checkout?', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                        <p><?php esc_html_e( 'Zero milliseconds. The plugin loads 0 JavaScript and 0 CSS on your customer-facing storefront. All calculations run strictly in the admin dashboard and during order processing.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    </div>
+                    <div class="scogs-faq-item">
+                        <h4><?php esc_html_e( 'What is MarketPulse AI Dynamic Repricing?', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                        <p><?php esc_html_e( 'Keeping static product prices causes you to lose sales when rivals undercut you, and forfeits 15%–25% extra profit when rivals run out of stock. MarketPulse AI monitors 100+ stores 24/7 to reprice your products automatically while strictly honoring your COGS floor.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    </div>
+                    <div class="scogs-faq-item">
+                        <h4><?php esc_html_e( 'Where can I get help or report an issue?', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                        <p><?php esc_html_e( 'You can reach out directly to the NexForge AI support team at support@usemarketpulse.com or join our merchant community at usemarketpulse.com.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to action footer -->
+            <div class="scogs-guide-cta-card">
+                <div class="scogs-gcta-text">
+                    <h3><?php esc_html_e( 'Ready to take your profitability to the next level?', 'simple-cost-of-goods-for-woocommerce' ); ?></h3>
+                    <p><?php esc_html_e( 'Protect your COGS margin floor and beat competitor pricing with MarketPulse AI Repricer.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                </div>
+                <a href="<?php echo esc_url( $plan_url ); ?>" target="_blank" class="button button-primary scogs-audit-btn">
+                    <?php esc_html_e( 'Claim Free Store Audit & Plan Access &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                </a>
             </div>
         </div>
         <?php
