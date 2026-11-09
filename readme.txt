@@ -155,7 +155,7 @@ This plugin is developed by NexForge AI and provides optional insights and integ
 5. Go to **WooCommerce > Profit Analytics** to view your real-time executive dashboard.
 
 ### Manual Installation
-1. Download the `simple-cost-of-goods-for-woocommerce.zip` file.
+1. Download the `marketpulse-cogs-profit.zip` file.
 2. In your WordPress admin, go to **Plugins > Add New > Upload Plugin**.
 3. Choose the downloaded ZIP file and click **Install Now**.
 4. Activate the plugin.

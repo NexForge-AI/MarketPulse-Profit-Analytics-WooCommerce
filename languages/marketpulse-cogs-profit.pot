@@ -273,7 +273,7 @@ msgstr ""
 msgid "All Suppliers"
 msgstr ""
 
-#: includes/class-cogs-reports.php:26 includes/class-cogs-reports.php:27 simple-cost-of-goods-for-woocommerce.php:203
+#: includes/class-cogs-reports.php:26 includes/class-cogs-reports.php:27 marketpulse-cogs-profit.php:203
 msgid "MarketPulse Profit Analytics"
 msgstr ""
 
@@ -1037,15 +1037,15 @@ msgstr ""
 msgid "Include customer-paid taxes in net revenue calculations."
 msgstr ""
 
-#: simple-cost-of-goods-for-woocommerce.php:204
+#: marketpulse-cogs-profit.php:204
 msgid "NexForge AI"
 msgstr ""
 
-#: simple-cost-of-goods-for-woocommerce.php:215
+#: marketpulse-cogs-profit.php:215
 msgid "Simple Cost of Goods & Profit Tracker"
 msgstr ""
 
-#: simple-cost-of-goods-for-woocommerce.php:215
+#: marketpulse-cogs-profit.php:215
 msgid "requires WooCommerce to be installed and active."
 msgstr ""
 

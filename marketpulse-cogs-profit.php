@@ -8,7 +8,7 @@
  * Author URI:        https://usemarketpulse.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       simple-cost-of-goods-for-woocommerce
+ * Text Domain:       marketpulse-cogs-profit
  * Domain Path:       /languages
  * Requires at least: 5.8
  * Requires PHP:      7.4
@@ -194,8 +194,8 @@ final class Simple_Cost_Of_Goods_WooCommerce {
      */
     public function plugin_action_links( $links ) {
         $custom_links = array(
-            '<a href="' . esc_url( admin_url( 'admin.php?page=scogs-analytics' ) ) . '" style="font-weight:600;">' . esc_html__( 'MarketPulse Profit Analytics', 'simple-cost-of-goods-for-woocommerce' ) . '</a>',
-            '<a href="https://usemarketpulse.com" target="_blank" rel="noopener noreferrer" style="color:#2271b1;">' . esc_html__( 'NexForge AI', 'simple-cost-of-goods-for-woocommerce' ) . '</a>'
+            '<a href="' . esc_url( admin_url( 'admin.php?page=scogs-analytics' ) ) . '" style="font-weight:600;">' . esc_html__( 'MarketPulse Profit Analytics', 'marketpulse-cogs-profit' ) . '</a>',
+            '<a href="https://usemarketpulse.com" target="_blank" rel="noopener noreferrer" style="color:#2271b1;">' . esc_html__( 'NexForge AI', 'marketpulse-cogs-profit' ) . '</a>'
         );
         return array_merge( $custom_links, $links );
     }
@@ -206,7 +206,7 @@ final class Simple_Cost_Of_Goods_WooCommerce {
     public function woocommerce_missing_notice() {
         ?>
         <div class="notice notice-error is-dismissible">
-            <p><strong><?php esc_html_e( 'MarketPulse COGS & Profit for WooCommerce', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'requires WooCommerce to be installed and active.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+            <p><strong><?php esc_html_e( 'MarketPulse COGS & Profit for WooCommerce', 'marketpulse-cogs-profit' ); ?></strong> <?php esc_html_e( 'requires WooCommerce to be installed and active.', 'marketpulse-cogs-profit' ); ?></p>
         </div>
         <?php
     }

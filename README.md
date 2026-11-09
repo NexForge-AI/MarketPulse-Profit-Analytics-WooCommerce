@@ -38,7 +38,7 @@ Revenue is vanity; **profit is sanity**. Most Cost of Goods plugins for WooComme
 1. Clone or download this repository into your WordPress plugin directory:
    ```bash
    cd wp-content/plugins/
-   git clone https://github.com/NexForge-AI/simple-cost-of-goods-for-woocommerce.git
+   git clone https://github.com/NexForge-AI/marketpulse-cogs-profit.git
    ```
 2. Activate the plugin via **WP Admin &rarr; Plugins**.
 3. Edit any product and fill in the **Cost Price (COGS)** field.

@@ -24,7 +24,7 @@ class SCOGS_Dashboard {
 
         wp_add_dashboard_widget(
             'scogs_profit_summary_widget',
-            __( 'Profit & Margin Tracker (by NexForge AI)', 'simple-cost-of-goods-for-woocommerce' ),
+            __( 'Profit & Margin Tracker (by NexForge AI)', 'marketpulse-cogs-profit' ),
             array( __CLASS__, 'render_dashboard_widget' )
         );
     }
@@ -136,21 +136,21 @@ class SCOGS_Dashboard {
             <div class="scogs-dashboard-grid">
                 <!-- Today Card -->
                 <div class="scogs-dash-card">
-                    <span class="scogs-card-title"><?php echo $stats['today_profit'] < 0 ? esc_html__( "Today's Net Loss", 'simple-cost-of-goods-for-woocommerce' ) : esc_html__( "Today's Net Profit", 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-card-title"><?php echo $stats['today_profit'] < 0 ? esc_html__( "Today's Net Loss", 'marketpulse-cogs-profit' ) : esc_html__( "Today's Net Profit", 'marketpulse-cogs-profit' ); ?></span>
                     <span class="scogs-card-value <?php echo $stats['today_profit'] < 0 ? 'scogs-loss-val' : 'scogs-profit-val'; ?>"><?php echo wp_kses_post( wc_price( $stats['today_profit'] ) ); ?></span>
                     <div class="scogs-card-meta">
-                        <span><?php esc_html_e( 'Revenue:', 'simple-cost-of-goods-for-woocommerce' ); ?> <?php echo wp_kses_post( wc_price( $stats['today_revenue'] ) ); ?></span>
-                        <span class="scogs-badge <?php echo $stats['today_profit'] < 0 ? 'scogs-badge-red' : 'scogs-badge-blue'; ?>"><?php echo esc_html( round( $stats['today_margin'], 1 ) ); ?>% <?php esc_html_e( 'Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        <span><?php esc_html_e( 'Revenue:', 'marketpulse-cogs-profit' ); ?> <?php echo wp_kses_post( wc_price( $stats['today_revenue'] ) ); ?></span>
+                        <span class="scogs-badge <?php echo $stats['today_profit'] < 0 ? 'scogs-badge-red' : 'scogs-badge-blue'; ?>"><?php echo esc_html( round( $stats['today_margin'], 1 ) ); ?>% <?php esc_html_e( 'Margin', 'marketpulse-cogs-profit' ); ?></span>
                     </div>
                 </div>
 
                 <!-- Month Card -->
                 <div class="scogs-dash-card">
-                    <span class="scogs-card-title"><?php echo $stats['month_profit'] < 0 ? esc_html__( 'This Month Net Loss', 'simple-cost-of-goods-for-woocommerce' ) : esc_html__( 'This Month Net Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-card-title"><?php echo $stats['month_profit'] < 0 ? esc_html__( 'This Month Net Loss', 'marketpulse-cogs-profit' ) : esc_html__( 'This Month Net Profit', 'marketpulse-cogs-profit' ); ?></span>
                     <span class="scogs-card-value <?php echo $stats['month_profit'] < 0 ? 'scogs-loss-val' : 'scogs-profit-val'; ?>"><?php echo wp_kses_post( wc_price( $stats['month_profit'] ) ); ?></span>
                     <div class="scogs-card-meta">
-                        <span><?php esc_html_e( 'Revenue:', 'simple-cost-of-goods-for-woocommerce' ); ?> <?php echo wp_kses_post( wc_price( $stats['month_revenue'] ) ); ?></span>
-                        <span class="scogs-badge <?php echo $stats['month_profit'] < 0 ? 'scogs-badge-red' : 'scogs-badge-blue'; ?>"><?php echo esc_html( round( $stats['month_margin'], 1 ) ); ?>% <?php esc_html_e( 'Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        <span><?php esc_html_e( 'Revenue:', 'marketpulse-cogs-profit' ); ?> <?php echo wp_kses_post( wc_price( $stats['month_revenue'] ) ); ?></span>
+                        <span class="scogs-badge <?php echo $stats['month_profit'] < 0 ? 'scogs-badge-red' : 'scogs-badge-blue'; ?>"><?php echo esc_html( round( $stats['month_margin'], 1 ) ); ?>% <?php esc_html_e( 'Margin', 'marketpulse-cogs-profit' ); ?></span>
                     </div>
                 </div>
             </div>
@@ -165,20 +165,20 @@ class SCOGS_Dashboard {
                 <div class="scogs-dash-leak-header">
                     <div style="display:flex; align-items:center; gap:6px;">
                         <span class="scogs-pulse-dot" style="width:7px; height:7px;"></span>
-                        <strong class="scogs-dash-leak-title"><?php esc_html_e( 'ESTIMATED UNCAPTURED MARGIN THIS MONTH', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
+                        <strong class="scogs-dash-leak-title"><?php esc_html_e( 'ESTIMATED UNCAPTURED MARGIN THIS MONTH', 'marketpulse-cogs-profit' ); ?></strong>
                     </div>
                     <span class="scogs-dash-leak-val scogs-leak-danger-text">&minus;<?php echo wp_kses_post( wc_price( $month_leak ) ); ?></span>
                 </div>
                 <div class="scogs-dash-leak-bar">
-                    <div class="scogs-dash-bar-captured" style="width: 75%;"><?php esc_html_e( 'Captured Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></div>
-                    <div class="scogs-dash-bar-leaked" style="width: 25%;">&minus;12% <?php esc_html_e( 'Leaking', 'simple-cost-of-goods-for-woocommerce' ); ?></div>
+                    <div class="scogs-dash-bar-captured" style="width: 75%;"><?php esc_html_e( 'Captured Margin', 'marketpulse-cogs-profit' ); ?></div>
+                    <div class="scogs-dash-bar-leaked" style="width: 25%;">&minus;12% <?php esc_html_e( 'Leaking', 'marketpulse-cogs-profit' ); ?></div>
                 </div>
                 <div class="scogs-dash-leak-footer">
                     <p>
-                        <?php esc_html_e( 'Static pricing leaves money on the table when rivals run out of stock or undercut you. MarketPulse reprices 24/7 to capture maximum profit.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        <?php esc_html_e( 'Static pricing leaves money on the table when rivals run out of stock or undercut you. MarketPulse reprices 24/7 to capture maximum profit.', 'marketpulse-cogs-profit' ); ?>
                     </p>
                     <a href="https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=dashboard_widget&utm_campaign=stop_the_leak" target="_blank" rel="noopener noreferrer" class="button button-small button-primary scogs-dash-leak-btn">
-                        <?php esc_html_e( 'Stop The Profit Leak &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        <?php esc_html_e( 'Stop The Profit Leak &rarr;', 'marketpulse-cogs-profit' ); ?>
                     </a>
                 </div>
             </div>

@@ -23,8 +23,8 @@ class SCOGS_Reports {
     public static function add_admin_menu() {
         add_submenu_page(
             'woocommerce',
-            __( 'MarketPulse Profit Analytics', 'simple-cost-of-goods-for-woocommerce' ),
-            __( 'MarketPulse Profit Analytics', 'simple-cost-of-goods-for-woocommerce' ),
+            __( 'MarketPulse Profit Analytics', 'marketpulse-cogs-profit' ),
+            __( 'MarketPulse Profit Analytics', 'marketpulse-cogs-profit' ),
             'manage_woocommerce',
             'scogs-analytics',
             array( __CLASS__, 'render_page' )
@@ -49,7 +49,7 @@ class SCOGS_Reports {
                     <img src="<?php echo esc_url( SCOGS_URL . 'assets/images/logo.png' ); ?>" alt="MarketPulse" class="scogs-header-brand-logo" />
                     <div class="scogs-header-title-wrap">
                         <h1 class="wp-heading-inline scogs-header-h1">
-                            <?php esc_html_e( 'MarketPulse Profit Analytics & Financial Intelligence', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            <?php esc_html_e( 'MarketPulse Profit Analytics & Financial Intelligence', 'marketpulse-cogs-profit' ); ?>
                         </h1>
                         <span class="scogs-version-tag">v<?php echo esc_html( SCOGS_VERSION ); ?></span>
                     </div>
@@ -57,7 +57,7 @@ class SCOGS_Reports {
                 <div class="scogs-header-right">
                     <span class="scogs-brand-pill">
                         <img src="<?php echo esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ); ?>" alt="" class="scogs-brand-pill-logo" />
-                        <?php esc_html_e( 'Powered by', 'simple-cost-of-goods-for-woocommerce' ); ?> 
+                        <?php esc_html_e( 'Powered by', 'marketpulse-cogs-profit' ); ?> 
                         <a href="https://usemarketpulse.com?utm_source=cogs_plugin&utm_medium=header_link" target="_blank" rel="noopener noreferrer">NexForge AI</a>
                     </span>
                 </div>
@@ -67,19 +67,19 @@ class SCOGS_Reports {
             <!-- Tab Navigation -->
             <nav class="nav-tab-wrapper scogs-nav-tabs">
                 <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview' ) ); ?>" class="nav-tab <?php echo 'overview' === $active_tab ? 'nav-tab-active' : ''; ?>">
-                    <span class="dashicons dashicons-chart-area"></span> <?php esc_html_e( 'Overview & Charts', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <span class="dashicons dashicons-chart-area"></span> <?php esc_html_e( 'Overview & Charts', 'marketpulse-cogs-profit' ); ?>
                 </a>
                 <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=expenses' ) ); ?>" class="nav-tab <?php echo 'expenses' === $active_tab ? 'nav-tab-active' : ''; ?>">
-                    <span class="dashicons dashicons-money-alt"></span> <?php esc_html_e( 'Operating Expenses', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <span class="dashicons dashicons-money-alt"></span> <?php esc_html_e( 'Operating Expenses', 'marketpulse-cogs-profit' ); ?>
                 </a>
                 <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=gateways' ) ); ?>" class="nav-tab <?php echo 'gateways' === $active_tab ? 'nav-tab-active' : ''; ?>">
-                    <span class="dashicons dashicons-cart"></span> <?php esc_html_e( 'Payment Gateway Fees', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <span class="dashicons dashicons-cart"></span> <?php esc_html_e( 'Payment Gateway Fees', 'marketpulse-cogs-profit' ); ?>
                 </a>
                 <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=suppliers' ) ); ?>" class="nav-tab <?php echo 'suppliers' === $active_tab ? 'nav-tab-active' : ''; ?>">
-                    <span class="dashicons dashicons-groups"></span> <?php esc_html_e( 'Suppliers & Bulk Tools', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <span class="dashicons dashicons-groups"></span> <?php esc_html_e( 'Suppliers & Bulk Tools', 'marketpulse-cogs-profit' ); ?>
                 </a>
                 <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=guide' ) ); ?>" class="nav-tab <?php echo 'guide' === $active_tab ? 'nav-tab-active' : ''; ?>">
-                    <span class="dashicons dashicons-book-alt"></span> <?php esc_html_e( 'User Guide & FAQs', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <span class="dashicons dashicons-book-alt"></span> <?php esc_html_e( 'User Guide & FAQs', 'marketpulse-cogs-profit' ); ?>
                 </a>
             </nav>
 
@@ -162,37 +162,37 @@ class SCOGS_Reports {
         // Dynamic Card 6 Status & Styling based on Profit/Loss and Margin Health
         if ( $true_net_profit < 0 ) {
             $net_card_class  = 'scogs-kpi-status-danger';
-            $net_card_title  = __( '6. True Net Loss', 'simple-cost-of-goods-for-woocommerce' );
+            $net_card_title  = __( '6. True Net Loss', 'marketpulse-cogs-profit' );
             $net_badge_class = 'scogs-badge-red';
         } elseif ( $order_stats['gross_revenue'] == 0 && $true_net_profit == 0 ) {
             $net_card_class  = 'scogs-kpi-status-neutral';
-            $net_card_title  = __( '6. True Net Profit', 'simple-cost-of-goods-for-woocommerce' );
+            $net_card_title  = __( '6. True Net Profit', 'marketpulse-cogs-profit' );
             $net_badge_class = 'scogs-badge-blue';
         } elseif ( $true_net_margin < 15 ) {
             // Critical / thin margin (< 15%)
             $net_card_class  = 'scogs-kpi-status-danger';
-            $net_card_title  = __( '6. True Net Profit', 'simple-cost-of-goods-for-woocommerce' );
+            $net_card_title  = __( '6. True Net Profit', 'marketpulse-cogs-profit' );
             $net_badge_class = 'scogs-badge-red';
         } elseif ( $true_net_margin < 30 ) {
             // Moderate margin (15% to 29.9%)
             $net_card_class  = 'scogs-kpi-status-warning';
-            $net_card_title  = __( '6. True Net Profit', 'simple-cost-of-goods-for-woocommerce' );
+            $net_card_title  = __( '6. True Net Profit', 'marketpulse-cogs-profit' );
             $net_badge_class = 'scogs-badge-amber';
         } else {
             // Healthy profit margin (>= 30%)
             $net_card_class  = 'scogs-kpi-status-success';
-            $net_card_title  = __( '6. True Net Profit', 'simple-cost-of-goods-for-woocommerce' );
+            $net_card_title  = __( '6. True Net Profit', 'marketpulse-cogs-profit' );
             $net_badge_class = 'scogs-badge-green';
         }
         ?>
         <!-- Date Filter Toolbar -->
         <div class="scogs-toolbar-card">
             <div class="scogs-filter-presets">
-                <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview&range=today' ) ); ?>" class="button <?php echo 'today' === $range ? 'button-primary' : ''; ?>"><?php esc_html_e( 'Today', 'simple-cost-of-goods-for-woocommerce' ); ?></a>
-                <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview&range=yesterday' ) ); ?>" class="button <?php echo 'yesterday' === $range ? 'button-primary' : ''; ?>"><?php esc_html_e( 'Yesterday', 'simple-cost-of-goods-for-woocommerce' ); ?></a>
-                <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview&range=last_7_days' ) ); ?>" class="button <?php echo 'last_7_days' === $range ? 'button-primary' : ''; ?>"><?php esc_html_e( 'Last 7 Days', 'simple-cost-of-goods-for-woocommerce' ); ?></a>
-                <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview&range=this_month' ) ); ?>" class="button <?php echo 'this_month' === $range ? 'button-primary' : ''; ?>"><?php esc_html_e( 'This Month', 'simple-cost-of-goods-for-woocommerce' ); ?></a>
-                <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview&range=last_month' ) ); ?>" class="button <?php echo 'last_month' === $range ? 'button-primary' : ''; ?>"><?php esc_html_e( 'Last Month', 'simple-cost-of-goods-for-woocommerce' ); ?></a>
+                <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview&range=today' ) ); ?>" class="button <?php echo 'today' === $range ? 'button-primary' : ''; ?>"><?php esc_html_e( 'Today', 'marketpulse-cogs-profit' ); ?></a>
+                <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview&range=yesterday' ) ); ?>" class="button <?php echo 'yesterday' === $range ? 'button-primary' : ''; ?>"><?php esc_html_e( 'Yesterday', 'marketpulse-cogs-profit' ); ?></a>
+                <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview&range=last_7_days' ) ); ?>" class="button <?php echo 'last_7_days' === $range ? 'button-primary' : ''; ?>"><?php esc_html_e( 'Last 7 Days', 'marketpulse-cogs-profit' ); ?></a>
+                <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview&range=this_month' ) ); ?>" class="button <?php echo 'this_month' === $range ? 'button-primary' : ''; ?>"><?php esc_html_e( 'This Month', 'marketpulse-cogs-profit' ); ?></a>
+                <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview&range=last_month' ) ); ?>" class="button <?php echo 'last_month' === $range ? 'button-primary' : ''; ?>"><?php esc_html_e( 'Last Month', 'marketpulse-cogs-profit' ); ?></a>
             </div>
             <form method="get" class="scogs-custom-date-form">
                 <input type="hidden" name="page" value="scogs-analytics">
@@ -201,12 +201,12 @@ class SCOGS_Reports {
                 <input type="date" name="start_date" value="<?php echo esc_attr( $start_date ); ?>" required>
                 <span>&rarr;</span>
                 <input type="date" name="end_date" value="<?php echo esc_attr( $end_date ); ?>" required>
-                <button type="submit" class="button"><?php esc_html_e( 'Filter', 'simple-cost-of-goods-for-woocommerce' ); ?></button>
+                <button type="submit" class="button"><?php esc_html_e( 'Filter', 'marketpulse-cogs-profit' ); ?></button>
             </form>
             <div style="margin-left:auto;">
-                <a href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=scogs_export_financial_csv&start_date=' . $start_date . '&end_date=' . $end_date ), 'scogs_export_financial_csv_nonce' ) ); ?>" class="button button-secondary" title="<?php esc_attr_e( 'Download audit-ready P&L spreadsheet for this period', 'simple-cost-of-goods-for-woocommerce' ); ?>">
+                <a href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=scogs_export_financial_csv&start_date=' . $start_date . '&end_date=' . $end_date ), 'scogs_export_financial_csv_nonce' ) ); ?>" class="button button-secondary" title="<?php esc_attr_e( 'Download audit-ready P&L spreadsheet for this period', 'marketpulse-cogs-profit' ); ?>">
                     <span class="dashicons dashicons-download" style="vertical-align:middle; font-size:15px; margin-right:2px;"></span>
-                    <?php esc_html_e( 'Export P&L (CSV)', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <?php esc_html_e( 'Export P&L (CSV)', 'marketpulse-cogs-profit' ); ?>
                 </a>
             </div>
         </div>
@@ -215,44 +215,44 @@ class SCOGS_Reports {
         <div class="scogs-kpi-grid">
             <!-- 1. Gross Revenue -->
             <div class="scogs-kpi-card">
-                <span class="scogs-kpi-title"><?php esc_html_e( '1. Gross Revenue', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-kpi-title"><?php esc_html_e( '1. Gross Revenue', 'marketpulse-cogs-profit' ); ?></span>
                 <span class="scogs-kpi-num"><?php echo wp_kses_post( wc_price( $order_stats['gross_revenue'] ) ); ?></span>
-                <span class="scogs-kpi-sub"><?php echo esc_html( $order_stats['order_count'] ); ?> <?php esc_html_e( 'orders placed', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-kpi-sub"><?php echo esc_html( $order_stats['order_count'] ); ?> <?php esc_html_e( 'orders placed', 'marketpulse-cogs-profit' ); ?></span>
             </div>
 
             <!-- 2. Total COGS -->
             <div class="scogs-kpi-card">
-                <span class="scogs-kpi-title"><?php esc_html_e( '2. Total COGS', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-kpi-title"><?php esc_html_e( '2. Total COGS', 'marketpulse-cogs-profit' ); ?></span>
                 <span class="scogs-kpi-num scogs-cost-text">&minus;<?php echo wp_kses_post( wc_price( $order_stats['total_cogs'] ) ); ?></span>
-                <span class="scogs-kpi-sub"><?php esc_html_e( 'Product acquisition cost', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-kpi-sub"><?php esc_html_e( 'Product acquisition cost', 'marketpulse-cogs-profit' ); ?></span>
             </div>
 
             <!-- 3. Gross Profit -->
             <div class="scogs-kpi-card">
-                <span class="scogs-kpi-title"><?php esc_html_e( '3. Gross Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-kpi-title"><?php esc_html_e( '3. Gross Profit', 'marketpulse-cogs-profit' ); ?></span>
                 <span class="scogs-kpi-num scogs-subtotal-text"><?php echo wp_kses_post( wc_price( $order_stats['gross_profit'] ) ); ?></span>
-                <span class="scogs-badge scogs-badge-blue"><?php echo esc_html( round( $order_stats['gross_margin'], 1 ) ); ?>% <?php esc_html_e( 'Gross Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-badge scogs-badge-blue"><?php echo esc_html( round( $order_stats['gross_margin'], 1 ) ); ?>% <?php esc_html_e( 'Gross Margin', 'marketpulse-cogs-profit' ); ?></span>
             </div>
 
             <!-- 4. Fees & Deficit -->
             <div class="scogs-kpi-card">
-                <span class="scogs-kpi-title"><?php esc_html_e( '4. Gateway & Shipping Fees', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-kpi-title"><?php esc_html_e( '4. Gateway & Shipping Fees', 'marketpulse-cogs-profit' ); ?></span>
                 <span class="scogs-kpi-num scogs-cost-text">&minus;<?php echo wp_kses_post( wc_price( $order_stats['gateway_fees'] + $order_stats['shipping_deficit'] ) ); ?></span>
-                <span class="scogs-kpi-sub"><?php esc_html_e( 'Gateways:', 'simple-cost-of-goods-for-woocommerce' ); ?> <?php echo wp_kses_post( wc_price( $order_stats['gateway_fees'] ) ); ?> | <?php esc_html_e( 'Deficit:', 'simple-cost-of-goods-for-woocommerce' ); ?> <?php echo wp_kses_post( wc_price( $order_stats['shipping_deficit'] ) ); ?></span>
+                <span class="scogs-kpi-sub"><?php esc_html_e( 'Gateways:', 'marketpulse-cogs-profit' ); ?> <?php echo wp_kses_post( wc_price( $order_stats['gateway_fees'] ) ); ?> | <?php esc_html_e( 'Deficit:', 'marketpulse-cogs-profit' ); ?> <?php echo wp_kses_post( wc_price( $order_stats['shipping_deficit'] ) ); ?></span>
             </div>
 
             <!-- 5. Operating Expenses -->
             <div class="scogs-kpi-card">
-                <span class="scogs-kpi-title"><?php esc_html_e( '5. Operating Expenses', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-kpi-title"><?php esc_html_e( '5. Operating Expenses', 'marketpulse-cogs-profit' ); ?></span>
                 <span class="scogs-kpi-num scogs-cost-text">&minus;<?php echo wp_kses_post( wc_price( $operating_expenses ) ); ?></span>
-                <span class="scogs-kpi-sub"><a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=expenses' ) ); ?>"><?php esc_html_e( 'Manage Ads, Rent, Server &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?></a></span>
+                <span class="scogs-kpi-sub"><a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=expenses' ) ); ?>"><?php esc_html_e( 'Manage Ads, Rent, Server &rarr;', 'marketpulse-cogs-profit' ); ?></a></span>
             </div>
 
             <!-- 6. True Net Profit / Loss -->
             <div class="scogs-kpi-card scogs-kpi-highlight <?php echo esc_attr( $net_card_class ); ?>">
                 <span class="scogs-kpi-title"><?php echo esc_html( $net_card_title ); ?></span>
                 <span class="scogs-kpi-num"><?php echo wp_kses_post( wc_price( $true_net_profit ) ); ?></span>
-                <span class="scogs-badge <?php echo esc_attr( $net_badge_class ); ?>"><?php echo esc_html( round( $true_net_margin, 1 ) ); ?>% <?php esc_html_e( 'Net Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-badge <?php echo esc_attr( $net_badge_class ); ?>"><?php echo esc_html( round( $true_net_margin, 1 ) ); ?>% <?php esc_html_e( 'Net Margin', 'marketpulse-cogs-profit' ); ?></span>
             </div>
         </div>
 
@@ -265,7 +265,7 @@ class SCOGS_Reports {
             <div class="scogs-table-card">
                 <h3 class="scogs-card-heading">
                     <span class="dashicons dashicons-awards" style="color:#10b981;"></span> 
-                    <?php esc_html_e( 'Top 5 Most Profitable Products', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <?php esc_html_e( 'Top 5 Most Profitable Products', 'marketpulse-cogs-profit' ); ?>
                 </h3>
                 <?php self::render_top_products_table( $start_date, $end_date, 'DESC' ); ?>
             </div>
@@ -274,7 +274,7 @@ class SCOGS_Reports {
             <div class="scogs-table-card">
                 <h3 class="scogs-card-heading">
                     <span class="dashicons dashicons-warning" style="color:#ef4444;"></span> 
-                    <?php esc_html_e( 'Lowest Margin Products (Requires Attention)', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <?php esc_html_e( 'Lowest Margin Products (Requires Attention)', 'marketpulse-cogs-profit' ); ?>
                 </h3>
                 <?php self::render_top_products_table( $start_date, $end_date, 'ASC' ); ?>
             </div>
@@ -297,20 +297,20 @@ class SCOGS_Reports {
             <div class="scogs-two-col-grid">
                 <!-- Add Expense Form -->
                 <div class="scogs-form-card">
-                    <h3><?php esc_html_e( 'Add Operating Expense', 'simple-cost-of-goods-for-woocommerce' ); ?></h3>
-                    <p class="description"><?php esc_html_e( 'Record overhead costs like Meta ads, server bills, salaries or packaging to deduct from monthly gross profit.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <h3><?php esc_html_e( 'Add Operating Expense', 'marketpulse-cogs-profit' ); ?></h3>
+                    <p class="description"><?php esc_html_e( 'Record overhead costs like Meta ads, server bills, salaries or packaging to deduct from monthly gross profit.', 'marketpulse-cogs-profit' ); ?></p>
                     
                     <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
                         <?php wp_nonce_field( 'scogs_add_expense_nonce' ); ?>
                         <input type="hidden" name="action" value="scogs_add_expense">
 
                         <p>
-                            <label for="expense_date"><strong><?php esc_html_e( 'Expense Date:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong></label><br>
+                            <label for="expense_date"><strong><?php esc_html_e( 'Expense Date:', 'marketpulse-cogs-profit' ); ?></strong></label><br>
                             <input type="date" id="expense_date" name="expense_date" value="<?php echo esc_attr( current_time( 'Y-m-d' ) ); ?>" class="widefat" required>
                         </p>
 
                         <p>
-                            <label for="category"><strong><?php esc_html_e( 'Category:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong></label><br>
+                            <label for="category"><strong><?php esc_html_e( 'Category:', 'marketpulse-cogs-profit' ); ?></strong></label><br>
                             <select id="category" name="category" class="widefat">
                                 <?php foreach ( $categories as $key => $label ) : ?>
                                     <option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $label ); ?></option>
@@ -319,44 +319,44 @@ class SCOGS_Reports {
                         </p>
 
                         <p>
-                            <label for="title"><strong><?php esc_html_e( 'Expense Title:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong></label><br>
-                            <input type="text" id="title" name="title" placeholder="<?php esc_attr_e( 'e.g. Facebook Ads Campaign #12', 'simple-cost-of-goods-for-woocommerce' ); ?>" class="widefat" required>
+                            <label for="title"><strong><?php esc_html_e( 'Expense Title:', 'marketpulse-cogs-profit' ); ?></strong></label><br>
+                            <input type="text" id="title" name="title" placeholder="<?php esc_attr_e( 'e.g. Facebook Ads Campaign #12', 'marketpulse-cogs-profit' ); ?>" class="widefat" required>
                         </p>
 
                         <p>
-                            <label for="amount"><strong><?php esc_html_e( 'Amount:', 'simple-cost-of-goods-for-woocommerce' ); ?> (<?php echo esc_html( get_woocommerce_currency_symbol() ); ?>)</strong></label><br>
+                            <label for="amount"><strong><?php esc_html_e( 'Amount:', 'marketpulse-cogs-profit' ); ?> (<?php echo esc_html( get_woocommerce_currency_symbol() ); ?>)</strong></label><br>
                             <input type="number" step="0.01" min="0.01" id="amount" name="amount" placeholder="0.00" class="widefat" required>
                         </p>
 
                         <p>
-                            <label for="notes"><strong><?php esc_html_e( 'Notes / Reference (Optional):', 'simple-cost-of-goods-for-woocommerce' ); ?></strong></label><br>
-                            <textarea id="notes" name="notes" rows="2" class="widefat" placeholder="<?php esc_attr_e( 'Invoice number, transaction ID, or details...', 'simple-cost-of-goods-for-woocommerce' ); ?>"></textarea>
+                            <label for="notes"><strong><?php esc_html_e( 'Notes / Reference (Optional):', 'marketpulse-cogs-profit' ); ?></strong></label><br>
+                            <textarea id="notes" name="notes" rows="2" class="widefat" placeholder="<?php esc_attr_e( 'Invoice number, transaction ID, or details...', 'marketpulse-cogs-profit' ); ?>"></textarea>
                         </p>
 
-                        <button type="submit" class="button button-primary"><?php esc_html_e( 'Save Expense', 'simple-cost-of-goods-for-woocommerce' ); ?></button>
+                        <button type="submit" class="button button-primary"><?php esc_html_e( 'Save Expense', 'marketpulse-cogs-profit' ); ?></button>
                     </form>
                 </div>
 
                 <!-- Expense History Table -->
                 <div class="scogs-table-card">
                     <div class="scogs-table-header-flex">
-                        <h3><?php esc_html_e( 'Expense Ledger', 'simple-cost-of-goods-for-woocommerce' ); ?></h3>
-                        <span class="scogs-badge scogs-badge-blue"><?php esc_html_e( 'Total Logged:', 'simple-cost-of-goods-for-woocommerce' ); ?> <?php echo wp_kses_post( wc_price( $total ) ); ?></span>
+                        <h3><?php esc_html_e( 'Expense Ledger', 'marketpulse-cogs-profit' ); ?></h3>
+                        <span class="scogs-badge scogs-badge-blue"><?php esc_html_e( 'Total Logged:', 'marketpulse-cogs-profit' ); ?> <?php echo wp_kses_post( wc_price( $total ) ); ?></span>
                     </div>
 
                     <?php if ( empty( $expenses ) ) : ?>
                         <p class="scogs-muted" style="padding: 20px; text-align:center;">
-                            <?php esc_html_e( 'No operating expenses logged yet. Add your first marketing or overhead expense using the form on the left.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            <?php esc_html_e( 'No operating expenses logged yet. Add your first marketing or overhead expense using the form on the left.', 'marketpulse-cogs-profit' ); ?>
                         </p>
                     <?php else : ?>
                         <table class="wp-list-table widefat fixed striped">
                             <thead>
                                 <tr>
-                                    <th style="width: 100px;"><?php esc_html_e( 'Date', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
-                                    <th><?php esc_html_e( 'Category', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
-                                    <th><?php esc_html_e( 'Title', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
-                                    <th style="width: 100px; text-align:right;"><?php esc_html_e( 'Amount', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
-                                    <th style="width: 60px; text-align:center;"><?php esc_html_e( 'Action', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
+                                    <th style="width: 100px;"><?php esc_html_e( 'Date', 'marketpulse-cogs-profit' ); ?></th>
+                                    <th><?php esc_html_e( 'Category', 'marketpulse-cogs-profit' ); ?></th>
+                                    <th><?php esc_html_e( 'Title', 'marketpulse-cogs-profit' ); ?></th>
+                                    <th style="width: 100px; text-align:right;"><?php esc_html_e( 'Amount', 'marketpulse-cogs-profit' ); ?></th>
+                                    <th style="width: 60px; text-align:center;"><?php esc_html_e( 'Action', 'marketpulse-cogs-profit' ); ?></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -370,7 +370,7 @@ class SCOGS_Reports {
                                     <td><strong><?php echo esc_html( $row->title ); ?></strong></td>
                                     <td style="text-align:right; font-weight:600; color:#b91c1c;">&minus;<?php echo wp_kses_post( wc_price( $row->amount ) ); ?></td>
                                     <td style="text-align:center;">
-                                        <a href="<?php echo esc_url( $delete_url ); ?>" onclick="return confirm('<?php esc_attr_e( 'Delete this expense entry?', 'simple-cost-of-goods-for-woocommerce' ); ?>');" style="color:#ef4444;">
+                                        <a href="<?php echo esc_url( $delete_url ); ?>" onclick="return confirm('<?php esc_attr_e( 'Delete this expense entry?', 'marketpulse-cogs-profit' ); ?>');" style="color:#ef4444;">
                                             <span class="dashicons dashicons-trash"></span>
                                         </a>
                                     </td>
@@ -399,15 +399,15 @@ class SCOGS_Reports {
                 if ( isset( $_GET['saved'] ) ) :
                 ?>
                     <div class="notice notice-success is-dismissible" style="margin: 0 0 16px 0;">
-                        <p><strong><?php esc_html_e( 'Payment gateway fee rules saved successfully.', 'simple-cost-of-goods-for-woocommerce' ); ?></strong></p>
+                        <p><strong><?php esc_html_e( 'Payment gateway fee rules saved successfully.', 'marketpulse-cogs-profit' ); ?></strong></p>
                     </div>
                 <?php endif; ?>
 
                 <div class="scogs-table-header-flex">
                     <div>
-                        <h3><?php esc_html_e( 'Payment Gateway Fee Auto-Detection', 'simple-cost-of-goods-for-woocommerce' ); ?></h3>
+                        <h3><?php esc_html_e( 'Payment Gateway Fee Auto-Detection', 'marketpulse-cogs-profit' ); ?></h3>
                         <p class="description" style="margin: 4px 0 0 0;">
-                            <?php esc_html_e( 'The plugin automatically detects active payment gateways in your store and auto-fills standard market transaction rates (e.g. Stripe 2.9% + $0.30, PayPal 3.49%, bKash 1.5%). You can adjust them anytime to match your negotiated terms.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            <?php esc_html_e( 'The plugin automatically detects active payment gateways in your store and auto-fills standard market transaction rates (e.g. Stripe 2.9% + $0.30, PayPal 3.49%, bKash 1.5%). You can adjust them anytime to match your negotiated terms.', 'marketpulse-cogs-profit' ); ?>
                         </p>
                     </div>
                 </div>
@@ -419,9 +419,9 @@ class SCOGS_Reports {
                     <table class="wp-list-table widefat fixed striped" style="margin-top:16px;">
                         <thead>
                             <tr>
-                                <th><?php esc_html_e( 'Payment Gateway', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
-                                <th style="width: 170px;"><?php esc_html_e( 'Percentage Fee (%)', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
-                                <th style="width: 170px;"><?php esc_html_e( 'Fixed Fee', 'simple-cost-of-goods-for-woocommerce' ); ?> (<?php echo esc_html( $currency ); ?>)</th>
+                                <th><?php esc_html_e( 'Payment Gateway', 'marketpulse-cogs-profit' ); ?></th>
+                                <th style="width: 170px;"><?php esc_html_e( 'Percentage Fee (%)', 'marketpulse-cogs-profit' ); ?></th>
+                                <th style="width: 170px;"><?php esc_html_e( 'Fixed Fee', 'marketpulse-cogs-profit' ); ?> (<?php echo esc_html( $currency ); ?>)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -433,9 +433,9 @@ class SCOGS_Reports {
                                     <strong><?php echo esc_html( $data['title'] ); ?></strong>
                                     <code><?php echo esc_html( $gateway_id ); ?></code>
                                     <?php if ( $data['enabled'] ) : ?>
-                                        <span class="scogs-badge scogs-badge-green"><?php esc_html_e( 'Active', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                                        <span class="scogs-badge scogs-badge-green"><?php esc_html_e( 'Active', 'marketpulse-cogs-profit' ); ?></span>
                                     <?php else : ?>
-                                        <span class="scogs-badge" style="background:#f1f5f9; color:#94a3b8;"><?php esc_html_e( 'Inactive', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                                        <span class="scogs-badge" style="background:#f1f5f9; color:#94a3b8;"><?php esc_html_e( 'Inactive', 'marketpulse-cogs-profit' ); ?></span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
@@ -456,7 +456,7 @@ class SCOGS_Reports {
                     </table>
 
                     <p style="margin-top: 18px;">
-                        <button type="submit" class="button button-primary"><?php esc_html_e( 'Save Gateway Rules', 'simple-cost-of-goods-for-woocommerce' ); ?></button>
+                        <button type="submit" class="button button-primary"><?php esc_html_e( 'Save Gateway Rules', 'marketpulse-cogs-profit' ); ?></button>
                     </p>
                 </form>
             </div>
@@ -484,20 +484,20 @@ class SCOGS_Reports {
             <div class="scogs-two-col-grid">
                 <!-- Supplier List -->
                 <div class="scogs-table-card">
-                    <h3><?php esc_html_e( 'Active Suppliers & Distributors', 'simple-cost-of-goods-for-woocommerce' ); ?></h3>
-                    <p class="description"><?php esc_html_e( 'Suppliers currently linked to your product catalog.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <h3><?php esc_html_e( 'Active Suppliers & Distributors', 'marketpulse-cogs-profit' ); ?></h3>
+                    <p class="description"><?php esc_html_e( 'Suppliers currently linked to your product catalog.', 'marketpulse-cogs-profit' ); ?></p>
 
                     <?php if ( empty( $suppliers ) ) : ?>
                         <p class="scogs-muted" style="padding: 20px; text-align:center;">
-                            <?php esc_html_e( 'No suppliers assigned yet. You can assign suppliers on product edit screens or via CSV import.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            <?php esc_html_e( 'No suppliers assigned yet. You can assign suppliers on product edit screens or via CSV import.', 'marketpulse-cogs-profit' ); ?>
                         </p>
                     <?php else : ?>
                         <table class="wp-list-table widefat fixed striped">
                             <thead>
                                 <tr>
-                                    <th><?php esc_html_e( 'Supplier Name', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
-                                    <th style="width: 120px; text-align:center;"><?php esc_html_e( 'Products Linked', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
-                                    <th style="width: 100px; text-align:center;"><?php esc_html_e( 'Action', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
+                                    <th><?php esc_html_e( 'Supplier Name', 'marketpulse-cogs-profit' ); ?></th>
+                                    <th style="width: 120px; text-align:center;"><?php esc_html_e( 'Products Linked', 'marketpulse-cogs-profit' ); ?></th>
+                                    <th style="width: 100px; text-align:center;"><?php esc_html_e( 'Action', 'marketpulse-cogs-profit' ); ?></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -508,7 +508,7 @@ class SCOGS_Reports {
                                     <td><strong><?php echo esc_html( $sup->supplier_name ); ?></strong></td>
                                     <td style="text-align:center;"><span class="scogs-badge scogs-badge-blue"><?php echo esc_html( $sup->product_count ); ?></span></td>
                                     <td style="text-align:center;">
-                                        <a href="<?php echo esc_url( $filter_url ); ?>" class="button button-small"><?php esc_html_e( 'View Products', 'simple-cost-of-goods-for-woocommerce' ); ?></a>
+                                        <a href="<?php echo esc_url( $filter_url ); ?>" class="button button-small"><?php esc_html_e( 'View Products', 'marketpulse-cogs-profit' ); ?></a>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -519,24 +519,24 @@ class SCOGS_Reports {
 
                 <!-- Bulk CSV Import / Export Card -->
                 <div class="scogs-form-card">
-                    <h3><?php esc_html_e( 'Bulk CSV Inventory Tools', 'simple-cost-of-goods-for-woocommerce' ); ?></h3>
+                    <h3><?php esc_html_e( 'Bulk CSV Inventory Tools', 'marketpulse-cogs-profit' ); ?></h3>
                     <p class="description">
-                        <?php esc_html_e( 'MarketPulse hooks seamlessly into WooCommerce’s native CSV Importer and Exporter. You can bulk update wholesale costs and supplier names for thousands of products in Excel or Google Sheets.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        <?php esc_html_e( 'MarketPulse hooks seamlessly into WooCommerce’s native CSV Importer and Exporter. You can bulk update wholesale costs and supplier names for thousands of products in Excel or Google Sheets.', 'marketpulse-cogs-profit' ); ?>
                     </p>
 
                     <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; margin: 16px 0;">
-                        <h4><?php esc_html_e( '1. Export Your Catalog to CSV', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                        <p><?php esc_html_e( 'Exports your entire catalog with dedicated "Cost of Goods (COGS)" and "Supplier" columns ready for editing.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                        <h4><?php esc_html_e( '1. Export Your Catalog to CSV', 'marketpulse-cogs-profit' ); ?></h4>
+                        <p><?php esc_html_e( 'Exports your entire catalog with dedicated "Cost of Goods (COGS)" and "Supplier" columns ready for editing.', 'marketpulse-cogs-profit' ); ?></p>
                         <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=product&page=product_exporter' ) ); ?>" class="button button-secondary">
-                            <?php esc_html_e( 'Export Products to CSV &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            <?php esc_html_e( 'Export Products to CSV &rarr;', 'marketpulse-cogs-profit' ); ?>
                         </a>
                     </div>
 
                     <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; margin-bottom: 16px;">
-                        <h4><?php esc_html_e( '2. Import Updated CSV File', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                        <p><?php esc_html_e( 'Upload your modified CSV. Existing products will have their cost prices and suppliers updated automatically.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                        <h4><?php esc_html_e( '2. Import Updated CSV File', 'marketpulse-cogs-profit' ); ?></h4>
+                        <p><?php esc_html_e( 'Upload your modified CSV. Existing products will have their cost prices and suppliers updated automatically.', 'marketpulse-cogs-profit' ); ?></p>
                         <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=product&page=product_importer' ) ); ?>" class="button button-primary">
-                            <?php esc_html_e( 'Import Products from CSV &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            <?php esc_html_e( 'Import Products from CSV &rarr;', 'marketpulse-cogs-profit' ); ?>
                         </a>
                     </div>
                 </div>
@@ -557,10 +557,10 @@ class SCOGS_Reports {
             <div class="scogs-guide-hero">
                 <div class="scogs-hero-flex">
                     <div class="scogs-hero-content">
-                        <span class="scogs-hero-pill"><?php esc_html_e( 'OFFICIAL DOCUMENTATION & KNOWLEDGEBASE', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                        <h2><?php esc_html_e( 'How MarketPulse COGS & Profit Works', 'simple-cost-of-goods-for-woocommerce' ); ?></h2>
+                        <span class="scogs-hero-pill"><?php esc_html_e( 'OFFICIAL DOCUMENTATION & KNOWLEDGEBASE', 'marketpulse-cogs-profit' ); ?></span>
+                        <h2><?php esc_html_e( 'How MarketPulse COGS & Profit Works', 'marketpulse-cogs-profit' ); ?></h2>
                         <p>
-                            <?php esc_html_e( 'Welcome! This plugin provides real-time financial transparency for your WooCommerce store by replacing vanity gross revenue with mathematically accurate True Net Profit. Here is everything you need to get started in 60 seconds.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            <?php esc_html_e( 'Welcome! This plugin provides real-time financial transparency for your WooCommerce store by replacing vanity gross revenue with mathematically accurate True Net Profit. Here is everything you need to get started in 60 seconds.', 'marketpulse-cogs-profit' ); ?>
                         </p>
                     </div>
                     <div class="scogs-hero-logo-box">
@@ -572,26 +572,26 @@ class SCOGS_Reports {
             <!-- 60-Second Quick Start Steps -->
             <div class="scogs-guide-card">
                 <h3 class="scogs-guide-section-title">
-                    <span class="dashicons dashicons-clock"></span> <?php esc_html_e( '60-Second Quick Start Guide', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <span class="dashicons dashicons-clock"></span> <?php esc_html_e( '60-Second Quick Start Guide', 'marketpulse-cogs-profit' ); ?>
                 </h3>
                 <div class="scogs-steps-grid">
                     <div class="scogs-step-card">
                         <div class="scogs-step-number">1</div>
-                        <h4><?php esc_html_e( 'Enter Product Costs (COGS)', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                        <p><?php esc_html_e( 'Edit any product or go to Products table. Fill in your wholesale purchase or manufacturing cost in the "Cost Price (COGS)" field.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
-                        <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=product' ) ); ?>" class="button button-small button-secondary"><?php esc_html_e( 'Go to Products &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?></a>
+                        <h4><?php esc_html_e( 'Enter Product Costs (COGS)', 'marketpulse-cogs-profit' ); ?></h4>
+                        <p><?php esc_html_e( 'Edit any product or go to Products table. Fill in your wholesale purchase or manufacturing cost in the "Cost Price (COGS)" field.', 'marketpulse-cogs-profit' ); ?></p>
+                        <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=product' ) ); ?>" class="button button-small button-secondary"><?php esc_html_e( 'Go to Products &rarr;', 'marketpulse-cogs-profit' ); ?></a>
                     </div>
                     <div class="scogs-step-card">
                         <div class="scogs-step-number">2</div>
-                        <h4><?php esc_html_e( 'Automation Takes Over', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                        <p><?php esc_html_e( 'When orders come in, the plugin locks purchase costs, calculates payment gateway fees, and factors in delivery courier deficits.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
-                        <span class="scogs-step-tag"><?php esc_html_e( '100% Zero-Config Automatic', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        <h4><?php esc_html_e( 'Automation Takes Over', 'marketpulse-cogs-profit' ); ?></h4>
+                        <p><?php esc_html_e( 'When orders come in, the plugin locks purchase costs, calculates payment gateway fees, and factors in delivery courier deficits.', 'marketpulse-cogs-profit' ); ?></p>
+                        <span class="scogs-step-tag"><?php esc_html_e( '100% Zero-Config Automatic', 'marketpulse-cogs-profit' ); ?></span>
                     </div>
                     <div class="scogs-step-card">
                         <div class="scogs-step-number">3</div>
-                        <h4><?php esc_html_e( 'Track True Net Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                        <p><?php esc_html_e( 'Visit the Overview tab to view real-time SVG charts, top profit-making items, and generate 1-click audit-ready P&L financial reports.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
-                        <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview' ) ); ?>" class="button button-small button-primary"><?php esc_html_e( 'View Analytics Hub &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?></a>
+                        <h4><?php esc_html_e( 'Track True Net Profit', 'marketpulse-cogs-profit' ); ?></h4>
+                        <p><?php esc_html_e( 'Visit the Overview tab to view real-time SVG charts, top profit-making items, and generate 1-click audit-ready P&L financial reports.', 'marketpulse-cogs-profit' ); ?></p>
+                        <a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=overview' ) ); ?>" class="button button-small button-primary"><?php esc_html_e( 'View Analytics Hub &rarr;', 'marketpulse-cogs-profit' ); ?></a>
                     </div>
                 </div>
             </div>
@@ -603,13 +603,13 @@ class SCOGS_Reports {
                     <div class="scogs-feat-icon" style="background:#dbeafe; color:#2563eb;">
                         <span class="dashicons dashicons-tag"></span>
                     </div>
-                    <h4><?php esc_html_e( '1. Managing Product Cost Prices', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                    <p><?php esc_html_e( 'You can manage product costs in 4 convenient ways:', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <h4><?php esc_html_e( '1. Managing Product Cost Prices', 'marketpulse-cogs-profit' ); ?></h4>
+                    <p><?php esc_html_e( 'You can manage product costs in 4 convenient ways:', 'marketpulse-cogs-profit' ); ?></p>
                     <ul>
-                        <li><strong><?php esc_html_e( 'Single Products:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Enter cost in Product Data > General tab. See instant gross margin % preview.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
-                        <li><strong><?php esc_html_e( 'Variable Products:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Set distinct costs per variation inside the Variations tab.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
-                        <li><strong><?php esc_html_e( 'Quick Edit & Bulk Edit:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Update Cost and Supplier directly on the Products list table without opening each page.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
-                        <li><strong><?php esc_html_e( 'Native CSV Tools:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Use WooCommerce Product CSV Exporter/Importer to update thousands of items in Excel.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                        <li><strong><?php esc_html_e( 'Single Products:', 'marketpulse-cogs-profit' ); ?></strong> <?php esc_html_e( 'Enter cost in Product Data > General tab. See instant gross margin % preview.', 'marketpulse-cogs-profit' ); ?></li>
+                        <li><strong><?php esc_html_e( 'Variable Products:', 'marketpulse-cogs-profit' ); ?></strong> <?php esc_html_e( 'Set distinct costs per variation inside the Variations tab.', 'marketpulse-cogs-profit' ); ?></li>
+                        <li><strong><?php esc_html_e( 'Quick Edit & Bulk Edit:', 'marketpulse-cogs-profit' ); ?></strong> <?php esc_html_e( 'Update Cost and Supplier directly on the Products list table without opening each page.', 'marketpulse-cogs-profit' ); ?></li>
+                        <li><strong><?php esc_html_e( 'Native CSV Tools:', 'marketpulse-cogs-profit' ); ?></strong> <?php esc_html_e( 'Use WooCommerce Product CSV Exporter/Importer to update thousands of items in Excel.', 'marketpulse-cogs-profit' ); ?></li>
                     </ul>
                 </div>
 
@@ -618,12 +618,12 @@ class SCOGS_Reports {
                     <div class="scogs-feat-icon" style="background:#fef3c7; color:#d97706;">
                         <span class="dashicons dashicons-cart"></span>
                     </div>
-                    <h4><?php esc_html_e( '2. Payment Gateway Commission Auto-Detection', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                    <p><?php esc_html_e( 'Payment processors deduct transaction fees before depositing funds into your bank account. The plugin tracks this automatically:', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <h4><?php esc_html_e( '2. Payment Gateway Commission Auto-Detection', 'marketpulse-cogs-profit' ); ?></h4>
+                    <p><?php esc_html_e( 'Payment processors deduct transaction fees before depositing funds into your bank account. The plugin tracks this automatically:', 'marketpulse-cogs-profit' ); ?></p>
                     <ul>
-                        <li><strong><?php esc_html_e( 'Standard Market Rates Pre-Configured:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Stripe (2.9% + $0.30), PayPal (3.49% + $0.49), bKash (1.5%), Cash on Delivery (0%).', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
-                        <li><strong><?php esc_html_e( 'Zero Setup Needed:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'You never need to configure anything unless you have custom negotiated volume rates.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
-                        <li><strong><?php esc_html_e( 'Historical Order Integrity:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Changing rates in settings only affects new orders. Past accounting is permanently protected.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                        <li><strong><?php esc_html_e( 'Standard Market Rates Pre-Configured:', 'marketpulse-cogs-profit' ); ?></strong> <?php esc_html_e( 'Stripe (2.9% + $0.30), PayPal (3.49% + $0.49), bKash (1.5%), Cash on Delivery (0%).', 'marketpulse-cogs-profit' ); ?></li>
+                        <li><strong><?php esc_html_e( 'Zero Setup Needed:', 'marketpulse-cogs-profit' ); ?></strong> <?php esc_html_e( 'You never need to configure anything unless you have custom negotiated volume rates.', 'marketpulse-cogs-profit' ); ?></li>
+                        <li><strong><?php esc_html_e( 'Historical Order Integrity:', 'marketpulse-cogs-profit' ); ?></strong> <?php esc_html_e( 'Changing rates in settings only affects new orders. Past accounting is permanently protected.', 'marketpulse-cogs-profit' ); ?></li>
                     </ul>
                 </div>
 
@@ -632,11 +632,11 @@ class SCOGS_Reports {
                     <div class="scogs-feat-icon" style="background:#fee2e2; color:#dc2626;">
                         <span class="dashicons dashicons-building"></span>
                     </div>
-                    <h4><?php esc_html_e( '3. Business Operating Expenses Ledger', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                    <p><?php esc_html_e( 'A store can be gross profit positive while actually losing money due to heavy ad spend and overhead:', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <h4><?php esc_html_e( '3. Business Operating Expenses Ledger', 'marketpulse-cogs-profit' ); ?></h4>
+                    <p><?php esc_html_e( 'A store can be gross profit positive while actually losing money due to heavy ad spend and overhead:', 'marketpulse-cogs-profit' ); ?></p>
                     <ul>
-                        <li><strong><?php esc_html_e( 'Track All Overhead:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Log Facebook/Google Ads, store hosting, warehouse rent, packaging supplies, and salaries.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
-                        <li><strong><?php esc_html_e( 'True Net Profit Calculation:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Operating expenses are subtracted from gross profit across selected date ranges to reveal real take-home cash.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                        <li><strong><?php esc_html_e( 'Track All Overhead:', 'marketpulse-cogs-profit' ); ?></strong> <?php esc_html_e( 'Log Facebook/Google Ads, store hosting, warehouse rent, packaging supplies, and salaries.', 'marketpulse-cogs-profit' ); ?></li>
+                        <li><strong><?php esc_html_e( 'True Net Profit Calculation:', 'marketpulse-cogs-profit' ); ?></strong> <?php esc_html_e( 'Operating expenses are subtracted from gross profit across selected date ranges to reveal real take-home cash.', 'marketpulse-cogs-profit' ); ?></li>
                     </ul>
                 </div>
 
@@ -645,11 +645,11 @@ class SCOGS_Reports {
                     <div class="scogs-feat-icon" style="background:#dcfce7; color:#15803d;">
                         <span class="dashicons dashicons-car"></span>
                     </div>
-                    <h4><?php esc_html_e( '4. Courier Shipping Deficit Tracking', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                    <p><?php esc_html_e( 'Hidden shipping losses are one of the biggest profit killers for WooCommerce merchants:', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <h4><?php esc_html_e( '4. Courier Shipping Deficit Tracking', 'marketpulse-cogs-profit' ); ?></h4>
+                    <p><?php esc_html_e( 'Hidden shipping losses are one of the biggest profit killers for WooCommerce merchants:', 'marketpulse-cogs-profit' ); ?></p>
                     <ul>
-                        <li><strong><?php esc_html_e( 'The Problem:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'You charge customer $5.00 flat shipping, but DHL or Pathao charges you $8.00. You lose $3.00 on delivery.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
-                        <li><strong><?php esc_html_e( 'The Solution:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'Input actual courier cost in the order edit sidebar. The $3.00 deficit is automatically subtracted from order net profit.', 'simple-cost-of-goods-for-woocommerce' ); ?></li>
+                        <li><strong><?php esc_html_e( 'The Problem:', 'marketpulse-cogs-profit' ); ?></strong> <?php esc_html_e( 'You charge customer $5.00 flat shipping, but DHL or Pathao charges you $8.00. You lose $3.00 on delivery.', 'marketpulse-cogs-profit' ); ?></li>
+                        <li><strong><?php esc_html_e( 'The Solution:', 'marketpulse-cogs-profit' ); ?></strong> <?php esc_html_e( 'Input actual courier cost in the order edit sidebar. The $3.00 deficit is automatically subtracted from order net profit.', 'marketpulse-cogs-profit' ); ?></li>
                     </ul>
                 </div>
             </div>
@@ -657,29 +657,29 @@ class SCOGS_Reports {
             <!-- Mathematical Core Formulas -->
             <div class="scogs-guide-card">
                 <h3 class="scogs-guide-section-title">
-                    <span class="dashicons dashicons-calculator"></span> <?php esc_html_e( 'The 5 Standard Accounting Formulas Explained', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <span class="dashicons dashicons-calculator"></span> <?php esc_html_e( 'The 5 Standard Accounting Formulas Explained', 'marketpulse-cogs-profit' ); ?>
                 </h3>
                 <div class="scogs-formula-list">
                     <div class="scogs-formula-row">
                         <span class="scogs-f-badge">1</span>
-                        <div class="scogs-f-name"><strong><?php esc_html_e( 'Gross Revenue', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> = &sum; (Product Price &times; Quantity Sold)</div>
+                        <div class="scogs-f-name"><strong><?php esc_html_e( 'Gross Revenue', 'marketpulse-cogs-profit' ); ?></strong> = &sum; (Product Price &times; Quantity Sold)</div>
                     </div>
                     <div class="scogs-formula-row">
                         <span class="scogs-f-badge">2</span>
-                        <div class="scogs-f-name"><strong><?php esc_html_e( 'Total COGS', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> = &sum; (Unit Purchase Cost &times; Quantity Sold)</div>
+                        <div class="scogs-f-name"><strong><?php esc_html_e( 'Total COGS', 'marketpulse-cogs-profit' ); ?></strong> = &sum; (Unit Purchase Cost &times; Quantity Sold)</div>
                     </div>
                     <div class="scogs-formula-row">
                         <span class="scogs-f-badge">3</span>
-                        <div class="scogs-f-name"><strong><?php esc_html_e( 'Gross Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> = Gross Revenue &minus; Order Discounts &minus; Total COGS</div>
+                        <div class="scogs-f-name"><strong><?php esc_html_e( 'Gross Profit', 'marketpulse-cogs-profit' ); ?></strong> = Gross Revenue &minus; Order Discounts &minus; Total COGS</div>
                     </div>
                     <div class="scogs-formula-row">
                         <span class="scogs-f-badge">4</span>
-                        <div class="scogs-f-name"><strong><?php esc_html_e( 'Shipping Courier Deficit', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> = Max( 0, Actual Courier Cost &minus; Customer Shipping Paid )</div>
+                        <div class="scogs-f-name"><strong><?php esc_html_e( 'Shipping Courier Deficit', 'marketpulse-cogs-profit' ); ?></strong> = Max( 0, Actual Courier Cost &minus; Customer Shipping Paid )</div>
                     </div>
                     <div class="scogs-formula-row scogs-f-highlight">
                         <span class="scogs-f-badge scogs-f-gold">5</span>
                         <div class="scogs-f-name">
-                            <strong><?php esc_html_e( 'True Net Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> = Gross Profit &minus; Gateway Fees &minus; Shipping Deficit &minus; Operating Expenses
+                            <strong><?php esc_html_e( 'True Net Profit', 'marketpulse-cogs-profit' ); ?></strong> = Gross Profit &minus; Gateway Fees &minus; Shipping Deficit &minus; Operating Expenses
                         </div>
                     </div>
                 </div>
@@ -688,32 +688,32 @@ class SCOGS_Reports {
             <!-- Frequently Asked Questions (FAQ) -->
             <div class="scogs-guide-card">
                 <h3 class="scogs-guide-section-title">
-                    <span class="dashicons dashicons-editor-help"></span> <?php esc_html_e( 'Frequently Asked Questions (FAQ)', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <span class="dashicons dashicons-editor-help"></span> <?php esc_html_e( 'Frequently Asked Questions (FAQ)', 'marketpulse-cogs-profit' ); ?>
                 </h3>
                 <div class="scogs-faq-grid">
                     <div class="scogs-faq-item">
-                        <h4><?php esc_html_e( 'Do I need to manually configure payment gateway fees?', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                        <p><?php esc_html_e( 'No. The plugin includes a built-in knowledge base of standard rates for Stripe, PayPal, Square, bKash, and COD. You only need to edit them if you have negotiated custom volume discounts with your processor.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                        <h4><?php esc_html_e( 'Do I need to manually configure payment gateway fees?', 'marketpulse-cogs-profit' ); ?></h4>
+                        <p><?php esc_html_e( 'No. The plugin includes a built-in knowledge base of standard rates for Stripe, PayPal, Square, bKash, and COD. You only need to edit them if you have negotiated custom volume discounts with your processor.', 'marketpulse-cogs-profit' ); ?></p>
                     </div>
                     <div class="scogs-faq-item">
-                        <h4><?php esc_html_e( 'If I change a product cost price today, will it alter past order profits?', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                        <p><?php esc_html_e( 'Never! When an order is completed, its financials (cost, gateway fees, courier deficit, net profit) are locked permanently into that order’s metadata. Changing prices today will only apply to future orders.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                        <h4><?php esc_html_e( 'If I change a product cost price today, will it alter past order profits?', 'marketpulse-cogs-profit' ); ?></h4>
+                        <p><?php esc_html_e( 'Never! When an order is completed, its financials (cost, gateway fees, courier deficit, net profit) are locked permanently into that order’s metadata. Changing prices today will only apply to future orders.', 'marketpulse-cogs-profit' ); ?></p>
                     </div>
                     <div class="scogs-faq-item">
-                        <h4><?php esc_html_e( 'How do I export financial reports for my accountant or tax filing?', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                        <p><?php esc_html_e( 'Open the Overview & Charts tab, choose your desired date range (e.g. This Month, Last Month, or Custom), and click the "Export P&L (CSV)" button. It generates a UTF-8 financial statement ready for Excel.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                        <h4><?php esc_html_e( 'How do I export financial reports for my accountant or tax filing?', 'marketpulse-cogs-profit' ); ?></h4>
+                        <p><?php esc_html_e( 'Open the Overview & Charts tab, choose your desired date range (e.g. This Month, Last Month, or Custom), and click the "Export P&L (CSV)" button. It generates a UTF-8 financial statement ready for Excel.', 'marketpulse-cogs-profit' ); ?></p>
                     </div>
                     <div class="scogs-faq-item">
-                        <h4><?php esc_html_e( 'Does this plugin slow down my storefront or customer checkout?', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                        <p><?php esc_html_e( 'Zero milliseconds. The plugin loads 0 JavaScript and 0 CSS on your customer-facing storefront. All calculations run strictly in the admin dashboard and during order processing.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                        <h4><?php esc_html_e( 'Does this plugin slow down my storefront or customer checkout?', 'marketpulse-cogs-profit' ); ?></h4>
+                        <p><?php esc_html_e( 'Zero milliseconds. The plugin loads 0 JavaScript and 0 CSS on your customer-facing storefront. All calculations run strictly in the admin dashboard and during order processing.', 'marketpulse-cogs-profit' ); ?></p>
                     </div>
                     <div class="scogs-faq-item">
-                        <h4><?php esc_html_e( 'What is MarketPulse AI Dynamic Repricing?', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                        <p><?php esc_html_e( 'Keeping static product prices causes you to lose sales when rivals undercut you, and forfeits 15%–25% extra profit when rivals run out of stock. MarketPulse AI monitors 100+ stores 24/7 to reprice your products automatically while strictly honoring your COGS floor.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                        <h4><?php esc_html_e( 'What is MarketPulse AI Dynamic Repricing?', 'marketpulse-cogs-profit' ); ?></h4>
+                        <p><?php esc_html_e( 'Keeping static product prices causes you to lose sales when rivals undercut you, and forfeits 15%–25% extra profit when rivals run out of stock. MarketPulse AI monitors 100+ stores 24/7 to reprice your products automatically while strictly honoring your COGS floor.', 'marketpulse-cogs-profit' ); ?></p>
                     </div>
                     <div class="scogs-faq-item">
-                        <h4><?php esc_html_e( 'Where can I get help or report an issue?', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                        <p><?php esc_html_e( 'You can reach out directly to the NexForge AI support team at support@usemarketpulse.com or join our merchant community at usemarketpulse.com.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                        <h4><?php esc_html_e( 'Where can I get help or report an issue?', 'marketpulse-cogs-profit' ); ?></h4>
+                        <p><?php esc_html_e( 'You can reach out directly to the NexForge AI support team at support@usemarketpulse.com or join our merchant community at usemarketpulse.com.', 'marketpulse-cogs-profit' ); ?></p>
                     </div>
                 </div>
             </div>
@@ -721,11 +721,11 @@ class SCOGS_Reports {
             <!-- Call to action footer -->
             <div class="scogs-guide-cta-card">
                 <div class="scogs-gcta-text">
-                    <h3><?php esc_html_e( 'Ready to take your profitability to the next level?', 'simple-cost-of-goods-for-woocommerce' ); ?></h3>
-                    <p><?php esc_html_e( 'Protect your COGS margin floor and beat competitor pricing with MarketPulse AI Repricer.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <h3><?php esc_html_e( 'Ready to take your profitability to the next level?', 'marketpulse-cogs-profit' ); ?></h3>
+                    <p><?php esc_html_e( 'Protect your COGS margin floor and beat competitor pricing with MarketPulse AI Repricer.', 'marketpulse-cogs-profit' ); ?></p>
                 </div>
                 <a href="<?php echo esc_url( $plan_url ); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary scogs-audit-btn">
-                    <?php esc_html_e( 'Claim Free Store Audit & Plan Access &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <?php esc_html_e( 'Claim Free Store Audit & Plan Access &rarr;', 'marketpulse-cogs-profit' ); ?>
                 </a>
             </div>
         </div>
@@ -758,7 +758,7 @@ class SCOGS_Reports {
      */
     public static function handle_save_gateways() {
         if ( ! current_user_can( 'manage_woocommerce' ) ) {
-            wp_die( esc_html__( 'Unauthorized user.', 'simple-cost-of-goods-for-woocommerce' ) );
+            wp_die( esc_html__( 'Unauthorized user.', 'marketpulse-cogs-profit' ) );
         }
 
         check_admin_referer( 'scogs_save_gateways_nonce' );
@@ -789,7 +789,7 @@ class SCOGS_Reports {
      */
     public static function handle_export_financial_csv() {
         if ( ! current_user_can( 'manage_woocommerce' ) ) {
-            wp_die( esc_html__( 'Unauthorized user.', 'simple-cost-of-goods-for-woocommerce' ) );
+            wp_die( esc_html__( 'Unauthorized user.', 'marketpulse-cogs-profit' ) );
         }
 
         check_admin_referer( 'scogs_export_financial_csv_nonce' );
@@ -986,7 +986,7 @@ class SCOGS_Reports {
         }
 
         if ( empty( $product_stats ) ) {
-            echo '<p class="scogs-muted" style="padding:16px; text-align:center;">' . esc_html__( 'No product sales recorded in this date range.', 'simple-cost-of-goods-for-woocommerce' ) . '</p>';
+            echo '<p class="scogs-muted" style="padding:16px; text-align:center;">' . esc_html__( 'No product sales recorded in this date range.', 'marketpulse-cogs-profit' ) . '</p>';
             return;
         }
 
@@ -1001,10 +1001,10 @@ class SCOGS_Reports {
         <table class="wp-list-table widefat fixed striped">
             <thead>
                 <tr>
-                    <th><?php esc_html_e( 'Product', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
-                    <th style="width: 50px; text-align:center;"><?php esc_html_e( 'Sold', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
-                    <th style="width: 80px; text-align:right;"><?php esc_html_e( 'Revenue', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
-                    <th style="width: 80px; text-align:right;"><?php esc_html_e( 'Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></th>
+                    <th><?php esc_html_e( 'Product', 'marketpulse-cogs-profit' ); ?></th>
+                    <th style="width: 50px; text-align:center;"><?php esc_html_e( 'Sold', 'marketpulse-cogs-profit' ); ?></th>
+                    <th style="width: 80px; text-align:right;"><?php esc_html_e( 'Revenue', 'marketpulse-cogs-profit' ); ?></th>
+                    <th style="width: 80px; text-align:right;"><?php esc_html_e( 'Profit', 'marketpulse-cogs-profit' ); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -1016,7 +1016,7 @@ class SCOGS_Reports {
                     <td>
                         <strong><?php echo esc_html( wp_trim_words( $item['name'], 5 ) ); ?></strong><br>
                         <span class="scogs-badge <?php echo esc_attr( $badge ); ?>" style="font-size:10px; padding:1px 5px;">
-                            <?php echo esc_html( round( $margin, 1 ) ); ?>% <?php esc_html_e( 'margin', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            <?php echo esc_html( round( $margin, 1 ) ); ?>% <?php esc_html_e( 'margin', 'marketpulse-cogs-profit' ); ?>
                         </span>
                     </td>
                     <td style="text-align:center;"><?php echo esc_html( $item['qty'] ); ?></td>
@@ -1146,12 +1146,12 @@ class SCOGS_Reports {
             <div class="scogs-chart-header">
                 <div class="scogs-chart-title">
                     <span class="dashicons dashicons-chart-bar" style="color:#2563eb;"></span>
-                    <h3><?php esc_html_e( 'Sales, Cost & Profit Daily Trend', 'simple-cost-of-goods-for-woocommerce' ); ?></h3>
+                    <h3><?php esc_html_e( 'Sales, Cost & Profit Daily Trend', 'marketpulse-cogs-profit' ); ?></h3>
                 </div>
                 <div class="scogs-chart-legend">
-                    <span class="scogs-legend-item"><span class="scogs-legend-color" style="background:#3b82f6;"></span> <?php esc_html_e( 'Gross Revenue', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                    <span class="scogs-legend-item"><span class="scogs-legend-color" style="background:#f59e0b;"></span> <?php esc_html_e( 'Total COGS', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                    <span class="scogs-legend-item"><span class="scogs-legend-color" style="background:#10b981;"></span> <?php esc_html_e( 'Net Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-legend-item"><span class="scogs-legend-color" style="background:#3b82f6;"></span> <?php esc_html_e( 'Gross Revenue', 'marketpulse-cogs-profit' ); ?></span>
+                    <span class="scogs-legend-item"><span class="scogs-legend-color" style="background:#f59e0b;"></span> <?php esc_html_e( 'Total COGS', 'marketpulse-cogs-profit' ); ?></span>
+                    <span class="scogs-legend-item"><span class="scogs-legend-color" style="background:#10b981;"></span> <?php esc_html_e( 'Net Profit', 'marketpulse-cogs-profit' ); ?></span>
                 </div>
             </div>
 
@@ -1195,11 +1195,11 @@ class SCOGS_Reports {
                         $tip_text   = sprintf(
                             "%s\n%s: %s\n%s: -%s\n%s: %s",
                             $day['label'],
-                            esc_html__( 'Revenue', 'simple-cost-of-goods-for-woocommerce' ),
+                            esc_html__( 'Revenue', 'marketpulse-cogs-profit' ),
                             wp_strip_all_tags( wc_price( $day['revenue'] ) ),
-                            esc_html__( 'COGS', 'simple-cost-of-goods-for-woocommerce' ),
+                            esc_html__( 'COGS', 'marketpulse-cogs-profit' ),
                             wp_strip_all_tags( wc_price( $day['cogs'] ) ),
-                            esc_html__( 'Net Profit', 'simple-cost-of-goods-for-woocommerce' ),
+                            esc_html__( 'Net Profit', 'marketpulse-cogs-profit' ),
                             wp_strip_all_tags( wc_price( $day['profit'] ) )
                         );
                         ?>
@@ -1234,7 +1234,7 @@ class SCOGS_Reports {
                     <?php if ( ! $has_data ) : ?>
                         <rect x="<?php echo esc_attr( $pad_left + 40 ); ?>" y="<?php echo esc_attr( $pad_top + 60 ); ?>" width="<?php echo esc_attr( $plot_w - 80 ); ?>" height="70" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" opacity="0.95"></rect>
                         <text x="<?php echo esc_attr( $svg_w / 2 ); ?>" y="<?php echo esc_attr( $pad_top + 100 ); ?>" text-anchor="middle" font-size="13" font-weight="600" fill="#64748b">
-                            <?php esc_html_e( 'No sales recorded in this period yet. Placed orders will automatically appear here.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            <?php esc_html_e( 'No sales recorded in this period yet. Placed orders will automatically appear here.', 'marketpulse-cogs-profit' ); ?>
                         </text>
                     <?php endif; ?>
                 </svg>
@@ -1283,10 +1283,10 @@ class SCOGS_Reports {
                 <div class="scogs-audit-badge-wrap">
                     <img src="<?php echo esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ); ?>" alt="" class="scogs-audit-header-logo" />
                     <span class="scogs-pulse-dot"></span>
-                    <span class="scogs-audit-badge"><?php esc_html_e( 'LIVE STORE AUDIT: ESTIMATED PROFIT LEAK', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-audit-badge"><?php esc_html_e( 'LIVE STORE AUDIT: ESTIMATED PROFIT LEAK', 'marketpulse-cogs-profit' ); ?></span>
                 </div>
                 <div class="scogs-audit-time-tag">
-                    <?php esc_html_e( 'Based on standard e-commerce static vs dynamic pricing benchmarks', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    <?php esc_html_e( 'Based on standard e-commerce static vs dynamic pricing benchmarks', 'marketpulse-cogs-profit' ); ?>
                 </div>
             </div>
 
@@ -1294,19 +1294,19 @@ class SCOGS_Reports {
             <div class="scogs-audit-banner-grid">
                 <div class="scogs-audit-title-col">
                     <h2>
-                        <?php esc_html_e( 'You Left an Estimated', 'simple-cost-of-goods-for-woocommerce' ); ?> 
+                        <?php esc_html_e( 'You Left an Estimated', 'marketpulse-cogs-profit' ); ?> 
                         <span class="scogs-leak-danger-text" id="scogs-headline-loss">&minus;<?php echo wp_kses_post( wc_price( $leak_amount ) ); ?></span>
-                        <?php esc_html_e( 'on the Table This Period', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        <?php esc_html_e( 'on the Table This Period', 'marketpulse-cogs-profit' ); ?>
                     </h2>
                     <p class="scogs-audit-sub">
-                        <?php esc_html_e( 'Static pricing quietly drains margin. When competitors undercut, your paid ad traffic buys from rival stores. When competitors sell out, you forfeit lucrative surge profits.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        <?php esc_html_e( 'Static pricing quietly drains margin. When competitors undercut, your paid ad traffic buys from rival stores. When competitors sell out, you forfeit lucrative surge profits.', 'marketpulse-cogs-profit' ); ?>
                     </p>
                 </div>
 
                 <div class="scogs-audit-stat-card">
-                    <span class="scogs-stat-label"><?php esc_html_e( 'ESTIMATED UNCAPTURED MARGIN', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-stat-label"><?php esc_html_e( 'ESTIMATED UNCAPTURED MARGIN', 'marketpulse-cogs-profit' ); ?></span>
                     <span class="scogs-stat-number scogs-leak-danger-text" id="scogs-card-loss">&minus;<?php echo wp_kses_post( wc_price( $leak_amount ) ); ?></span>
-                    <span class="scogs-stat-foot"><?php esc_html_e( 'Pure cash missed without automated dynamic pricing', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-stat-foot"><?php esc_html_e( 'Pure cash missed without automated dynamic pricing', 'marketpulse-cogs-profit' ); ?></span>
                 </div>
             </div>
 
@@ -1324,14 +1324,14 @@ class SCOGS_Reports {
                     <div class="scogs-battle-title">
                         <span class="scogs-radar-ping-dot"></span>
                         <span class="dashicons dashicons-visibility scogs-radar-icon"></span>
-                        <strong><?php esc_html_e( 'MARKETPULSE AI RADAR: LIVE COMPETITOR THREAT SCAN', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
+                        <strong><?php esc_html_e( 'MARKETPULSE AI RADAR: LIVE COMPETITOR THREAT SCAN', 'marketpulse-cogs-profit' ); ?></strong>
                     </div>
-                    <span class="scogs-battle-pill"><?php esc_html_e( '● REAL CATALOG SCAN', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-battle-pill"><?php esc_html_e( '● REAL CATALOG SCAN', 'marketpulse-cogs-profit' ); ?></span>
                 </div>
 
                 <!-- Product Subject Bar -->
                 <div class="scogs-battle-subject">
-                    <span class="scogs-subject-tag"><?php esc_html_e( 'MONITORED ITEM:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-subject-tag"><?php esc_html_e( 'MONITORED ITEM:', 'marketpulse-cogs-profit' ); ?></span>
                     <strong class="scogs-subject-title" title="<?php echo esc_attr( $sample_product->get_name() ); ?>">
                         <?php echo esc_html( wp_trim_words( $sample_product->get_name(), 12, '...' ) ); ?>
                     </strong>
@@ -1343,11 +1343,11 @@ class SCOGS_Reports {
                     <div class="scogs-battle-col scogs-col-store">
                         <div class="scogs-col-header">
                             <span class="dashicons dashicons-store"></span>
-                            <span><?php esc_html_e( 'YOUR LIVE PRICE', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                            <span><?php esc_html_e( 'YOUR LIVE PRICE', 'marketpulse-cogs-profit' ); ?></span>
                         </div>
                         <div class="scogs-col-price"><?php echo wp_kses_post( wc_price( $prod_price ) ); ?></div>
                         <div class="scogs-col-desc">
-                            <?php esc_html_e( 'Your current catalog selling price in WooCommerce.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            <?php esc_html_e( 'Your current catalog selling price in WooCommerce.', 'marketpulse-cogs-profit' ); ?>
                         </div>
                     </div>
 
@@ -1355,14 +1355,14 @@ class SCOGS_Reports {
                     <div class="scogs-battle-col scogs-col-threat">
                         <div class="scogs-col-header">
                             <span class="dashicons dashicons-warning"></span>
-                            <span><?php esc_html_e( 'RIVAL UNDERCUT THREAT', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                            <span><?php esc_html_e( 'RIVAL UNDERCUT THREAT', 'marketpulse-cogs-profit' ); ?></span>
                         </div>
                         <div class="scogs-col-price scogs-threat-price">
                             <?php echo wp_kses_post( wc_price( $undercut_price ) ); ?>
                             <span class="scogs-diff-badge">&minus;<?php echo wp_kses_post( wc_price( $undercut_diff ) ); ?></span>
                         </div>
                         <div class="scogs-col-desc">
-                            <?php esc_html_e( 'When rivals drop price, up to 40% of your paid Facebook/Google ad clicks bounce to them.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            <?php esc_html_e( 'When rivals drop price, up to 40% of your paid Facebook/Google ad clicks bounce to them.', 'marketpulse-cogs-profit' ); ?>
                         </div>
                     </div>
 
@@ -1370,14 +1370,14 @@ class SCOGS_Reports {
                     <div class="scogs-battle-col scogs-col-surge">
                         <div class="scogs-col-header">
                             <span class="dashicons dashicons-arrow-up-alt"></span>
-                            <span><?php esc_html_e( 'RIVAL STOCKOUT SURGE', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                            <span><?php esc_html_e( 'RIVAL STOCKOUT SURGE', 'marketpulse-cogs-profit' ); ?></span>
                         </div>
                         <div class="scogs-col-price scogs-surge-price">
                             <?php echo wp_kses_post( wc_price( $surge_price ) ); ?>
-                            <span class="scogs-surge-badge">+<?php echo wp_kses_post( wc_price( $surge_gain ) ); ?> <?php esc_html_e( 'gain', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                            <span class="scogs-surge-badge">+<?php echo wp_kses_post( wc_price( $surge_gain ) ); ?> <?php esc_html_e( 'gain', 'marketpulse-cogs-profit' ); ?></span>
                         </div>
                         <div class="scogs-col-desc">
-                            <?php esc_html_e( 'When rivals sell out, AI instantly lifts your price to capture premium surge profits with 0 lost sales.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            <?php esc_html_e( 'When rivals sell out, AI instantly lifts your price to capture premium surge profits with 0 lost sales.', 'marketpulse-cogs-profit' ); ?>
                         </div>
                     </div>
                 </div>
@@ -1386,10 +1386,10 @@ class SCOGS_Reports {
                 <div class="scogs-battle-footer">
                     <div class="scogs-battle-footer-text">
                         <span class="dashicons dashicons-shield" style="color:#2563eb;"></span>
-                        <span><?php esc_html_e( 'MarketPulse monitors 100+ marketplaces 24/7 to reprice this product automatically while strictly guarding your COGS floor.', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        <span><?php esc_html_e( 'MarketPulse monitors 100+ marketplaces 24/7 to reprice this product automatically while strictly guarding your COGS floor.', 'marketpulse-cogs-profit' ); ?></span>
                     </div>
                     <a href="<?php echo esc_url( $signup_plan_url ); ?>" target="_blank" rel="noopener noreferrer" class="scogs-battle-action-btn">
-                        <?php esc_html_e( 'Auto-Track & Reprice This Item with MarketPulse AI &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        <?php esc_html_e( 'Auto-Track & Reprice This Item with MarketPulse AI &rarr;', 'marketpulse-cogs-profit' ); ?>
                     </a>
                 </div>
             </div>
@@ -1397,21 +1397,21 @@ class SCOGS_Reports {
 
             <!-- Visual Profit Gap Comparison Graphic -->
             <div class="scogs-visual-gap-card">
-                <h4 class="scogs-gap-title"><?php esc_html_e( 'Visual Profit Leak Analysis (Actual Take-Home vs. Potential)', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
+                <h4 class="scogs-gap-title"><?php esc_html_e( 'Visual Profit Leak Analysis (Actual Take-Home vs. Potential)', 'marketpulse-cogs-profit' ); ?></h4>
                 
                 <div class="scogs-bar-compare-group">
                     <!-- Bar 1: Actual Net Profit -->
                     <div class="scogs-bar-row">
                         <div class="scogs-bar-label">
-                            <strong><?php esc_html_e( 'Your Actual Net Profit:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
+                            <strong><?php esc_html_e( 'Your Actual Net Profit:', 'marketpulse-cogs-profit' ); ?></strong>
                             <span class="scogs-bar-amount" id="scogs-label-actual"><?php echo wp_kses_post( wc_price( $net_prof ) ); ?></span>
                         </div>
                         <div class="scogs-bar-track">
                             <div class="scogs-bar-fill scogs-bar-actual" id="scogs-bar-actual-fill" style="width: <?php echo esc_attr( $actual_bar_pct ); ?>%;">
-                                <span><span id="scogs-bar-actual-pct-text"><?php echo esc_html( $actual_bar_pct ); ?></span>% <?php esc_html_e( 'Captured', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                                <span><span id="scogs-bar-actual-pct-text"><?php echo esc_html( $actual_bar_pct ); ?></span>% <?php esc_html_e( 'Captured', 'marketpulse-cogs-profit' ); ?></span>
                             </div>
                             <div class="scogs-bar-fill scogs-bar-leaked" id="scogs-bar-leaked-fill" style="width: <?php echo esc_attr( $leaked_bar_pct ); ?>%;">
-                                <span>&minus;<span id="scogs-bar-leaked-pct-text"><?php echo esc_html( $leaked_bar_pct ); ?></span>% <?php esc_html_e( 'Leaking', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                                <span>&minus;<span id="scogs-bar-leaked-pct-text"><?php echo esc_html( $leaked_bar_pct ); ?></span>% <?php esc_html_e( 'Leaking', 'marketpulse-cogs-profit' ); ?></span>
                             </div>
                         </div>
                     </div>
@@ -1419,12 +1419,12 @@ class SCOGS_Reports {
                     <!-- Bar 2: Optimized with MarketPulse -->
                     <div class="scogs-bar-row" style="margin-top: 14px;">
                         <div class="scogs-bar-label">
-                            <strong style="color:#059669;"><?php esc_html_e( 'Potential Profit with MarketPulse AI Repricer:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
+                            <strong style="color:#059669;"><?php esc_html_e( 'Potential Profit with MarketPulse AI Repricer:', 'marketpulse-cogs-profit' ); ?></strong>
                             <span class="scogs-bar-amount scogs-opt-profit-text" id="scogs-label-optimized"><?php echo wp_kses_post( wc_price( $opt_profit ) ); ?></span>
                         </div>
                         <div class="scogs-bar-track">
                             <div class="scogs-bar-fill scogs-bar-optimized" style="width: 100%;">
-                                <span>100% <?php esc_html_e( 'Fully Optimized (+', 'simple-cost-of-goods-for-woocommerce' ); ?><span id="scogs-gain-pct"><?php echo esc_html( $gain_pct ); ?></span>% <?php esc_html_e( 'more cash in bank)', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                                <span>100% <?php esc_html_e( 'Fully Optimized (+', 'marketpulse-cogs-profit' ); ?><span id="scogs-gain-pct"><?php echo esc_html( $gain_pct ); ?></span>% <?php esc_html_e( 'more cash in bank)', 'marketpulse-cogs-profit' ); ?></span>
                             </div>
                         </div>
                     </div>
@@ -1435,9 +1435,9 @@ class SCOGS_Reports {
                     <div class="scogs-slider-header">
                         <label for="scogs-interactive-slider">
                             <span class="dashicons dashicons-dashboard" style="color:#2563eb;"></span>
-                            <strong><?php esc_html_e( 'Simulate Your Dynamic Repricing Gain:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
+                            <strong><?php esc_html_e( 'Simulate Your Dynamic Repricing Gain:', 'marketpulse-cogs-profit' ); ?></strong>
                         </label>
-                        <span class="scogs-slider-pct-badge"><span id="scogs-slider-val">12</span>% <?php esc_html_e( 'Repricing Margin Lift', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        <span class="scogs-slider-pct-badge"><span id="scogs-slider-val">12</span>% <?php esc_html_e( 'Repricing Margin Lift', 'marketpulse-cogs-profit' ); ?></span>
                     </div>
                     <input type="range" 
                            id="scogs-interactive-slider" 
@@ -1463,24 +1463,24 @@ class SCOGS_Reports {
                     <div class="scogs-pillar-icon" style="background:#fee2e2; color:#ef4444;">
                         <span class="dashicons dashicons-arrow-down-alt"></span>
                     </div>
-                    <h4><?php esc_html_e( '1. Bounced Ad Traffic', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                    <p><?php esc_html_e( 'When rivals drop prices by even a fraction, up to 40% of your paid Facebook and Google ad clicks bounce to competitor checkouts.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <h4><?php esc_html_e( '1. Bounced Ad Traffic', 'marketpulse-cogs-profit' ); ?></h4>
+                    <p><?php esc_html_e( 'When rivals drop prices by even a fraction, up to 40% of your paid Facebook and Google ad clicks bounce to competitor checkouts.', 'marketpulse-cogs-profit' ); ?></p>
                 </div>
 
                 <div class="scogs-pillar-card">
                     <div class="scogs-pillar-icon" style="background:#fef3c7; color:#d97706;">
                         <span class="dashicons dashicons-money-alt"></span>
                     </div>
-                    <h4><?php esc_html_e( '2. Missed Stockout Surges', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                    <p><?php esc_html_e( 'When competitor inventory sells out, static pricing gives away +15% to +25% in instant premium profit surges from urgent buyers.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <h4><?php esc_html_e( '2. Missed Stockout Surges', 'marketpulse-cogs-profit' ); ?></h4>
+                    <p><?php esc_html_e( 'When competitor inventory sells out, static pricing gives away +15% to +25% in instant premium profit surges from urgent buyers.', 'marketpulse-cogs-profit' ); ?></p>
                 </div>
 
                 <div class="scogs-pillar-card">
                     <div class="scogs-pillar-icon" style="background:#dbeafe; color:#2563eb;">
                         <span class="dashicons dashicons-shield"></span>
                     </div>
-                    <h4><?php esc_html_e( '3. 100% Margin Floor Guard', 'simple-cost-of-goods-for-woocommerce' ); ?></h4>
-                    <p><?php esc_html_e( 'MarketPulse strictly honors your purchase COGS. Wholesale costs rise, but AI ensures you never sell at a loss.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                    <h4><?php esc_html_e( '3. 100% Margin Floor Guard', 'marketpulse-cogs-profit' ); ?></h4>
+                    <p><?php esc_html_e( 'MarketPulse strictly honors your purchase COGS. Wholesale costs rise, but AI ensures you never sell at a loss.', 'marketpulse-cogs-profit' ); ?></p>
                 </div>
             </div>
 
@@ -1488,18 +1488,18 @@ class SCOGS_Reports {
             <div class="scogs-audit-cta-footer">
                 <div class="scogs-cta-left">
                     <div class="scogs-cta-tagline">
-                        <strong><?php esc_html_e( 'Stop Leaving Cash on the Table Every Single Day', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
-                        <p><?php esc_html_e( 'Activate your free 24-Hour Competitor & Profit Audit with MarketPulse. See exactly where competitors are undercutting your sales and start auto-optimizing.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+                        <strong><?php esc_html_e( 'Stop Leaving Cash on the Table Every Single Day', 'marketpulse-cogs-profit' ); ?></strong>
+                        <p><?php esc_html_e( 'Activate your free 24-Hour Competitor & Profit Audit with MarketPulse. See exactly where competitors are undercutting your sales and start auto-optimizing.', 'marketpulse-cogs-profit' ); ?></p>
                     </div>
                     <div class="scogs-trust-items">
-                        <span><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( '100% Free Signup', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                        <span><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( 'No Credit Card Required', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                        <span><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( 'Connects in 60s with WooCommerce', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        <span><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( '100% Free Signup', 'marketpulse-cogs-profit' ); ?></span>
+                        <span><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( 'No Credit Card Required', 'marketpulse-cogs-profit' ); ?></span>
+                        <span><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( 'Connects in 60s with WooCommerce', 'marketpulse-cogs-profit' ); ?></span>
                     </div>
                 </div>
                 <div class="scogs-cta-right">
                     <a href="<?php echo esc_url( $signup_plan_url ); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary scogs-audit-btn">
-                        <?php esc_html_e( 'Claim Free Store Audit & Plan Access &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        <?php esc_html_e( 'Claim Free Store Audit & Plan Access &rarr;', 'marketpulse-cogs-profit' ); ?>
                     </a>
                 </div>
             </div>
