@@ -107,6 +107,11 @@ class SCOGS_Product {
                     echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" class="scogs-callout-btn">' . esc_html__( '⚡ Optimize Price with MarketPulse &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
                     echo '</div>';
                 }
+            } else {
+                echo '<p class="form-field scogs-live-margin" style="display:none;">';
+                echo '<label>' . esc_html__( 'Est. Gross Margin', 'simple-cost-of-goods-for-woocommerce' ) . '</label>';
+                echo '<span class="scogs-live-badge-wrap"></span>';
+                echo '</p>';
             }
         }
 

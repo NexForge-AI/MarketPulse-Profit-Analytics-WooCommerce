@@ -150,7 +150,6 @@
                 }
             }
         }
-        }
 
         $(document).on('input change keyup', '#_regular_price, #_sale_price, #_cogs_cost_price', function () {
             calculateSimpleMargin();
