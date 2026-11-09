@@ -59,17 +59,7 @@ class SCOGS_Product {
             'data_type'   => 'price',
         ) );
 
-        // 2. Supplier
-        woocommerce_wp_text_input( array(
-            'id'          => self::META_KEY_SUPPLIER,
-            'label'       => __( 'Supplier / Vendor', 'simple-cost-of-goods-for-woocommerce' ),
-            'placeholder' => __( 'e.g. Acme Wholesale Ltd.', 'simple-cost-of-goods-for-woocommerce' ),
-            'desc_tip'    => true,
-            'description' => __( 'Track which vendor or distributor supplies this item.', 'simple-cost-of-goods-for-woocommerce' ),
-            'type'        => 'text',
-        ) );
-
-        // Live margin preview if price exists
+        // Live margin preview immediately below Cost Price
         $product = wc_get_product( $post->ID );
         if ( $product ) {
             $cost   = self::get_product_cost( $product );
@@ -119,6 +109,16 @@ class SCOGS_Product {
                 }
             }
         }
+
+        // 2. Supplier / Vendor
+        woocommerce_wp_text_input( array(
+            'id'          => self::META_KEY_SUPPLIER,
+            'label'       => __( 'Supplier / Vendor', 'simple-cost-of-goods-for-woocommerce' ),
+            'placeholder' => __( 'e.g. Acme Wholesale Ltd.', 'simple-cost-of-goods-for-woocommerce' ),
+            'desc_tip'    => true,
+            'description' => __( 'Track which vendor or distributor supplies this item.', 'simple-cost-of-goods-for-woocommerce' ),
+            'type'        => 'text',
+        ) );
 
         echo '</div>';
     }

@@ -204,6 +204,50 @@
     box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4) !important;
 }
 
+/* Cost Price Input Highlight and Inline Warning Chip */
+input#_cogs_cost_price.scogs-input-danger {
+    border: 2px solid #ef4444 !important;
+    background-color: #fff1f2 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) !important;
+    color: #991b1b !important;
+    font-weight: 700 !important;
+    transition: all 0.25s ease !important;
+}
+
+input#_cogs_cost_price.scogs-input-warning {
+    border: 2px solid #f59e0b !important;
+    background-color: #fffbeb !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2) !important;
+    color: #92400e !important;
+    font-weight: 700 !important;
+    transition: all 0.25s ease !important;
+}
+
+.scogs-cost-inline-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+    animation: scogsFadeIn 0.25s ease;
+}
+
+.scogs-cost-inline-chip.scogs-inline-danger {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+}
+
+.scogs-cost-inline-chip.scogs-inline-warning {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #b45309;
+}
+
 .wp-list-table th.column-scogs_supplier,
 .wp-list-table td.column-scogs_supplier {
     width: 120px !important;

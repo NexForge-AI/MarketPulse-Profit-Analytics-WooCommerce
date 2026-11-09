@@ -70,34 +70,31 @@
             const costPrice = parseFloat($('#_cogs_cost_price').val()) || 0;
 
             const sellingPrice = salePrice > 0 ? salePrice : regularPrice;
+            const $costInput = $('#_cogs_cost_price');
 
             let $wrapper = $('.scogs-live-margin');
             if (!$wrapper.length) {
-                const targetField = $('#_cogs_supplier').closest('.form-field');
-                if (targetField.length) {
-                    targetField.after('<p class="form-field scogs-live-margin"><label>Est. Gross Margin</label><span class="scogs-live-badge-wrap"></span></p>');
-                } else {
-                    $('#_cogs_cost_price').closest('.form-field').after('<p class="form-field scogs-live-margin"><label>Est. Gross Margin</label><span class="scogs-live-badge-wrap"></span></p>');
-                }
+                $costInput.closest('.form-field').after('<p class="form-field scogs-live-margin"><label>Est. Gross Margin</label><span class="scogs-live-badge-wrap"></span></p>');
                 $wrapper = $('.scogs-live-margin');
             }
+
+            // Remove existing inline warning chip next to cost input
+            $costInput.closest('.form-field').find('.scogs-cost-inline-chip').remove();
 
             if (sellingPrice > 0 && costPrice > 0) {
                 const profit = sellingPrice - costPrice;
                 const margin = (profit / sellingPrice) * 100;
 
                 let badgeClass = 'scogs-badge-red';
-                if (margin >= 30) {
-                    badgeClass = 'scogs-badge-green';
-                } else if (margin >= 15) {
-                    badgeClass = 'scogs-badge-amber';
-                }
-
                 let tipHtml = '';
                 let calloutHtml = '';
                 const planUrl = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_alert&utm_campaign=boost_margin';
 
                 if (margin < 15) {
+                    badgeClass = 'scogs-badge-red';
+                    $costInput.removeClass('scogs-input-warning').addClass('scogs-input-danger');
+                    $costInput.after('<span class="scogs-cost-inline-chip scogs-inline-danger"><span class="scogs-pulse-dot" style="width:6px;height:6px;"></span> ⚠️ ' + margin.toFixed(1) + '% Critical Margin</span>');
+
                     tipHtml = ' <a href="' + planUrl + '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;">🚀 Boost Margin with MarketPulse &rarr;</a>';
                     calloutHtml = '<div class="scogs-margin-alert-callout scogs-callout-danger">' +
                         '<div class="scogs-callout-content">' +
@@ -112,6 +109,10 @@
                         '</a>' +
                     '</div>';
                 } else if (margin < 30) {
+                    badgeClass = 'scogs-badge-amber';
+                    $costInput.removeClass('scogs-input-danger').addClass('scogs-input-warning');
+                    $costInput.after('<span class="scogs-cost-inline-chip scogs-inline-warning">⚡ ' + margin.toFixed(1) + '% Low Margin</span>');
+
                     tipHtml = ' <a href="' + planUrl + '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;">⚡ Boost Margin with MarketPulse &rarr;</a>';
                     calloutHtml = '<div class="scogs-margin-alert-callout scogs-callout-warning">' +
                         '<div class="scogs-callout-content">' +
@@ -125,6 +126,9 @@
                             '⚡ Optimize Price with MarketPulse &rarr;' +
                         '</a>' +
                     '</div>';
+                } else {
+                    badgeClass = 'scogs-badge-green';
+                    $costInput.removeClass('scogs-input-danger scogs-input-warning');
                 }
 
                 const badgeHtml = '<span class="scogs-badge ' + badgeClass + '">' +
@@ -138,10 +142,14 @@
                     $wrapper.after(calloutHtml);
                 }
                 $wrapper.show();
-            } else if ($wrapper.length) {
-                $wrapper.hide();
-                $wrapper.next('.scogs-margin-alert-callout').remove();
+            } else {
+                $costInput.removeClass('scogs-input-danger scogs-input-warning');
+                if ($wrapper.length) {
+                    $wrapper.hide();
+                    $wrapper.next('.scogs-margin-alert-callout').remove();
+                }
             }
+        }
         }
 
         $(document).on('input change keyup', '#_regular_price, #_sale_price, #_cogs_cost_price', function () {
