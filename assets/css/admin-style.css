@@ -92,16 +92,17 @@
 .scogs-margin-boost-tip {
     display: inline-flex;
     align-items: center;
-    gap: 3px;
-    font-size: 10px;
-    font-weight: 600;
-    color: #2563eb;
-    text-decoration: none;
-    line-height: 1.3;
-    padding: 2px 6px;
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    line-height: 1.2;
+    padding: 3px 8px;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    border: 1px solid #1e40af;
     border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(37, 99, 235, 0.3);
     white-space: nowrap;
     transition: all 0.2s ease;
 }
@@ -111,14 +112,96 @@
     width: 11px;
     height: 11px;
     line-height: 11px;
-    color: #2563eb;
+    color: #ffffff;
 }
 
 .scogs-margin-boost-tip:hover {
-    background: #dbeafe;
-    color: #1d4ed8;
-    border-color: #93c5fd;
-    text-decoration: none;
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.45);
+    color: #ffffff !important;
+}
+
+/* Live Low Margin Warning Alert Callout Box (Product Edit) */
+.scogs-margin-alert-callout {
+    margin-top: 10px;
+    padding: 12px 16px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    animation: scogsFadeIn 0.3s ease;
+}
+
+@keyframes scogsFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.scogs-callout-danger {
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+    border-left: 4px solid #ef4444;
+}
+
+.scogs-callout-warning {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-left: 4px solid #f59e0b;
+}
+
+.scogs-callout-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 250px;
+}
+
+.scogs-callout-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.scogs-callout-text {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #1e293b;
+}
+
+.scogs-callout-text strong {
+    color: #991b1b;
+    display: block;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.scogs-callout-warning .scogs-callout-text strong {
+    color: #92400e;
+}
+
+.scogs-callout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #2563eb !important;
+    color: #ffffff !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    padding: 6px 14px !important;
+    border-radius: 5px !important;
+    text-decoration: none !important;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25) !important;
+    transition: all 0.2s ease !important;
+    white-space: nowrap;
+}
+
+.scogs-callout-btn:hover {
+    background: #1d4ed8 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4) !important;
 }
 
 .wp-list-table th.column-scogs_supplier,

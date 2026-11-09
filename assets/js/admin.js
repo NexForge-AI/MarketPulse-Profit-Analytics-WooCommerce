@@ -94,9 +94,37 @@
                 }
 
                 let tipHtml = '';
-                if (margin < 30) {
-                    const planUrl = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_margin&utm_campaign=boost_margin';
-                    tipHtml = ' <a href="' + planUrl + '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px; display:inline-flex; align-items:center;">⚡ Boost margin with MarketPulse &rarr;</a>';
+                let calloutHtml = '';
+                const planUrl = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_alert&utm_campaign=boost_margin';
+
+                if (margin < 15) {
+                    tipHtml = ' <a href="' + planUrl + '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;">🚀 Boost Margin with MarketPulse &rarr;</a>';
+                    calloutHtml = '<div class="scogs-margin-alert-callout scogs-callout-danger">' +
+                        '<div class="scogs-callout-content">' +
+                            '<span class="scogs-callout-icon">⚠️</span>' +
+                            '<div class="scogs-callout-text">' +
+                                '<strong>Dangerously Low Margin Alert (' + margin.toFixed(1) + '%):</strong>' +
+                                'After payment gateway fees and courier deficits, your net take-home profit is nearly zero.' +
+                            '</div>' +
+                        '</div>' +
+                        '<a href="' + planUrl + '" target="_blank" class="scogs-callout-btn">' +
+                            '🚀 Protect & Reprice with MarketPulse AI &rarr;' +
+                        '</a>' +
+                    '</div>';
+                } else if (margin < 30) {
+                    tipHtml = ' <a href="' + planUrl + '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;">⚡ Boost Margin with MarketPulse &rarr;</a>';
+                    calloutHtml = '<div class="scogs-margin-alert-callout scogs-callout-warning">' +
+                        '<div class="scogs-callout-content">' +
+                            '<span class="scogs-callout-icon">💡</span>' +
+                            '<div class="scogs-callout-text">' +
+                                '<strong>Unlock Higher Margin (' + margin.toFixed(1) + '%):</strong>' +
+                                'When competitors run out of stock, automated AI repricing safely lifts prices to 30%+ with zero lost sales.' +
+                            '</div>' +
+                        '</div>' +
+                        '<a href="' + planUrl + '" target="_blank" class="scogs-callout-btn">' +
+                            '⚡ Optimize Price with MarketPulse &rarr;' +
+                        '</a>' +
+                    '</div>';
                 }
 
                 const badgeHtml = '<span class="scogs-badge ' + badgeClass + '">' +
@@ -105,9 +133,14 @@
 
                 $wrapper.find('.scogs-live-badge-wrap, span.scogs-badge, a.scogs-margin-boost-tip').remove();
                 $wrapper.find('label').after(badgeHtml);
+                $wrapper.next('.scogs-margin-alert-callout').remove();
+                if (calloutHtml) {
+                    $wrapper.after(calloutHtml);
+                }
                 $wrapper.show();
             } else if ($wrapper.length) {
                 $wrapper.hide();
+                $wrapper.next('.scogs-margin-alert-callout').remove();
             }
         }
 

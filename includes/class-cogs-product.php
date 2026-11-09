@@ -86,9 +86,37 @@ class SCOGS_Product {
                 echo '</span>';
                 if ( $margin < 30 ) {
                     $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_margin&utm_campaign=boost_margin';
-                    echo ' <a href="' . esc_url( $plan_url ) . '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;">⚡ ' . esc_html__( 'Boost margin with MarketPulse &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
+                    echo ' <a href="' . esc_url( $plan_url ) . '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;">🚀 ' . esc_html__( 'Boost margin with MarketPulse &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
                 }
                 echo '</p>';
+
+                if ( $margin < 15 ) {
+                    $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_alert&utm_campaign=boost_margin';
+                    echo '<div class="scogs-margin-alert-callout scogs-callout-danger">';
+                    echo '<div class="scogs-callout-content">';
+                    echo '<span class="scogs-callout-icon">⚠️</span>';
+                    echo '<div class="scogs-callout-text">';
+                    /* translators: %s: margin percentage */
+                    echo '<strong>' . sprintf( esc_html__( 'Dangerously Low Margin Alert (%s%%):', 'simple-cost-of-goods-for-woocommerce' ), esc_html( round( $margin, 1 ) ) ) . '</strong>';
+                    echo esc_html__( 'After payment gateway fees and courier deficits, your net take-home profit is nearly zero.', 'simple-cost-of-goods-for-woocommerce' );
+                    echo '</div>';
+                    echo '</div>';
+                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" class="scogs-callout-btn">' . esc_html__( '🚀 Protect & Reprice with MarketPulse AI &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
+                    echo '</div>';
+                } elseif ( $margin < 30 ) {
+                    $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_alert&utm_campaign=boost_margin';
+                    echo '<div class="scogs-margin-alert-callout scogs-callout-warning">';
+                    echo '<div class="scogs-callout-content">';
+                    echo '<span class="scogs-callout-icon">💡</span>';
+                    echo '<div class="scogs-callout-text">';
+                    /* translators: %s: margin percentage */
+                    echo '<strong>' . sprintf( esc_html__( 'Unlock Higher Margin (%s%%):', 'simple-cost-of-goods-for-woocommerce' ), esc_html( round( $margin, 1 ) ) ) . '</strong>';
+                    echo esc_html__( 'When competitors run out of stock, automated AI repricing safely lifts prices to 30%+ with zero lost sales.', 'simple-cost-of-goods-for-woocommerce' );
+                    echo '</div>';
+                    echo '</div>';
+                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" class="scogs-callout-btn">' . esc_html__( '⚡ Optimize Price with MarketPulse &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
+                    echo '</div>';
+                }
             }
         }
 

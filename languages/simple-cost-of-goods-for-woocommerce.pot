@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-09T10:41:14+00:00\n"
+"POT-Creation-Date: 2026-11-09T10:55:19+00:00\n"
 "PO-Revision-Date: \n"
 "Language: en\n"
 
@@ -17,7 +17,7 @@ msgstr ""
 msgid "Cost of Goods (COGS)"
 msgstr ""
 
-#: includes/class-cogs-csv.php:32 includes/class-cogs-csv.php:57 includes/class-cogs-csv.php:70 includes/class-cogs-product.php:148 includes/class-cogs-product.php:192 includes/class-cogs-product.php:273 includes/class-cogs-product.php:314
+#: includes/class-cogs-csv.php:32 includes/class-cogs-csv.php:57 includes/class-cogs-csv.php:70 includes/class-cogs-product.php:176 includes/class-cogs-product.php:220 includes/class-cogs-product.php:301 includes/class-cogs-product.php:342
 msgid "Supplier"
 msgstr ""
 
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Revenue:"
 msgstr ""
 
-#: includes/class-cogs-dashboard.php:143 includes/class-cogs-dashboard.php:153 includes/class-cogs-product.php:191
+#: includes/class-cogs-dashboard.php:143 includes/class-cogs-dashboard.php:153 includes/class-cogs-product.php:219
 msgid "Margin"
 msgstr ""
 
@@ -173,11 +173,11 @@ msgstr ""
 msgid "Net Profit"
 msgstr ""
 
-#: includes/class-cogs-product.php:54 includes/class-cogs-product.php:136
+#: includes/class-cogs-product.php:54 includes/class-cogs-product.php:164
 msgid "Cost Price (COGS)"
 msgstr ""
 
-#: includes/class-cogs-product.php:55 includes/class-cogs-product.php:269
+#: includes/class-cogs-product.php:55 includes/class-cogs-product.php:297
 msgid "e.g. 15.00"
 msgstr ""
 
@@ -205,47 +205,71 @@ msgstr ""
 msgid "Boost margin with MarketPulse &rarr;"
 msgstr ""
 
-#: includes/class-cogs-product.php:138
+#: includes/class-cogs-product.php:100
+msgid "Dangerously Low Margin Alert (%s%%):"
+msgstr ""
+
+#: includes/class-cogs-product.php:101
+msgid "After payment gateway fees and courier deficits, your net take-home profit is nearly zero."
+msgstr ""
+
+#: includes/class-cogs-product.php:104
+msgid "🚀 Protect & Reprice with MarketPulse AI &rarr;"
+msgstr ""
+
+#: includes/class-cogs-product.php:113
+msgid "Unlock Higher Margin (%s%%):"
+msgstr ""
+
+#: includes/class-cogs-product.php:114
+msgid "When competitors run out of stock, automated AI repricing safely lifts prices to 30%+ with zero lost sales."
+msgstr ""
+
+#: includes/class-cogs-product.php:117
+msgid "⚡ Optimize Price with MarketPulse &rarr;"
+msgstr ""
+
+#: includes/class-cogs-product.php:166
 msgid "e.g. 10.00"
 msgstr ""
 
-#: includes/class-cogs-product.php:140
+#: includes/class-cogs-product.php:168
 msgid "Wholesale purchase cost for this specific variation."
 msgstr ""
 
-#: includes/class-cogs-product.php:150
+#: includes/class-cogs-product.php:178
 msgid "e.g. Acme Ltd."
 msgstr ""
 
-#: includes/class-cogs-product.php:190
+#: includes/class-cogs-product.php:218
 msgid "Cost"
 msgstr ""
 
-#: includes/class-cogs-product.php:229
+#: includes/class-cogs-product.php:257
 msgid "Gross Profit: "
 msgstr ""
 
-#: includes/class-cogs-product.php:236
+#: includes/class-cogs-product.php:264
 msgid "Low margin? Automatically protect COGS & optimize price with MarketPulse AI"
 msgstr ""
 
-#: includes/class-cogs-product.php:237
+#: includes/class-cogs-product.php:265
 msgid "Boost margin with MarketPulse"
 msgstr ""
 
-#: includes/class-cogs-product.php:267 includes/class-cogs-product.php:308
+#: includes/class-cogs-product.php:295 includes/class-cogs-product.php:336
 msgid "Cost Price"
 msgstr ""
 
-#: includes/class-cogs-product.php:275
+#: includes/class-cogs-product.php:303
 msgid "Supplier name"
 msgstr ""
 
-#: includes/class-cogs-product.php:310 includes/class-cogs-product.php:316
+#: includes/class-cogs-product.php:338 includes/class-cogs-product.php:344
 msgid "— No Change —"
 msgstr ""
 
-#: includes/class-cogs-product.php:360
+#: includes/class-cogs-product.php:388
 msgid "All Suppliers"
 msgstr ""
 
