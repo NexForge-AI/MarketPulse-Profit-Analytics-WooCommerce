@@ -93,11 +93,18 @@
                     badgeClass = 'scogs-badge-amber';
                 }
 
+                let tipHtml = '';
+                if (margin < 30) {
+                    const planUrl = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_margin&utm_campaign=boost_margin';
+                    tipHtml = ' <a href="' + planUrl + '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px; display:inline-flex; align-items:center;">⚡ Boost margin with MarketPulse &rarr;</a>';
+                }
+
                 const badgeHtml = '<span class="scogs-badge ' + badgeClass + '">' +
                     formatCurrency(profit) + ' (' + margin.toFixed(1) + '%)' +
-                    '</span>';
+                    '</span>' + tipHtml;
 
-                $wrapper.find('.scogs-live-badge-wrap, span.scogs-badge').replaceWith(badgeHtml);
+                $wrapper.find('.scogs-live-badge-wrap, span.scogs-badge, a.scogs-margin-boost-tip').remove();
+                $wrapper.find('label').after(badgeHtml);
                 $wrapper.show();
             } else if ($wrapper.length) {
                 $wrapper.hide();
@@ -107,6 +114,7 @@
         $(document).on('input change keyup', '#_regular_price, #_sale_price, #_cogs_cost_price', function () {
             calculateSimpleMargin();
         });
+        calculateSimpleMargin();
 
         // 3. Real-time Live Margin calculation for Variable Products (inside variations tab)
         $(document).on('input change keyup', '.scogs-variation-fields input[name^="_cogs_cost_price"], .woocommerce_variation input[name^="variable_regular_price"], .woocommerce_variation input[name^="variable_sale_price"]', function () {
@@ -128,10 +136,18 @@
                     badgeClass = 'scogs-badge-amber';
                 }
 
+                let tipHtml = '';
+                if (margin < 30) {
+                    const planUrl = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=variable_edit_margin&utm_campaign=boost_margin';
+                    tipHtml = ' <a href="' + planUrl + '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:6px; display:inline-flex; align-items:center;">⚡ Boost margin with MarketPulse</a>';
+                }
+
+                const contentHtml = '<strong>Margin:</strong> <span class="scogs-badge ' + badgeClass + '">' + formatCurrency(profit) + ' (' + margin.toFixed(1) + '%)</span>' + tipHtml;
+
                 if (!$badge.length) {
-                    $row.find('.scogs-variation-fields').append('<div class="scogs-var-live-margin" style="margin-top:6px; font-size:12px;"><strong>Margin:</strong> <span class="scogs-badge ' + badgeClass + '">' + formatCurrency(profit) + ' (' + margin.toFixed(1) + '%)</span></div>');
+                    $row.find('.scogs-variation-fields').append('<div class="scogs-var-live-margin" style="margin-top:6px; font-size:12px;">' + contentHtml + '</div>');
                 } else {
-                    $badge.html('<strong>Margin:</strong> <span class="scogs-badge ' + badgeClass + '">' + formatCurrency(profit) + ' (' + margin.toFixed(1) + '%)</span>');
+                    $badge.html(contentHtml);
                 }
             } else if ($badge.length) {
                 $badge.empty();
