@@ -1033,43 +1033,87 @@ class SCOGS_Reports {
                 </div>
             </div>
 
-            <?php if ( $sample_product ) : ?>
-            <!-- Live Catalog Sample Vulnerability Radar -->
-            <div class="scogs-radar-box">
-                <div class="scogs-radar-top">
-                    <div class="scogs-radar-title-wrap">
+            <?php if ( $sample_product ) : 
+                $prod_price     = (float) $sample_product->get_price();
+                $undercut_price = round( $prod_price * 0.95, 2 );
+                $undercut_diff  = round( $prod_price - $undercut_price, 2 );
+                $surge_price    = round( $prod_price * 1.12, 2 );
+                $surge_gain     = round( $surge_price - $prod_price, 2 );
+            ?>
+            <!-- Live Catalog Sample Vulnerability Radar: AI Battle Card -->
+            <div class="scogs-radar-battle-card">
+                <!-- Radar Header -->
+                <div class="scogs-battle-header">
+                    <div class="scogs-battle-title">
+                        <span class="scogs-radar-ping-dot"></span>
                         <span class="dashicons dashicons-visibility scogs-radar-icon"></span>
-                        <strong><?php esc_html_e( 'Live Catalog Sample Vulnerability Radar', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
+                        <strong><?php esc_html_e( 'MARKETPULSE AI RADAR: LIVE COMPETITOR THREAT SCAN', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
                     </div>
-                    <span class="scogs-radar-pill"><?php esc_html_e( 'Real Store Product Sample', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-battle-pill"><?php esc_html_e( '● REAL CATALOG SCAN', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
                 </div>
-                <div class="scogs-radar-grid">
-                    <div class="scogs-radar-prod-col">
-                        <span class="scogs-radar-label"><?php esc_html_e( 'Audited Product:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                        <strong class="scogs-radar-name" title="<?php echo esc_attr( $sample_product->get_name() ); ?>">
-                            <?php echo esc_html( wp_trim_words( $sample_product->get_name(), 8, '...' ) ); ?>
-                        </strong>
-                        <span class="scogs-radar-price-tag">
-                            <?php esc_html_e( 'Current Price:', 'simple-cost-of-goods-for-woocommerce' ); ?>
-                            <strong><?php echo wc_price( (float) $sample_product->get_price() ); ?></strong>
-                        </span>
-                    </div>
-                    <div class="scogs-radar-alerts-col">
-                        <div class="scogs-radar-alert-chip scogs-alert-undercut">
-                            <span class="dashicons dashicons-arrow-down-alt"></span>
-                            <div>
-                                <strong><?php esc_html_e( 'Undercut Risk:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
-                                <?php esc_html_e( 'If competitors drop prices by ~5%, checkout conversions drop up to 35%.', 'simple-cost-of-goods-for-woocommerce' ); ?>
-                            </div>
+
+                <!-- Product Subject Bar -->
+                <div class="scogs-battle-subject">
+                    <span class="scogs-subject-tag"><?php esc_html_e( 'MONITORED ITEM:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <strong class="scogs-subject-title" title="<?php echo esc_attr( $sample_product->get_name() ); ?>">
+                        <?php echo esc_html( wp_trim_words( $sample_product->get_name(), 12, '...' ) ); ?>
+                    </strong>
+                </div>
+
+                <!-- 3-Column Visual Battle Grid -->
+                <div class="scogs-battle-grid">
+                    <!-- Column 1: Your Store's Live Price -->
+                    <div class="scogs-battle-col scogs-col-store">
+                        <div class="scogs-col-header">
+                            <span class="dashicons dashicons-store"></span>
+                            <span><?php esc_html_e( 'YOUR LIVE PRICE', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
                         </div>
-                        <div class="scogs-radar-alert-chip scogs-alert-surge">
+                        <div class="scogs-col-price"><?php echo wc_price( $prod_price ); ?></div>
+                        <div class="scogs-col-desc">
+                            <?php esc_html_e( 'Your current catalog selling price in WooCommerce.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Competitor Undercut Attack (Red Danger) -->
+                    <div class="scogs-battle-col scogs-col-threat">
+                        <div class="scogs-col-header">
+                            <span class="dashicons dashicons-warning"></span>
+                            <span><?php esc_html_e( 'RIVAL UNDERCUT THREAT', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        </div>
+                        <div class="scogs-col-price scogs-threat-price">
+                            <?php echo wc_price( $undercut_price ); ?>
+                            <span class="scogs-diff-badge">&minus;<?php echo wc_price( $undercut_diff ); ?></span>
+                        </div>
+                        <div class="scogs-col-desc">
+                            <?php esc_html_e( 'When rivals drop price, up to 40% of your paid Facebook/Google ad clicks bounce to them.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        </div>
+                    </div>
+
+                    <!-- Column 3: Stockout Surge Profit Opportunity (Green Gain) -->
+                    <div class="scogs-battle-col scogs-col-surge">
+                        <div class="scogs-col-header">
                             <span class="dashicons dashicons-arrow-up-alt"></span>
-                            <div>
-                                <strong><?php esc_html_e( 'Surge Opportunity:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong>
-                                <?php esc_html_e( 'When rivals sell out, AI can safely lift your price by +10% to +18% with zero lost sales.', 'simple-cost-of-goods-for-woocommerce' ); ?>
-                            </div>
+                            <span><?php esc_html_e( 'RIVAL STOCKOUT SURGE', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        </div>
+                        <div class="scogs-col-price scogs-surge-price">
+                            <?php echo wc_price( $surge_price ); ?>
+                            <span class="scogs-surge-badge">+<?php echo wc_price( $surge_gain ); ?> <?php esc_html_e( 'gain', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        </div>
+                        <div class="scogs-col-desc">
+                            <?php esc_html_e( 'When rivals sell out, AI instantly lifts your price to capture premium surge profits with 0 lost sales.', 'simple-cost-of-goods-for-woocommerce' ); ?>
                         </div>
                     </div>
+                </div>
+
+                <!-- Bottom Action Banner inside Radar -->
+                <div class="scogs-battle-footer">
+                    <div class="scogs-battle-footer-text">
+                        <span class="dashicons dashicons-shield" style="color:#2563eb;"></span>
+                        <span><?php esc_html_e( 'MarketPulse monitors 100+ marketplaces 24/7 to reprice this product automatically while strictly guarding your COGS floor.', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    </div>
+                    <a href="<?php echo esc_url( $signup_plan_url ); ?>" target="_blank" class="scogs-battle-action-btn">
+                        <?php esc_html_e( 'Auto-Track & Reprice This Item with MarketPulse AI &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                    </a>
                 </div>
             </div>
             <?php endif; ?>

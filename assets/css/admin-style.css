@@ -707,134 +707,225 @@ input#_cogs_cost_price.scogs-input-warning {
 }
 
 /* Live Personalized Catalog Vulnerability Radar */
-.scogs-radar-box {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-left: 4px solid #2563eb;
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin-top: 18px;
+/* Live Catalog Sample Vulnerability Radar: AI Battle Card */
+.scogs-radar-battle-card {
+    background: #ffffff;
+    border: 2px solid #2563eb;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+    position: relative;
+    overflow: hidden;
 }
 
-.scogs-radar-top {
+.scogs-battle-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.scogs-radar-title-wrap {
+.scogs-battle-title {
     display: flex;
     align-items: center;
     gap: 8px;
+    color: #1e3a8a;
     font-size: 13px;
-    color: #1e293b;
+    font-weight: 800;
+    letter-spacing: 0.04em;
 }
 
-.scogs-radar-icon {
-    color: #2563eb;
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
+.scogs-radar-ping-dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    background: #2563eb;
+    border-radius: 50%;
+    animation: scogs-pulse-blue 1.6s infinite;
 }
 
-.scogs-radar-pill {
+@keyframes scogs-pulse-blue {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(37, 99, 235, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+
+.scogs-battle-pill {
     background: #eff6ff;
     color: #1d4ed8;
     border: 1px solid #bfdbfe;
     font-size: 11px;
-    font-weight: 600;
-    padding: 2px 8px;
+    font-weight: 700;
+    padding: 3px 10px;
     border-radius: 12px;
+    letter-spacing: 0.03em;
 }
 
-.scogs-radar-grid {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 16px;
-    align-items: center;
-}
-
-@media (max-width: 900px) {
-    .scogs-radar-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.scogs-radar-prod-col {
-    background: #ffffff;
+.scogs-battle-subject {
+    background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 6px;
-    padding: 12px 14px;
+    padding: 8px 12px;
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
 }
 
-.scogs-radar-label {
+.scogs-subject-tag {
     font-size: 11px;
+    font-weight: 700;
     color: #64748b;
-    font-weight: 600;
-    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
 }
 
-.scogs-radar-name {
+.scogs-subject-title {
     font-size: 13px;
     color: #0f172a;
-    line-height: 1.4;
+    font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.scogs-radar-price-tag {
-    font-size: 12px;
-    color: #334155;
-    margin-top: 2px;
-}
-
-.scogs-radar-alerts-col {
+.scogs-battle-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 14px;
 }
 
-@media (max-width: 650px) {
-    .scogs-radar-alerts-col {
+@media (max-width: 950px) {
+    .scogs-battle-grid {
         grid-template-columns: 1fr;
     }
 }
 
-.scogs-radar-alert-chip {
+.scogs-battle-col {
+    border-radius: 8px;
+    padding: 14px 16px;
     display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    padding: 10px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    line-height: 1.4;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.scogs-alert-undercut {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    color: #991b1b;
+.scogs-col-store {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
 }
 
-.scogs-alert-undercut .dashicons {
-    color: #dc2626;
-    margin-top: 2px;
+.scogs-col-threat {
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+    border-left: 4px solid #ef4444;
 }
 
-.scogs-alert-surge {
+.scogs-col-surge {
     background: #f0fdf4;
     border: 1px solid #bbf7d0;
-    color: #166534;
+    border-left: 4px solid #10b981;
 }
 
-.scogs-alert-surge .dashicons {
-    color: #16a34a;
-    margin-top: 2px;
+.scogs-col-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+}
+
+.scogs-col-store .scogs-col-header { color: #475569; }
+.scogs-col-threat .scogs-col-header { color: #991b1b; }
+.scogs-col-surge .scogs-col-header { color: #166534; }
+
+.scogs-col-price {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.scogs-col-store .scogs-col-price { color: #0f172a; }
+.scogs-threat-price { color: #dc2626; }
+.scogs-surge-price { color: #059669; }
+
+.scogs-diff-badge {
+    font-size: 11px;
+    font-weight: 700;
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #fecaca;
+}
+
+.scogs-surge-badge {
+    font-size: 11px;
+    font-weight: 700;
+    background: #dcfce7;
+    color: #15803d;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #bbf7d0;
+}
+
+.scogs-col-desc {
+    font-size: 11px;
+    line-height: 1.4;
+    color: #475569;
+}
+
+.scogs-battle-footer {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.scogs-battle-footer-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #334155;
+    flex: 1;
+    min-width: 260px;
+}
+
+.scogs-battle-action-btn {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    color: #ffffff !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    padding: 7px 16px !important;
+    border-radius: 6px !important;
+    text-decoration: none !important;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3) !important;
+    transition: all 0.2s ease !important;
+    white-space: nowrap;
+}
+
+.scogs-battle-action-btn:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.45) !important;
 }
 
 /* Visual Profit Gap Comparison Graphic */

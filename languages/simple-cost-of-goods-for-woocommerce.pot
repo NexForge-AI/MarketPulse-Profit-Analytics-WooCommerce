@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-09T10:55:19+00:00\n"
+"POT-Creation-Date: 2026-11-09T11:19:58+00:00\n"
 "PO-Revision-Date: \n"
 "Language: en\n"
 
@@ -17,7 +17,7 @@ msgstr ""
 msgid "Cost of Goods (COGS)"
 msgstr ""
 
-#: includes/class-cogs-csv.php:32 includes/class-cogs-csv.php:57 includes/class-cogs-csv.php:70 includes/class-cogs-product.php:176 includes/class-cogs-product.php:220 includes/class-cogs-product.php:301 includes/class-cogs-product.php:342
+#: includes/class-cogs-csv.php:32 includes/class-cogs-csv.php:57 includes/class-cogs-csv.php:70 includes/class-cogs-product.php:181 includes/class-cogs-product.php:225 includes/class-cogs-product.php:306 includes/class-cogs-product.php:347
 msgid "Supplier"
 msgstr ""
 
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Revenue:"
 msgstr ""
 
-#: includes/class-cogs-dashboard.php:143 includes/class-cogs-dashboard.php:153 includes/class-cogs-product.php:219
+#: includes/class-cogs-dashboard.php:143 includes/class-cogs-dashboard.php:153 includes/class-cogs-product.php:224
 msgid "Margin"
 msgstr ""
 
@@ -49,7 +49,7 @@ msgstr ""
 msgid "Captured Margin"
 msgstr ""
 
-#: includes/class-cogs-dashboard.php:174 includes/class-cogs-reports.php:1093
+#: includes/class-cogs-dashboard.php:174 includes/class-cogs-reports.php:1137
 msgid "Leaking"
 msgstr ""
 
@@ -173,11 +173,11 @@ msgstr ""
 msgid "Net Profit"
 msgstr ""
 
-#: includes/class-cogs-product.php:54 includes/class-cogs-product.php:164
+#: includes/class-cogs-product.php:54 includes/class-cogs-product.php:169
 msgid "Cost Price (COGS)"
 msgstr ""
 
-#: includes/class-cogs-product.php:55 includes/class-cogs-product.php:297
+#: includes/class-cogs-product.php:55 includes/class-cogs-product.php:302
 msgid "e.g. 15.00"
 msgstr ""
 
@@ -185,91 +185,91 @@ msgstr ""
 msgid "Enter the wholesale purchase or manufacturing cost per unit. Used to calculate actual net profit margins."
 msgstr ""
 
-#: includes/class-cogs-product.php:65
-msgid "Supplier / Vendor"
-msgstr ""
-
-#: includes/class-cogs-product.php:66
-msgid "e.g. Acme Wholesale Ltd."
-msgstr ""
-
-#: includes/class-cogs-product.php:68
-msgid "Track which vendor or distributor supplies this item."
-msgstr ""
-
-#: includes/class-cogs-product.php:83
+#: includes/class-cogs-product.php:73 includes/class-cogs-product.php:112
 msgid "Est. Gross Margin"
 msgstr ""
 
-#: includes/class-cogs-product.php:89
+#: includes/class-cogs-product.php:79
 msgid "Boost margin with MarketPulse &rarr;"
 msgstr ""
 
-#: includes/class-cogs-product.php:100
+#: includes/class-cogs-product.php:90
 msgid "Dangerously Low Margin Alert (%s%%):"
 msgstr ""
 
-#: includes/class-cogs-product.php:101
+#: includes/class-cogs-product.php:91
 msgid "After payment gateway fees and courier deficits, your net take-home profit is nearly zero."
 msgstr ""
 
-#: includes/class-cogs-product.php:104
+#: includes/class-cogs-product.php:94
 msgid "🚀 Protect & Reprice with MarketPulse AI &rarr;"
 msgstr ""
 
-#: includes/class-cogs-product.php:113
+#: includes/class-cogs-product.php:103
 msgid "Unlock Higher Margin (%s%%):"
 msgstr ""
 
-#: includes/class-cogs-product.php:114
+#: includes/class-cogs-product.php:104
 msgid "When competitors run out of stock, automated AI repricing safely lifts prices to 30%+ with zero lost sales."
 msgstr ""
 
-#: includes/class-cogs-product.php:117
+#: includes/class-cogs-product.php:107
 msgid "⚡ Optimize Price with MarketPulse &rarr;"
 msgstr ""
 
-#: includes/class-cogs-product.php:166
+#: includes/class-cogs-product.php:121
+msgid "Supplier / Vendor"
+msgstr ""
+
+#: includes/class-cogs-product.php:122
+msgid "e.g. Acme Wholesale Ltd."
+msgstr ""
+
+#: includes/class-cogs-product.php:124
+msgid "Track which vendor or distributor supplies this item."
+msgstr ""
+
+#: includes/class-cogs-product.php:171
 msgid "e.g. 10.00"
 msgstr ""
 
-#: includes/class-cogs-product.php:168
+#: includes/class-cogs-product.php:173
 msgid "Wholesale purchase cost for this specific variation."
 msgstr ""
 
-#: includes/class-cogs-product.php:178
+#: includes/class-cogs-product.php:183
 msgid "e.g. Acme Ltd."
 msgstr ""
 
-#: includes/class-cogs-product.php:218
+#: includes/class-cogs-product.php:223
 msgid "Cost"
 msgstr ""
 
-#: includes/class-cogs-product.php:257
+#: includes/class-cogs-product.php:262
 msgid "Gross Profit: "
 msgstr ""
 
-#: includes/class-cogs-product.php:264
+#: includes/class-cogs-product.php:269
 msgid "Low margin? Automatically protect COGS & optimize price with MarketPulse AI"
 msgstr ""
 
-#: includes/class-cogs-product.php:265
+#: includes/class-cogs-product.php:270
 msgid "Boost margin with MarketPulse"
 msgstr ""
 
-#: includes/class-cogs-product.php:295 includes/class-cogs-product.php:336
+#: includes/class-cogs-product.php:300 includes/class-cogs-product.php:341
 msgid "Cost Price"
 msgstr ""
 
-#: includes/class-cogs-product.php:303
+#: includes/class-cogs-product.php:308
 msgid "Supplier name"
 msgstr ""
 
-#: includes/class-cogs-product.php:338 includes/class-cogs-product.php:344
+#: includes/class-cogs-product.php:343 includes/class-cogs-product.php:349
 msgid "— No Change —"
 msgstr ""
 
-#: includes/class-cogs-product.php:388
+#: includes/class-cogs-product.php:393
 msgid "All Suppliers"
 msgstr ""
 
@@ -633,115 +633,131 @@ msgstr ""
 msgid "Pure cash missed without automated dynamic pricing"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1042
-msgid "Live Catalog Sample Vulnerability Radar"
+#: includes/class-cogs-reports.php:1050
+msgid "MARKETPULSE AI RADAR: LIVE COMPETITOR THREAT SCAN"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1044
-msgid "Real Store Product Sample"
+#: includes/class-cogs-reports.php:1052
+msgid "● REAL CATALOG SCAN"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1048
-msgid "Audited Product:"
-msgstr ""
-
-#: includes/class-cogs-reports.php:1053
-msgid "Current Price:"
-msgstr ""
-
-#: includes/class-cogs-reports.php:1061
-msgid "Undercut Risk:"
-msgstr ""
-
-#: includes/class-cogs-reports.php:1062
-msgid "If competitors drop prices by ~5%, checkout conversions drop up to 35%."
-msgstr ""
-
-#: includes/class-cogs-reports.php:1068
-msgid "Surge Opportunity:"
+#: includes/class-cogs-reports.php:1057
+msgid "MONITORED ITEM:"
 msgstr ""
 
 #: includes/class-cogs-reports.php:1069
-msgid "When rivals sell out, AI can safely lift your price by +10% to +18% with zero lost sales."
+msgid "YOUR LIVE PRICE"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1079
+#: includes/class-cogs-reports.php:1073
+msgid "Your current catalog selling price in WooCommerce."
+msgstr ""
+
+#: includes/class-cogs-reports.php:1081
+msgid "RIVAL UNDERCUT THREAT"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1088
+msgid "When rivals drop price, up to 40% of your paid Facebook/Google ad clicks bounce to them."
+msgstr ""
+
+#: includes/class-cogs-reports.php:1096
+msgid "RIVAL STOCKOUT SURGE"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1100
+msgid "gain"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1103
+msgid "When rivals sell out, AI instantly lifts your price to capture premium surge profits with 0 lost sales."
+msgstr ""
+
+#: includes/class-cogs-reports.php:1112
+msgid "MarketPulse monitors 100+ marketplaces 24/7 to reprice this product automatically while strictly guarding your COGS floor."
+msgstr ""
+
+#: includes/class-cogs-reports.php:1115
+msgid "Auto-Track & Reprice This Item with MarketPulse AI &rarr;"
+msgstr ""
+
+#: includes/class-cogs-reports.php:1123
 msgid "Visual Profit Leak Analysis (Actual Take-Home vs. Potential)"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1085
+#: includes/class-cogs-reports.php:1129
 msgid "Your Actual Net Profit:"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1090
+#: includes/class-cogs-reports.php:1134
 msgid "Captured"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1101
+#: includes/class-cogs-reports.php:1145
 msgid "Potential Profit with MarketPulse AI Repricer:"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1106
+#: includes/class-cogs-reports.php:1150
 msgid "Fully Optimized (+"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1106
+#: includes/class-cogs-reports.php:1150
 msgid "more cash in bank)"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1117
+#: includes/class-cogs-reports.php:1161
 msgid "Simulate Your Dynamic Repricing Gain:"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1119
+#: includes/class-cogs-reports.php:1163
 msgid "Repricing Margin Lift"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1145
+#: includes/class-cogs-reports.php:1189
 msgid "1. Bounced Ad Traffic"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1146
+#: includes/class-cogs-reports.php:1190
 msgid "When rivals drop prices by even a fraction, up to 40% of your paid Facebook and Google ad clicks bounce to competitor checkouts."
 msgstr ""
 
-#: includes/class-cogs-reports.php:1153
+#: includes/class-cogs-reports.php:1197
 msgid "2. Missed Stockout Surges"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1154
+#: includes/class-cogs-reports.php:1198
 msgid "When competitor inventory sells out, static pricing gives away +15% to +25% in instant premium profit surges from urgent buyers."
 msgstr ""
 
-#: includes/class-cogs-reports.php:1161
+#: includes/class-cogs-reports.php:1205
 msgid "3. 100% Margin Floor Guard"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1162
+#: includes/class-cogs-reports.php:1206
 msgid "MarketPulse strictly honors your purchase COGS. Wholesale costs rise, but AI ensures you never sell at a loss."
 msgstr ""
 
-#: includes/class-cogs-reports.php:1170
+#: includes/class-cogs-reports.php:1214
 msgid "Stop Leaving Cash on the Table Every Single Day"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1171
+#: includes/class-cogs-reports.php:1215
 msgid "Activate your free 24-Hour Competitor & Profit Audit with MarketPulse. See exactly where competitors are undercutting your sales and start auto-optimizing."
 msgstr ""
 
-#: includes/class-cogs-reports.php:1174
+#: includes/class-cogs-reports.php:1218
 msgid "100% Free Signup"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1175
+#: includes/class-cogs-reports.php:1219
 msgid "No Credit Card Required"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1176
+#: includes/class-cogs-reports.php:1220
 msgid "Connects in 60s with WooCommerce"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1181
+#: includes/class-cogs-reports.php:1225
 msgid "Claim Free Store Audit & Plan Access &rarr;"
 msgstr ""
 
