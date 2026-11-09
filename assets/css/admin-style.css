@@ -66,20 +66,58 @@
     white-space: nowrap;
 }
 
-/* Product & Order List Table Columns (Fix vertical wrapping & breaking) */
+/* Product & Order List Table Columns (Bulletproof width, no vertical wrapping) */
+body.post-type-product .wrap .wp-list-table {
+    table-layout: auto !important;
+}
+
 .wp-list-table th.column-scogs_cost,
-.wp-list-table td.column-scogs_cost {
-    width: 90px !important;
-    min-width: 80px !important;
+.wp-list-table td.column-scogs_cost,
+th#scogs_cost,
+td.column-scogs_cost {
+    width: 95px !important;
+    min-width: 85px !important;
     text-align: right;
     white-space: nowrap !important;
+    word-break: normal !important;
+    word-wrap: normal !important;
 }
 
 .wp-list-table th.column-scogs_margin,
-.wp-list-table td.column-scogs_margin {
-    width: 145px !important;
-    min-width: 130px !important;
+.wp-list-table td.column-scogs_margin,
+th#scogs_margin,
+td.column-scogs_margin {
+    width: 150px !important;
+    min-width: 135px !important;
     text-align: center;
+    white-space: nowrap !important;
+    word-break: normal !important;
+    word-wrap: normal !important;
+}
+
+.wp-list-table th.column-scogs_supplier,
+.wp-list-table td.column-scogs_supplier,
+th#scogs_supplier,
+td.column-scogs_supplier {
+    width: 130px !important;
+    min-width: 110px !important;
+    white-space: nowrap !important;
+    word-break: normal !important;
+    word-wrap: normal !important;
+}
+
+.wp-list-table th.column-scogs_supplier a,
+.wp-list-table th.column-scogs_cost a,
+.wp-list-table th.column-scogs_margin a,
+.wp-list-table th.column-scogs_supplier span,
+.wp-list-table th.column-scogs_cost span,
+.wp-list-table th.column-scogs_margin span,
+th#scogs_supplier a, th#scogs_cost a, th#scogs_margin a,
+th#scogs_supplier span, th#scogs_cost span, th#scogs_margin span {
+    white-space: nowrap !important;
+    word-break: normal !important;
+    word-wrap: normal !important;
+    display: inline-block !important;
 }
 
 .scogs-margin-cell-wrap {

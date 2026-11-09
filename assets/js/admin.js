@@ -156,6 +156,7 @@
             calculateSimpleMargin();
         });
         calculateSimpleMargin();
+        setTimeout(calculateSimpleMargin, 150);
 
         // 3. Real-time Live Margin calculation for Variable Products (inside variations tab)
         $(document).on('input change keyup', '.scogs-variation-fields input[name^="_cogs_cost_price"], .woocommerce_variation input[name^="variable_regular_price"], .woocommerce_variation input[name^="variable_sale_price"]', function () {

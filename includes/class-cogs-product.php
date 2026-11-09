@@ -48,9 +48,26 @@ class SCOGS_Product {
 
         echo '<div class="options_group scogs-pricing-group">';
 
+        // Calculate margin for initial page load styling
+        $product = wc_get_product( $post->ID );
+        $cost    = $product ? self::get_product_cost( $product ) : 0;
+        $price   = $product ? (float) $product->get_price() : 0;
+        $profit  = ( $cost > 0 && $price > 0 ) ? ( $price - $cost ) : 0;
+        $margin  = ( $cost > 0 && $price > 0 ) ? ( ( $profit / $price ) * 100 ) : 0;
+
+        $cost_input_class = '';
+        if ( $cost > 0 && $price > 0 ) {
+            if ( $margin < 15 ) {
+                $cost_input_class = 'scogs-input-danger';
+            } elseif ( $margin < 30 ) {
+                $cost_input_class = 'scogs-input-warning';
+            }
+        }
+
         // 1. Cost Price (COGS)
         woocommerce_wp_text_input( array(
             'id'          => self::META_KEY_COST,
+            'class'       => 'short ' . $cost_input_class,
             'label'       => __( 'Cost Price (COGS)', 'simple-cost-of-goods-for-woocommerce' ) . ' (' . get_woocommerce_currency_symbol() . ')',
             'placeholder' => __( 'e.g. 15.00', 'simple-cost-of-goods-for-woocommerce' ),
             'desc_tip'    => true,
@@ -60,13 +77,8 @@ class SCOGS_Product {
         ) );
 
         // Live margin preview immediately below Cost Price
-        $product = wc_get_product( $post->ID );
         if ( $product ) {
-            $cost   = self::get_product_cost( $product );
-            $price  = (float) $product->get_price();
             if ( $cost > 0 && $price > 0 ) {
-                $profit = $price - $cost;
-                $margin = ( $profit / $price ) * 100;
                 $badge_class = $margin >= 30 ? 'scogs-badge-green' : ( $margin >= 15 ? 'scogs-badge-amber' : 'scogs-badge-red' );
 
                 echo '<p class="form-field scogs-live-margin">';
@@ -76,7 +88,7 @@ class SCOGS_Product {
                 echo '</span>';
                 if ( $margin < 30 ) {
                     $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_margin&utm_campaign=boost_margin';
-                    echo ' <a href="' . esc_url( $plan_url ) . '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;">🚀 ' . esc_html__( 'Boost margin with MarketPulse &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
+                    echo ' <a href="' . esc_url( $plan_url ) . '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;"><img src="' . esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ) . '" class="scogs-btn-brand-icon" alt="" />' . esc_html__( 'Boost margin with MarketPulse &rarr;', 'simple-cost-of-goods-for-woocommerce' ) . '</a>';
                 }
                 echo '</p>';
 
