@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-09T09:30:07+00:00\n"
+"POT-Creation-Date: 2026-11-09T09:41:39+00:00\n"
 "PO-Revision-Date: \n"
 "Language: en\n"
 
@@ -49,7 +49,7 @@ msgstr ""
 msgid "Captured Margin"
 msgstr ""
 
-#: includes/class-cogs-dashboard.php:174 includes/class-cogs-reports.php:1037
+#: includes/class-cogs-dashboard.php:174 includes/class-cogs-reports.php:950
 msgid "Leaking"
 msgstr ""
 
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Other Miscellaneous Expenses"
 msgstr ""
 
-#: includes/class-cogs-expenses.php:181 includes/class-cogs-expenses.php:205 includes/class-cogs-reports.php:605
+#: includes/class-cogs-expenses.php:181 includes/class-cogs-expenses.php:205 includes/class-cogs-reports.php:518
 msgid "Unauthorized user."
 msgstr ""
 
@@ -169,7 +169,7 @@ msgstr ""
 msgid "Item Profit:"
 msgstr ""
 
-#: includes/class-cogs-order.php:284 includes/class-cogs-reports.php:879 includes/class-cogs-reports.php:927
+#: includes/class-cogs-order.php:284 includes/class-cogs-reports.php:792 includes/class-cogs-reports.php:840
 msgid "Net Profit"
 msgstr ""
 
@@ -237,475 +237,443 @@ msgstr ""
 msgid "All Suppliers"
 msgstr ""
 
-#: includes/class-cogs-reports.php:25 includes/class-cogs-reports.php:26 simple-cost-of-goods-for-woocommerce.php:202
+#: includes/class-cogs-reports.php:26 includes/class-cogs-reports.php:27 simple-cost-of-goods-for-woocommerce.php:202
 msgid "MarketPulse Profit Analytics"
 msgstr ""
 
-#: includes/class-cogs-reports.php:48
+#: includes/class-cogs-reports.php:49
 msgid "MarketPulse Profit Analytics & Financial Intelligence"
 msgstr ""
 
-#: includes/class-cogs-reports.php:54
+#: includes/class-cogs-reports.php:55
 msgid "Powered by"
 msgstr ""
 
-#: includes/class-cogs-reports.php:63
+#: includes/class-cogs-reports.php:64
 msgid "Overview & Charts"
 msgstr ""
 
-#: includes/class-cogs-reports.php:66
+#: includes/class-cogs-reports.php:67
 msgid "Operating Expenses"
 msgstr ""
 
-#: includes/class-cogs-reports.php:69
+#: includes/class-cogs-reports.php:70
 msgid "Payment Gateway Fees"
 msgstr ""
 
-#: includes/class-cogs-reports.php:72
+#: includes/class-cogs-reports.php:73
 msgid "Suppliers & Bulk Tools"
 msgstr ""
 
-#: includes/class-cogs-reports.php:150
+#: includes/class-cogs-reports.php:151
 msgid "Today"
 msgstr ""
 
-#: includes/class-cogs-reports.php:151
+#: includes/class-cogs-reports.php:152
 msgid "Yesterday"
 msgstr ""
 
-#: includes/class-cogs-reports.php:152
+#: includes/class-cogs-reports.php:153
 msgid "Last 7 Days"
 msgstr ""
 
-#: includes/class-cogs-reports.php:153
+#: includes/class-cogs-reports.php:154
 msgid "This Month"
 msgstr ""
 
-#: includes/class-cogs-reports.php:154
+#: includes/class-cogs-reports.php:155
 msgid "Last Month"
 msgstr ""
 
-#: includes/class-cogs-reports.php:163
+#: includes/class-cogs-reports.php:164
 msgid "Filter"
 msgstr ""
 
-#: includes/class-cogs-reports.php:171
-msgid "1. Gross Revenue"
+#: includes/class-cogs-reports.php:167
+msgid "Download audit-ready P&L spreadsheet for this period"
 msgstr ""
 
-#: includes/class-cogs-reports.php:173
-msgid "orders placed"
+#: includes/class-cogs-reports.php:169
+msgid "Export P&L (CSV)"
 msgstr ""
 
 #: includes/class-cogs-reports.php:178
-msgid "2. Total COGS"
+msgid "1. Gross Revenue"
 msgstr ""
 
 #: includes/class-cogs-reports.php:180
-msgid "Product acquisition cost"
+msgid "orders placed"
 msgstr ""
 
 #: includes/class-cogs-reports.php:185
-msgid "3. Gross Profit"
+msgid "2. Total COGS"
 msgstr ""
 
 #: includes/class-cogs-reports.php:187
-msgid "Gross Margin"
+msgid "Product acquisition cost"
 msgstr ""
 
 #: includes/class-cogs-reports.php:192
-msgid "4. Gateway & Shipping Fees"
+msgid "3. Gross Profit"
 msgstr ""
 
 #: includes/class-cogs-reports.php:194
-msgid "Gateways:"
-msgstr ""
-
-#: includes/class-cogs-reports.php:194
-msgid "Deficit:"
+msgid "Gross Margin"
 msgstr ""
 
 #: includes/class-cogs-reports.php:199
-msgid "5. Operating Expenses"
+msgid "4. Gateway & Shipping Fees"
 msgstr ""
 
 #: includes/class-cogs-reports.php:201
-msgid "Manage Ads, Rent, Server &rarr;"
+msgid "Gateways:"
+msgstr ""
+
+#: includes/class-cogs-reports.php:201
+msgid "Deficit:"
 msgstr ""
 
 #: includes/class-cogs-reports.php:206
-msgid "6. True Net Profit"
+msgid "5. Operating Expenses"
 msgstr ""
 
 #: includes/class-cogs-reports.php:208
+msgid "Manage Ads, Rent, Server &rarr;"
+msgstr ""
+
+#: includes/class-cogs-reports.php:213
+msgid "6. True Net Profit"
+msgstr ""
+
+#: includes/class-cogs-reports.php:215
 msgid "Net Margin"
 msgstr ""
 
-#: includes/class-cogs-reports.php:221
+#: includes/class-cogs-reports.php:228
 msgid "Top 5 Most Profitable Products"
 msgstr ""
 
-#: includes/class-cogs-reports.php:230
+#: includes/class-cogs-reports.php:237
 msgid "Lowest Margin Products (Requires Attention)"
 msgstr ""
 
-#: includes/class-cogs-reports.php:253
+#: includes/class-cogs-reports.php:260
 msgid "Add Operating Expense"
 msgstr ""
 
-#: includes/class-cogs-reports.php:254
+#: includes/class-cogs-reports.php:261
 msgid "Record overhead costs like Meta ads, server bills, salaries or packaging to deduct from monthly gross profit."
 msgstr ""
 
-#: includes/class-cogs-reports.php:261
+#: includes/class-cogs-reports.php:268
 msgid "Expense Date:"
 msgstr ""
 
-#: includes/class-cogs-reports.php:266
+#: includes/class-cogs-reports.php:273
 msgid "Category:"
 msgstr ""
 
-#: includes/class-cogs-reports.php:275
+#: includes/class-cogs-reports.php:282
 msgid "Expense Title:"
 msgstr ""
 
-#: includes/class-cogs-reports.php:276
+#: includes/class-cogs-reports.php:283
 msgid "e.g. Facebook Ads Campaign #12"
 msgstr ""
 
-#: includes/class-cogs-reports.php:280
+#: includes/class-cogs-reports.php:287
 msgid "Amount:"
 msgstr ""
 
-#: includes/class-cogs-reports.php:285
+#: includes/class-cogs-reports.php:292
 msgid "Notes / Reference (Optional):"
 msgstr ""
 
-#: includes/class-cogs-reports.php:286
+#: includes/class-cogs-reports.php:293
 msgid "Invoice number, transaction ID, or details..."
 msgstr ""
 
-#: includes/class-cogs-reports.php:289
+#: includes/class-cogs-reports.php:296
 msgid "Save Expense"
 msgstr ""
 
-#: includes/class-cogs-reports.php:296
+#: includes/class-cogs-reports.php:303
 msgid "Expense Ledger"
 msgstr ""
 
-#: includes/class-cogs-reports.php:297
+#: includes/class-cogs-reports.php:304
 msgid "Total Logged:"
 msgstr ""
 
-#: includes/class-cogs-reports.php:302
+#: includes/class-cogs-reports.php:309
 msgid "No operating expenses logged yet. Add your first marketing or overhead expense using the form on the left."
 msgstr ""
 
-#: includes/class-cogs-reports.php:308
+#: includes/class-cogs-reports.php:315
 msgid "Date"
 msgstr ""
 
-#: includes/class-cogs-reports.php:309
+#: includes/class-cogs-reports.php:316
 msgid "Category"
 msgstr ""
 
-#: includes/class-cogs-reports.php:310
+#: includes/class-cogs-reports.php:317
 msgid "Title"
 msgstr ""
 
-#: includes/class-cogs-reports.php:311
+#: includes/class-cogs-reports.php:318
 msgid "Amount"
 msgstr ""
 
-#: includes/class-cogs-reports.php:312 includes/class-cogs-reports.php:543
+#: includes/class-cogs-reports.php:319 includes/class-cogs-reports.php:456
 msgid "Action"
 msgstr ""
 
-#: includes/class-cogs-reports.php:326
+#: includes/class-cogs-reports.php:333
 msgid "Delete this expense entry?"
 msgstr ""
 
-#: includes/class-cogs-reports.php:357
-msgid "Payment gateway fee rules saved successfully. Net profits will automatically reflect these deductions."
-msgstr ""
-
-#: includes/class-cogs-reports.php:363
-msgid "Payment Gateway Fee Auto-Detection & Deductions"
+#: includes/class-cogs-reports.php:359
+msgid "Payment gateway fee rules saved successfully."
 msgstr ""
 
 #: includes/class-cogs-reports.php:365
-msgid "Configure the percentage and fixed transaction fees charged by your payment processors. These fees are automatically deducted from order gross revenues to calculate True Net Profit."
+msgid "Payment Gateway Fee Auto-Detection"
 msgstr ""
 
-#: includes/class-cogs-reports.php:377
-msgid "Detected WooCommerce Payment Methods"
+#: includes/class-cogs-reports.php:367
+msgid "The plugin automatically detects active payment gateways in your store and auto-fills standard market transaction rates (e.g. Stripe 2.9% + $0.30, PayPal 3.49%, bKash 1.5%). You can adjust them anytime to match your negotiated terms."
 msgstr ""
 
-#: includes/class-cogs-reports.php:380
-msgid "These payment methods are currently registered or active in your store checkout."
-msgstr ""
-
-#: includes/class-cogs-reports.php:386
+#: includes/class-cogs-reports.php:379
 msgid "Payment Gateway"
 msgstr ""
 
-#: includes/class-cogs-reports.php:387 includes/class-cogs-reports.php:439
+#: includes/class-cogs-reports.php:380
 msgid "Percentage Fee (%)"
 msgstr ""
 
-#: includes/class-cogs-reports.php:388 includes/class-cogs-reports.php:440
+#: includes/class-cogs-reports.php:381
 msgid "Fixed Fee"
 msgstr ""
 
-#: includes/class-cogs-reports.php:404
+#: includes/class-cogs-reports.php:393
 msgid "Active"
 msgstr ""
 
-#: includes/class-cogs-reports.php:406
+#: includes/class-cogs-reports.php:395
 msgid "Inactive"
 msgstr ""
 
-#: includes/class-cogs-reports.php:429
-msgid "Mobile Banking & Popular Gateway Rules"
+#: includes/class-cogs-reports.php:416
+msgid "Save Gateway Rules"
 msgstr ""
 
-#: includes/class-cogs-reports.php:432
-msgid "Standard pre-configured fee rules for popular merchant gateways. When orders are processed via any matching gateway plugin, these fee percentages will automatically apply."
-msgstr ""
-
-#: includes/class-cogs-reports.php:438
-msgid "Gateway / Processor"
-msgstr ""
-
-#: includes/class-cogs-reports.php:456
-msgid "Preset Rule"
-msgstr ""
-
-#: includes/class-cogs-reports.php:476
-msgid "Save All Gateway Rules"
-msgstr ""
-
-#: includes/class-cogs-reports.php:483
-msgid "Add Custom Payment Gateway Rule"
-msgstr ""
-
-#: includes/class-cogs-reports.php:486
-msgid "Using an unlisted gateway? Enter its WooCommerce gateway ID (e.g. upay, square, razorpay) to automatically apply fees."
-msgstr ""
-
-#: includes/class-cogs-reports.php:491
-msgid "Gateway ID (e.g. upay)"
-msgstr ""
-
-#: includes/class-cogs-reports.php:503
-msgid "+ Add Rule"
-msgstr ""
-
-#: includes/class-cogs-reports.php:530
+#: includes/class-cogs-reports.php:443
 msgid "Active Suppliers & Distributors"
 msgstr ""
 
-#: includes/class-cogs-reports.php:531
+#: includes/class-cogs-reports.php:444
 msgid "Suppliers currently linked to your product catalog."
 msgstr ""
 
-#: includes/class-cogs-reports.php:535
+#: includes/class-cogs-reports.php:448
 msgid "No suppliers assigned yet. You can assign suppliers on product edit screens or via CSV import."
 msgstr ""
 
-#: includes/class-cogs-reports.php:541
+#: includes/class-cogs-reports.php:454
 msgid "Supplier Name"
 msgstr ""
 
-#: includes/class-cogs-reports.php:542
+#: includes/class-cogs-reports.php:455
 msgid "Products Linked"
 msgstr ""
 
-#: includes/class-cogs-reports.php:554
+#: includes/class-cogs-reports.php:467
 msgid "View Products"
 msgstr ""
 
-#: includes/class-cogs-reports.php:565
+#: includes/class-cogs-reports.php:478
 msgid "Bulk CSV Inventory Tools"
 msgstr ""
 
-#: includes/class-cogs-reports.php:567
+#: includes/class-cogs-reports.php:480
 msgid "Simple Cost of Goods hooks seamlessly into WooCommerce’s native CSV Importer and Exporter. You can bulk update wholesale costs and supplier names for thousands of products in Excel or Google Sheets."
 msgstr ""
 
-#: includes/class-cogs-reports.php:571
+#: includes/class-cogs-reports.php:484
 msgid "1. Export Your Catalog to CSV"
 msgstr ""
 
-#: includes/class-cogs-reports.php:572
+#: includes/class-cogs-reports.php:485
 msgid "Exports your entire catalog with dedicated \"Cost of Goods (COGS)\" and \"Supplier\" columns ready for editing."
 msgstr ""
 
-#: includes/class-cogs-reports.php:574
+#: includes/class-cogs-reports.php:487
 msgid "Export Products to CSV &rarr;"
 msgstr ""
 
-#: includes/class-cogs-reports.php:579
+#: includes/class-cogs-reports.php:492
 msgid "2. Import Updated CSV File"
 msgstr ""
 
-#: includes/class-cogs-reports.php:580
+#: includes/class-cogs-reports.php:493
 msgid "Upload your modified CSV. Existing products will have their cost prices and suppliers updated automatically."
 msgstr ""
 
-#: includes/class-cogs-reports.php:582
+#: includes/class-cogs-reports.php:495
 msgid "Import Products from CSV &rarr;"
 msgstr ""
 
-#: includes/class-cogs-reports.php:730
+#: includes/class-cogs-reports.php:643
 msgid "No product sales recorded in this date range."
 msgstr ""
 
-#: includes/class-cogs-reports.php:745
+#: includes/class-cogs-reports.php:658
 msgid "Product"
 msgstr ""
 
-#: includes/class-cogs-reports.php:746
+#: includes/class-cogs-reports.php:659
 msgid "Sold"
 msgstr ""
 
-#: includes/class-cogs-reports.php:747 includes/class-cogs-reports.php:923
+#: includes/class-cogs-reports.php:660 includes/class-cogs-reports.php:836
 msgid "Revenue"
 msgstr ""
 
-#: includes/class-cogs-reports.php:748
+#: includes/class-cogs-reports.php:661
 msgid "Profit"
 msgstr ""
 
-#: includes/class-cogs-reports.php:760
+#: includes/class-cogs-reports.php:673
 msgid "margin"
 msgstr ""
 
-#: includes/class-cogs-reports.php:874
+#: includes/class-cogs-reports.php:787
 msgid "Sales, Cost & Profit Daily Trend"
 msgstr ""
 
-#: includes/class-cogs-reports.php:877
+#: includes/class-cogs-reports.php:790
 msgid "Gross Revenue"
 msgstr ""
 
-#: includes/class-cogs-reports.php:878
+#: includes/class-cogs-reports.php:791
 msgid "Total COGS"
 msgstr ""
 
-#: includes/class-cogs-reports.php:925
+#: includes/class-cogs-reports.php:838
 msgid "COGS"
 msgstr ""
 
-#: includes/class-cogs-reports.php:962
+#: includes/class-cogs-reports.php:875
 msgid "No sales recorded in this period yet. Placed orders will automatically appear here."
 msgstr ""
 
-#: includes/class-cogs-reports.php:994
+#: includes/class-cogs-reports.php:907
 msgid "LIVE STORE AUDIT: ESTIMATED PROFIT LEAK"
 msgstr ""
 
-#: includes/class-cogs-reports.php:997
+#: includes/class-cogs-reports.php:910
 msgid "Based on standard e-commerce static vs dynamic pricing benchmarks"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1005
+#: includes/class-cogs-reports.php:918
 msgid "You Left an Estimated"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1007
+#: includes/class-cogs-reports.php:920
 msgid "on the Table This Period"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1010
+#: includes/class-cogs-reports.php:923
 msgid "By keeping product prices static while competitors adjust prices 24/7, your store routinely misses high-margin surges during rival stockouts and loses checkout conversions to competitor undercutting."
 msgstr ""
 
-#: includes/class-cogs-reports.php:1015
+#: includes/class-cogs-reports.php:928
 msgid "ESTIMATED UNCAPTURED MARGIN"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1017
+#: includes/class-cogs-reports.php:930
 msgid "Pure cash lost to manual static pricing"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1023
+#: includes/class-cogs-reports.php:936
 msgid "Visual Profit Leak Analysis (Actual Take-Home vs. Potential)"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1029
+#: includes/class-cogs-reports.php:942
 msgid "Your Actual Net Profit:"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1034
+#: includes/class-cogs-reports.php:947
 msgid "Captured"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1045
+#: includes/class-cogs-reports.php:958
 msgid "Potential Profit with MarketPulse AI Repricer:"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1050
+#: includes/class-cogs-reports.php:963
 msgid "Fully Optimized (+"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1050
+#: includes/class-cogs-reports.php:963
 msgid "more cash in bank)"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1061
+#: includes/class-cogs-reports.php:974
 msgid "Simulate Your Dynamic Repricing Gain:"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1063
+#: includes/class-cogs-reports.php:976
 msgid "Repricing Margin Lift"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1089
+#: includes/class-cogs-reports.php:1002
 msgid "1. The Competitor Stockout Trap"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1090
+#: includes/class-cogs-reports.php:1003
 msgid "When your competitors run out of stock or hike prices, shoppers rush to buy from you. With static pricing, you sell out at standard low markup, forfeiting +15% to +30% in pure surge margins."
 msgstr ""
 
-#: includes/class-cogs-reports.php:1097
+#: includes/class-cogs-reports.php:1010
 msgid "2. Wasted Ad Spend on Undercut Items"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1102
+#: includes/class-cogs-reports.php:1015
 msgid "When a competitor drops an item price by just %s, your checkout conversion drops up to 40%%. You pay for Facebook/Google ads, but rival sellers capture the customer."
 msgstr ""
 
-#: includes/class-cogs-reports.php:1111
+#: includes/class-cogs-reports.php:1024
 msgid "3. Zero Profit Margin Floor Guard"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1112
+#: includes/class-cogs-reports.php:1025
 msgid "Wholesale supplier costs and gateway fees rise over time. Without automated AI guardrails strictly enforcing your minimum COGS margin floor, you unknowingly sell products at a loss."
 msgstr ""
 
-#: includes/class-cogs-reports.php:1120
+#: includes/class-cogs-reports.php:1033
 msgid "Stop Leaving Cash on the Table Every Single Day"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1121
+#: includes/class-cogs-reports.php:1034
 msgid "MarketPulse monitors 100+ marketplaces 24/7 and automatically adjusts your WooCommerce prices while strictly guarding your minimum profit floor."
 msgstr ""
 
-#: includes/class-cogs-reports.php:1124
+#: includes/class-cogs-reports.php:1037
 msgid "Never sells below your set COGS floor"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1125
+#: includes/class-cogs-reports.php:1038
 msgid "24/7 Competitor Price Tracking"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1126
+#: includes/class-cogs-reports.php:1039
 msgid "Connects in 60 seconds with WooCommerce"
 msgstr ""
 
-#: includes/class-cogs-reports.php:1131
+#: includes/class-cogs-reports.php:1044
 msgid "Stop The Leak: Activate MarketPulse AI Repricer &rarr;"
 msgstr ""
 

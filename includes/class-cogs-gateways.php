@@ -17,24 +17,89 @@ class SCOGS_Gateways {
     }
 
     /**
-     * Get default preset rules for popular mobile banking & international gateways
+     * Known global and regional payment gateway default market commissions
      *
      * @return array
      */
-    public static function get_default_presets() {
+    public static function get_known_gateway_defaults() {
         return array(
-            'bkash'      => array( 'title' => 'bKash Merchant / PGW', 'percent' => 1.5, 'fixed' => 0.0 ),
-            'nagad'      => array( 'title' => 'Nagad Merchant', 'percent' => 1.2, 'fixed' => 0.0 ),
-            'rocket'     => array( 'title' => 'Rocket (DBBL)', 'percent' => 1.5, 'fixed' => 0.0 ),
-            'sslcommerz' => array( 'title' => 'SSLCommerz Gateway', 'percent' => 2.5, 'fixed' => 0.0 ),
-            'shurjopay'  => array( 'title' => 'Shurjopay Gateway', 'percent' => 2.0, 'fixed' => 0.0 ),
-            'amarpay'    => array( 'title' => 'Aamarpay', 'percent' => 2.2, 'fixed' => 0.0 ),
-            'stripe'     => array( 'title' => 'Stripe Credit Cards', 'percent' => 2.9, 'fixed' => 0.30 ),
-            'paypal'     => array( 'title' => 'PayPal Express', 'percent' => 3.49, 'fixed' => 0.49 ),
-            'cod'        => array( 'title' => 'Cash on Delivery (COD)', 'percent' => 0.0, 'fixed' => 0.0 ),
-            'bacs'       => array( 'title' => 'Direct Bank Transfer', 'percent' => 0.0, 'fixed' => 0.0 ),
-            'cheque'     => array( 'title' => 'Check Payments', 'percent' => 0.0, 'fixed' => 0.0 ),
+            // Global / International
+            'stripe'        => array( 'percent' => 2.9, 'fixed' => 0.30 ),
+            'paypal'        => array( 'percent' => 3.49, 'fixed' => 0.49 ),
+            'ppec'          => array( 'percent' => 3.49, 'fixed' => 0.49 ),
+            'ppcp'          => array( 'percent' => 3.49, 'fixed' => 0.49 ),
+            'square'        => array( 'percent' => 2.9, 'fixed' => 0.30 ),
+            'mollie'        => array( 'percent' => 1.8, 'fixed' => 0.25 ),
+            'klarna'        => array( 'percent' => 2.99, 'fixed' => 0.35 ),
+            'razorpay'      => array( 'percent' => 2.0, 'fixed' => 0.0 ),
+            'paytm'         => array( 'percent' => 1.99, 'fixed' => 0.0 ),
+            'authorizenet'  => array( 'percent' => 2.9, 'fixed' => 0.30 ),
+            'authorize_net' => array( 'percent' => 2.9, 'fixed' => 0.30 ),
+            'braintree'     => array( 'percent' => 2.59, 'fixed' => 0.49 ),
+            'paystack'      => array( 'percent' => 1.5, 'fixed' => 0.0 ),
+            'flutterwave'   => array( 'percent' => 1.4, 'fixed' => 0.0 ),
+            'ccavenue'      => array( 'percent' => 2.0, 'fixed' => 0.0 ),
+
+            // South Asia / Regional (bKash, Nagad, etc.)
+            'bkash'         => array( 'percent' => 1.5, 'fixed' => 0.0 ),
+            'nagad'         => array( 'percent' => 1.2, 'fixed' => 0.0 ),
+            'rocket'        => array( 'percent' => 1.5, 'fixed' => 0.0 ),
+            'sslcommerz'    => array( 'percent' => 2.5, 'fixed' => 0.0 ),
+            'shurjopay'     => array( 'percent' => 2.0, 'fixed' => 0.0 ),
+            'amarpay'       => array( 'percent' => 2.2, 'fixed' => 0.0 ),
+
+            // Offline / Zero commission defaults
+            'cod'           => array( 'percent' => 0.0, 'fixed' => 0.0 ),
+            'bacs'          => array( 'percent' => 0.0, 'fixed' => 0.0 ),
+            'cheque'        => array( 'percent' => 0.0, 'fixed' => 0.0 ),
         );
+    }
+
+    /**
+     * Backward-compatibility alias
+     */
+    public static function get_default_presets() {
+        return self::get_known_gateway_defaults();
+    }
+
+    /**
+     * Auto-detect default fee for an installed gateway slug based on known provider knowledge
+     *
+     * @param string $gateway_id Gateway slug (e.g. 'stripe', 'woocommerce_bkash', 'ppcp-gateway')
+     * @return array
+     */
+    public static function detect_default_fee( $gateway_id ) {
+        $defaults = self::get_known_gateway_defaults();
+        $id_lower = strtolower( $gateway_id );
+
+        foreach ( $defaults as $slug => $rate ) {
+            if ( stripos( $id_lower, $slug ) !== false ) {
+                return $rate;
+            }
+        }
+
+        return array( 'percent' => 0.0, 'fixed' => 0.0 );
+    }
+
+    /**
+     * Get auto-detected fee rule for any installed gateway ID
+     * Checks saved options first, then falls back to auto-detected default
+     *
+     * @param string $gateway_id
+     * @return array
+     */
+    public static function get_gateway_fee_rule( $gateway_id ) {
+        $clean_id = sanitize_key( $gateway_id );
+        $saved    = get_option( self::OPTION_KEY, array() );
+
+        if ( isset( $saved[ $clean_id ] ) ) {
+            return array(
+                'percent' => (float) $saved[ $clean_id ]['percent'],
+                'fixed'   => (float) $saved[ $clean_id ]['fixed'],
+            );
+        }
+
+        return self::detect_default_fee( $clean_id );
     }
 
     /**
@@ -44,10 +109,10 @@ class SCOGS_Gateways {
      */
     public static function get_rules() {
         $saved    = get_option( self::OPTION_KEY, array() );
-        $defaults = self::get_default_presets();
+        $defaults = self::get_known_gateway_defaults();
         $rules    = array();
 
-        // 1. Fill from default presets
+        // 1. Fill from known defaults
         foreach ( $defaults as $key => $preset ) {
             $rules[ $key ] = array(
                 'percent' => isset( $saved[ $key ]['percent'] ) ? (float) $saved[ $key ]['percent'] : (float) $preset['percent'],
