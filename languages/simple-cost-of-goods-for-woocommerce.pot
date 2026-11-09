@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-09T07:54:24+00:00\n"
+"POT-Creation-Date: 2026-11-09T08:16:40+00:00\n"
 "PO-Revision-Date: \n"
 "Language: en\n"
 
@@ -217,12 +217,12 @@ msgstr ""
 msgid "All Suppliers"
 msgstr ""
 
-#: includes/class-cogs-reports.php:25 includes/class-cogs-reports.php:26 simple-cost-of-goods-for-woocommerce.php:188
-msgid "Profit Analytics"
+#: includes/class-cogs-reports.php:25 includes/class-cogs-reports.php:26 simple-cost-of-goods-for-woocommerce.php:198
+msgid "MarketPulse Profit Analytics"
 msgstr ""
 
 #: includes/class-cogs-reports.php:48
-msgid "Profit Analytics & Financial Intelligence"
+msgid "MarketPulse Profit Analytics & Financial Intelligence"
 msgstr ""
 
 #: includes/class-cogs-reports.php:54
@@ -569,15 +569,15 @@ msgstr ""
 msgid "Include customer-paid taxes in net revenue calculations."
 msgstr ""
 
-#: simple-cost-of-goods-for-woocommerce.php:189
+#: simple-cost-of-goods-for-woocommerce.php:199
 msgid "NexForge AI"
 msgstr ""
 
-#: simple-cost-of-goods-for-woocommerce.php:200
+#: simple-cost-of-goods-for-woocommerce.php:210
 msgid "Simple Cost of Goods & Profit Tracker"
 msgstr ""
 
-#: simple-cost-of-goods-for-woocommerce.php:200
+#: simple-cost-of-goods-for-woocommerce.php:210
 msgid "requires WooCommerce to be installed and active."
 msgstr ""
 

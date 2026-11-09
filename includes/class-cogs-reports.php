@@ -22,8 +22,8 @@ class SCOGS_Reports {
     public static function add_admin_menu() {
         add_submenu_page(
             'woocommerce',
-            __( 'Profit Analytics', 'simple-cost-of-goods-for-woocommerce' ),
-            __( 'Profit Analytics', 'simple-cost-of-goods-for-woocommerce' ),
+            __( 'MarketPulse Profit Analytics', 'simple-cost-of-goods-for-woocommerce' ),
+            __( 'MarketPulse Profit Analytics', 'simple-cost-of-goods-for-woocommerce' ),
             'manage_woocommerce',
             'scogs-analytics',
             array( __CLASS__, 'render_page' )
@@ -45,7 +45,7 @@ class SCOGS_Reports {
             <div class="scogs-header-bar">
                 <div class="scogs-header-left">
                     <h1 class="wp-heading-inline">
-                        <?php esc_html_e( 'Profit Analytics & Financial Intelligence', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        <?php esc_html_e( 'MarketPulse Profit Analytics & Financial Intelligence', 'simple-cost-of-goods-for-woocommerce' ); ?>
                     </h1>
                     <span class="scogs-version-tag">v<?php echo esc_html( SCOGS_VERSION ); ?></span>
                 </div>

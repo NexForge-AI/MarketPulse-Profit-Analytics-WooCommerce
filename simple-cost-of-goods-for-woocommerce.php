@@ -195,7 +195,7 @@ final class Simple_Cost_Of_Goods_WooCommerce {
      */
     public function plugin_action_links( $links ) {
         $custom_links = array(
-            '<a href="' . esc_url( admin_url( 'admin.php?page=scogs-analytics' ) ) . '" style="font-weight:600;">' . __( 'Profit Analytics', 'simple-cost-of-goods-for-woocommerce' ) . '</a>',
+            '<a href="' . esc_url( admin_url( 'admin.php?page=scogs-analytics' ) ) . '" style="font-weight:600;">' . __( 'MarketPulse Profit Analytics', 'simple-cost-of-goods-for-woocommerce' ) . '</a>',
             '<a href="https://usemarketpulse.com" target="_blank" style="color:#2271b1;">' . __( 'NexForge AI', 'simple-cost-of-goods-for-woocommerce' ) . '</a>'
         );
         return array_merge( $custom_links, $links );

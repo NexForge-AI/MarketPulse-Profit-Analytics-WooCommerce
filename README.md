@@ -13,7 +13,7 @@ Revenue is vanity; **profit is sanity**. Most Cost of Goods plugins for WooComme
 
 ## ✨ Features
 
-- **Unified Profit Analytics Hub (`WooCommerce > Profit Analytics`):** Complete executive overview with 6 core financial KPIs, date filtering (Today, Yesterday, 7D, This Month, Last Month, Custom), and product profit leaderboards.
+- **Unified Profit Analytics Hub (`WooCommerce > MarketPulse Profit Analytics`):** Complete executive overview with 6 core financial KPIs, date filtering (Today, Yesterday, 7D, This Month, Last Month, Custom), and product profit leaderboards.
 - **Interactive Daily Trend SVG Chart:** Pure SVG daily performance chart visualizing Gross Revenue vs. Total COGS vs. True Net Profit with zero external JavaScript dependencies.
 - **Payment Gateway Fee Auto-Detection:** Automatically detect transaction fees across payment processors (bKash, Nagad, Rocket, SSLCommerz, Stripe, PayPal, etc.) and deduct them from gross profit.
 - **Operating Expense Manager (Overhead Ledger):** Record non-product operational expenses (Meta/Google Ads, domain/hosting, salaries, office rent, packaging) to reveal true business take-home profit.
@@ -42,14 +42,14 @@ Revenue is vanity; **profit is sanity**. Most Cost of Goods plugins for WooComme
    ```
 2. Activate the plugin via **WP Admin &rarr; Plugins**.
 3. Edit any product and fill in the **Cost Price (COGS)** field.
-4. Access your central profit hub under **WooCommerce &rarr; Profit Analytics**.
+4. Access your central profit hub under **WooCommerce &rarr; MarketPulse Profit Analytics**.
 5. View real-time profit tracking under **WooCommerce &rarr; Orders** and your **WordPress Dashboard**.
 
 ---
 
 ## ⚙️ Configuration
 
-- **Profit Analytics Hub:** Navigate to `WooCommerce > Profit Analytics` to view charts, record operating expenses, and customize gateway fee deduction rules.
+- **Profit Analytics Hub:** Navigate to `WooCommerce > MarketPulse Profit Analytics` to view charts, record operating expenses, and customize gateway fee deduction rules.
 - **Settings:** Head over to `WooCommerce > Settings > Products > Cost of Goods (COGS)`:
   - **Include Shipping in Profit:** Toggle whether customer-paid shipping is factored into order net revenue.
   - **Include Tax in Profit:** Toggle whether customer-paid taxes are factored into order net revenue.

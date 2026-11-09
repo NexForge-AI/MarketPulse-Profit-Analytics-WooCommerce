@@ -23,7 +23,7 @@ Most financial plugins charge $79 to $199 every single year, or load hundreds of
 
 ### 🌟 Key Features
 
-* **Unified Profit Analytics Hub (`WooCommerce > Profit Analytics`):** Consolidate all financial reporting, operating expenses, payment gateway rules, and supplier tracking in one clean, tabbed interface.
+* **Unified Profit Analytics Hub (`WooCommerce > MarketPulse Profit Analytics`):** Consolidate all financial reporting, operating expenses, payment gateway rules, and supplier tracking in one clean, tabbed interface.
 * **Interactive Daily Trend SVG Chart:** Pure SVG daily performance chart visualizing Revenue vs. COGS vs. Net Profit across custom dates with zero external JavaScript library overhead.
 * **Payment Gateway Fee Auto-Detection:** Automatically detect transaction fees across payment processors (bKash, Nagad, Rocket, SSLCommerz, Stripe, PayPal, etc.) and deduct them from gross revenue.
 * **Operating Expense Manager (Overhead Ledger):** Record non-product operational expenses (Meta/Google Ads, domain/hosting, salaries, office rent, packaging) to reveal true business take-home profit.
@@ -50,7 +50,7 @@ Crafted with care by the engineering team at **[NexForge AI](https://usemarketpu
 1. Upload the plugin files to the `/wp-content/plugins/simple-cost-of-goods-for-woocommerce` directory, or install directly through the WordPress plugins screen.
 2. Activate the plugin through the **Plugins** screen in WordPress.
 3. Edit any product in **WooCommerce &rarr; Products** and enter your unit purchase cost in the **Cost Price (COGS)** field.
-4. Access your central profit hub under **WooCommerce &rarr; Profit Analytics**.
+4. Access your central profit hub under **WooCommerce &rarr; MarketPulse Profit Analytics**.
 5. View real-time order breakdowns under **WooCommerce &rarr; Orders** and on your WordPress **Dashboard**.
 
 == Frequently Asked Questions ==
