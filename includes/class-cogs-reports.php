@@ -154,7 +154,32 @@ class SCOGS_Reports {
         // 5. True Net Profit = Gross Profit - Gateway Fees - Shipping Deficit - Operating Expenses
         $true_net_profit = $order_stats['gross_profit'] - $order_stats['gateway_fees'] - $order_stats['shipping_deficit'] - $operating_expenses;
         $true_net_margin = $order_stats['gross_revenue'] > 0 ? ( $true_net_profit / $order_stats['gross_revenue'] ) * 100 : 0.0;
-        $net_badge_class = $true_net_margin >= 30 ? 'scogs-badge-green' : ( $true_net_margin >= 15 ? 'scogs-badge-amber' : 'scogs-badge-red' );
+
+        // Dynamic Card 6 Status & Styling based on Profit/Loss and Margin Health
+        if ( $true_net_profit < 0 ) {
+            $net_card_class  = 'scogs-kpi-status-danger';
+            $net_card_title  = __( '6. True Net Loss', 'simple-cost-of-goods-for-woocommerce' );
+            $net_badge_class = 'scogs-badge-red';
+        } elseif ( $order_stats['gross_revenue'] == 0 && $true_net_profit == 0 ) {
+            $net_card_class  = 'scogs-kpi-status-neutral';
+            $net_card_title  = __( '6. True Net Profit', 'simple-cost-of-goods-for-woocommerce' );
+            $net_badge_class = 'scogs-badge-blue';
+        } elseif ( $true_net_margin < 15 ) {
+            // Critical / thin margin (< 15%)
+            $net_card_class  = 'scogs-kpi-status-danger';
+            $net_card_title  = __( '6. True Net Profit', 'simple-cost-of-goods-for-woocommerce' );
+            $net_badge_class = 'scogs-badge-red';
+        } elseif ( $true_net_margin < 30 ) {
+            // Moderate margin (15% to 29.9%)
+            $net_card_class  = 'scogs-kpi-status-warning';
+            $net_card_title  = __( '6. True Net Profit', 'simple-cost-of-goods-for-woocommerce' );
+            $net_badge_class = 'scogs-badge-amber';
+        } else {
+            // Healthy profit margin (>= 30%)
+            $net_card_class  = 'scogs-kpi-status-success';
+            $net_card_title  = __( '6. True Net Profit', 'simple-cost-of-goods-for-woocommerce' );
+            $net_badge_class = 'scogs-badge-green';
+        }
         ?>
         <!-- Date Filter Toolbar -->
         <div class="scogs-toolbar-card">
@@ -219,10 +244,10 @@ class SCOGS_Reports {
                 <span class="scogs-kpi-sub"><a href="<?php echo esc_url( admin_url( 'admin.php?page=scogs-analytics&tab=expenses' ) ); ?>"><?php esc_html_e( 'Manage Ads, Rent, Server &rarr;', 'simple-cost-of-goods-for-woocommerce' ); ?></a></span>
             </div>
 
-            <!-- 6. True Net Profit -->
-            <div class="scogs-kpi-card scogs-kpi-highlight">
-                <span class="scogs-kpi-title"><?php esc_html_e( '6. True Net Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                <span class="scogs-kpi-num scogs-profit-val"><?php echo wc_price( $true_net_profit ); ?></span>
+            <!-- 6. True Net Profit / Loss -->
+            <div class="scogs-kpi-card scogs-kpi-highlight <?php echo esc_attr( $net_card_class ); ?>">
+                <span class="scogs-kpi-title"><?php echo esc_html( $net_card_title ); ?></span>
+                <span class="scogs-kpi-num"><?php echo wc_price( $true_net_profit ); ?></span>
                 <span class="scogs-badge <?php echo esc_attr( $net_badge_class ); ?>"><?php echo esc_html( round( $true_net_margin, 1 ) ); ?>% <?php esc_html_e( 'Net Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
             </div>
         </div>

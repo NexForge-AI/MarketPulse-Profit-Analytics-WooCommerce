@@ -203,11 +203,11 @@ class SCOGS_Order {
                 <?php endif; ?>
             </div>
 
-            <!-- 4. True Net Profit -->
+            <!-- 4. True Net Profit / Loss -->
             <div class="scogs-divider" style="border-top:2px solid #cbd5e1;"></div>
             <div class="scogs-metric-row scogs-profit-highlight">
-                <span class="scogs-metric-label"><?php esc_html_e( 'True Net Profit:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                <span class="scogs-metric-value scogs-profit-val"><?php echo wc_price( $stats['net_profit'] ); ?></span>
+                <span class="scogs-metric-label"><?php echo $stats['net_profit'] < 0 ? esc_html__( 'True Net Loss:', 'simple-cost-of-goods-for-woocommerce' ) : esc_html__( 'True Net Profit:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-metric-value <?php echo $stats['net_profit'] < 0 ? 'scogs-loss-val' : 'scogs-profit-val'; ?>"><?php echo wc_price( $stats['net_profit'] ); ?></span>
             </div>
             <div class="scogs-metric-row">
                 <span class="scogs-metric-label"><?php esc_html_e( 'Net Margin:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>

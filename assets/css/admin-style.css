@@ -376,6 +376,12 @@ input#_cogs_cost_price.scogs-input-warning {
     font-size: 16px;
 }
 
+.scogs-loss-val {
+    color: #dc2626;
+    font-weight: 700;
+    font-size: 16px;
+}
+
 .scogs-meta-footer {
     margin-top: 10px;
     padding-top: 6px;
@@ -608,10 +614,60 @@ input#_cogs_cost_price.scogs-input-warning {
 .scogs-kpi-highlight {
     background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
     border-color: #86efac;
+    transition: all 0.2s ease-in-out;
 }
 
 .scogs-kpi-highlight .scogs-kpi-title {
     color: #166534;
+}
+
+/* Card 6 Dynamic Status Variants (Net Profit, Loss & Margin Health) */
+.scogs-kpi-highlight.scogs-kpi-status-success {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    border-color: #86efac;
+    box-shadow: 0 1px 3px rgba(16, 185, 129, 0.08);
+}
+.scogs-kpi-highlight.scogs-kpi-status-success .scogs-kpi-title {
+    color: #166534;
+}
+.scogs-kpi-highlight.scogs-kpi-status-success .scogs-kpi-num {
+    color: #15803d;
+}
+
+.scogs-kpi-highlight.scogs-kpi-status-warning {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border-color: #fcd34d;
+    box-shadow: 0 1px 3px rgba(245, 158, 11, 0.08);
+}
+.scogs-kpi-highlight.scogs-kpi-status-warning .scogs-kpi-title {
+    color: #92400e;
+}
+.scogs-kpi-highlight.scogs-kpi-status-warning .scogs-kpi-num {
+    color: #b45309;
+}
+
+.scogs-kpi-highlight.scogs-kpi-status-danger {
+    background: linear-gradient(135deg, #fef2f2 0%, #fff1f2 100%);
+    border-color: #fca5a5;
+    box-shadow: 0 1px 3px rgba(239, 68, 68, 0.12);
+}
+.scogs-kpi-highlight.scogs-kpi-status-danger .scogs-kpi-title {
+    color: #991b1b;
+}
+.scogs-kpi-highlight.scogs-kpi-status-danger .scogs-kpi-num {
+    color: #dc2626;
+}
+
+.scogs-kpi-highlight.scogs-kpi-status-neutral {
+    background: #ffffff;
+    border-color: #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.scogs-kpi-highlight.scogs-kpi-status-neutral .scogs-kpi-title {
+    color: #64748b;
+}
+.scogs-kpi-highlight.scogs-kpi-status-neutral .scogs-kpi-num {
+    color: #0f172a;
 }
 
 /* Leaderboards Grid */

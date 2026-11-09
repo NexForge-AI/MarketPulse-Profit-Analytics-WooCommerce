@@ -136,21 +136,21 @@ class SCOGS_Dashboard {
             <div class="scogs-dashboard-grid">
                 <!-- Today Card -->
                 <div class="scogs-dash-card">
-                    <span class="scogs-card-title"><?php esc_html_e( "Today's Net Profit", 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                    <span class="scogs-card-value scogs-profit-val"><?php echo wc_price( $stats['today_profit'] ); ?></span>
+                    <span class="scogs-card-title"><?php echo $stats['today_profit'] < 0 ? esc_html__( "Today's Net Loss", 'simple-cost-of-goods-for-woocommerce' ) : esc_html__( "Today's Net Profit", 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-card-value <?php echo $stats['today_profit'] < 0 ? 'scogs-loss-val' : 'scogs-profit-val'; ?>"><?php echo wc_price( $stats['today_profit'] ); ?></span>
                     <div class="scogs-card-meta">
                         <span><?php esc_html_e( 'Revenue:', 'simple-cost-of-goods-for-woocommerce' ); ?> <?php echo wc_price( $stats['today_revenue'] ); ?></span>
-                        <span class="scogs-badge scogs-badge-blue"><?php echo esc_html( round( $stats['today_margin'], 1 ) ); ?>% <?php esc_html_e( 'Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        <span class="scogs-badge <?php echo $stats['today_profit'] < 0 ? 'scogs-badge-red' : 'scogs-badge-blue'; ?>"><?php echo esc_html( round( $stats['today_margin'], 1 ) ); ?>% <?php esc_html_e( 'Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
                     </div>
                 </div>
 
                 <!-- Month Card -->
                 <div class="scogs-dash-card">
-                    <span class="scogs-card-title"><?php esc_html_e( 'This Month Net Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                    <span class="scogs-card-value scogs-profit-val"><?php echo wc_price( $stats['month_profit'] ); ?></span>
+                    <span class="scogs-card-title"><?php echo $stats['month_profit'] < 0 ? esc_html__( 'This Month Net Loss', 'simple-cost-of-goods-for-woocommerce' ) : esc_html__( 'This Month Net Profit', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-card-value <?php echo $stats['month_profit'] < 0 ? 'scogs-loss-val' : 'scogs-profit-val'; ?>"><?php echo wc_price( $stats['month_profit'] ); ?></span>
                     <div class="scogs-card-meta">
                         <span><?php esc_html_e( 'Revenue:', 'simple-cost-of-goods-for-woocommerce' ); ?> <?php echo wc_price( $stats['month_revenue'] ); ?></span>
-                        <span class="scogs-badge scogs-badge-blue"><?php echo esc_html( round( $stats['month_margin'], 1 ) ); ?>% <?php esc_html_e( 'Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        <span class="scogs-badge <?php echo $stats['month_profit'] < 0 ? 'scogs-badge-red' : 'scogs-badge-blue'; ?>"><?php echo esc_html( round( $stats['month_margin'], 1 ) ); ?>% <?php esc_html_e( 'Margin', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
                     </div>
                 </div>
             </div>
