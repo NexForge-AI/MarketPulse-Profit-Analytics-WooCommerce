@@ -80,3 +80,4 @@ Yes, 100% free and open-source under the GPL-2.0 license.
 * Added Quick Edit cost price support.
 * Added High-Performance Dashboard Profit Widget with caching.
 * Full WooCommerce HPOS (custom order tables) compatibility.
+

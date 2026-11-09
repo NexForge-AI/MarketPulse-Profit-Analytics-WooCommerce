@@ -11,3 +11,4 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 delete_option( 'scogs_include_shipping' );
 delete_option( 'scogs_include_tax' );
 delete_transient( 'scogs_dashboard_stats' );
+

@@ -45,11 +45,27 @@
 }
 
 .scogs-cost-text {
-    color: #4b5563;
+    color: #64748b;
     font-weight: 500;
 }
 
-/* Order Meta Box Card */
+.scogs-subtotal-text {
+    color: #1e293b;
+    font-weight: 700;
+}
+
+.scogs-supplier-tag {
+    display: inline-block;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* Order Meta Box Card (Waterfall) */
 .scogs-order-summary-card {
     padding: 4px 0;
 }
@@ -58,7 +74,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 0;
+    padding: 5px 0;
     font-size: 13px;
 }
 
@@ -71,25 +87,39 @@
     color: #1e293b;
 }
 
+.scogs-deduct-row .scogs-metric-label {
+    color: #94a3b8;
+    padding-left: 6px;
+}
+
 .scogs-divider {
     height: 1px;
     background: #e2e8f0;
-    margin: 8px 0;
+    margin: 6px 0;
+}
+
+.scogs-shipping-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 6px 8px;
+    margin: 6px 0;
 }
 
 .scogs-profit-highlight {
     font-size: 14px;
+    padding-top: 4px;
 }
 
 .scogs-profit-val {
     color: #059669;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .scogs-meta-footer {
-    margin-top: 12px;
-    padding-top: 8px;
+    margin-top: 10px;
+    padding-top: 6px;
     border-top: 1px dashed #e2e8f0;
     text-align: center;
     color: #94a3b8;
@@ -106,94 +136,261 @@
     color: #0f172a;
 }
 
-/* Product Edit Live Margin */
-.scogs-live-margin {
-    margin-top: 8px !important;
+/* Analytics Hub Header */
+.scogs-analytics-wrap {
+    margin-top: 16px;
 }
 
-/* Dashboard Widget */
-.scogs-dashboard-widget-wrap {
-    padding: 4px 0;
-}
-
-.scogs-dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.scogs-dash-card {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-}
-
-.scogs-card-title {
-    font-size: 12px;
-    font-weight: 600;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-    margin-bottom: 6px;
-}
-
-.scogs-card-value {
-    font-size: 22px;
-    line-height: 1.2;
-    margin-bottom: 8px;
-}
-
-.scogs-card-meta {
+.scogs-header-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.scogs-header-left h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.scogs-version-tag {
+    display: inline-block;
+    background: #e2e8f0;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+
+.scogs-brand-pill {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 6px 12px;
+    border-radius: 20px;
     font-size: 12px;
+    color: #64748b;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.scogs-brand-pill a {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* Nav Tabs */
+.scogs-nav-tabs {
+    margin-bottom: 20px !important;
+    border-bottom: 1px solid #cbd5e1 !important;
+}
+
+.scogs-nav-tabs .nav-tab {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 16px;
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #475569;
+    transition: all 0.15s ease;
+}
+
+.scogs-nav-tabs .nav-tab-active {
+    background: #ffffff !important;
+    border-bottom-color: #ffffff !important;
+    color: #0f172a !important;
+}
+
+.scogs-nav-tabs .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    vertical-align: -2px;
+    margin-right: 4px;
+}
+
+/* Date Toolbar Card */
+.scogs-toolbar-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.scogs-filter-presets {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.scogs-custom-date-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.scogs-custom-date-form input[type="date"] {
+    font-size: 12px;
+    padding: 2px 8px;
+}
+
+/* KPI 6-Grid */
+.scogs-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.scogs-kpi-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.scogs-kpi-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+}
+
+.scogs-kpi-num {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+    margin-bottom: 6px;
+}
+
+.scogs-kpi-sub {
+    font-size: 11px;
     color: #64748b;
     margin-top: auto;
 }
 
-/* Cross Promotion Brand Box */
-.scogs-brand-box {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    background: linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 100%);
-    border: 1px solid #bfdbfe;
+.scogs-kpi-highlight {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    border-color: #86efac;
+}
+
+.scogs-kpi-highlight .scogs-kpi-title {
+    color: #166534;
+}
+
+/* Leaderboards Grid */
+.scogs-leaderboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.scogs-table-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 8px;
-    padding: 12px 14px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
 }
 
-.scogs-brand-icon {
-    flex-shrink: 0;
-    margin-top: 2px;
+.scogs-card-heading {
+    margin: 0 0 14px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.scogs-brand-text strong {
-    color: #1e3a8a;
-    font-size: 13px;
-    display: block;
+/* Two-column form & table */
+.scogs-two-col-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 900px) {
+    .scogs-two-col-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.scogs-form-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.scogs-form-card h3 {
+    margin-top: 0;
     margin-bottom: 4px;
 }
 
-.scogs-brand-text p {
+.scogs-table-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.scogs-table-header-flex h3 {
     margin: 0;
-    font-size: 12px;
+}
+
+/* Cross Promotion Card */
+.scogs-cross-promo-card {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border: 1px solid #93c5fd;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-top: 24px;
+}
+
+.scogs-promo-badge {
+    display: inline-block;
+    background: #1d4ed8;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.scogs-promo-content h3 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    color: #1e3a8a;
+}
+
+.scogs-promo-content p {
+    margin: 0 0 16px 0;
+    font-size: 13px;
     line-height: 1.5;
     color: #1e40af;
-}
-
-.scogs-link {
-    display: inline-block;
-    margin-top: 6px;
-    color: #2563eb !important;
-    font-weight: 600;
-    text-decoration: underline;
-}
-
-.scogs-link:hover {
-    color: #1d4ed8 !important;
+    max-width: 800px;
 }

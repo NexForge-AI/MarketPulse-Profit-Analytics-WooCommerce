@@ -66,3 +66,4 @@ Crafted with ❤️ by the team at **[NexForge AI](https://usemarketpulse.com)**
 ## 📄 License
 
 This plugin is open-source software licensed under the **[GNU General Public License v2 or later (GPL-2.0-or-later)](https://www.gnu.org/licenses/gpl-2.0.html)**.
+

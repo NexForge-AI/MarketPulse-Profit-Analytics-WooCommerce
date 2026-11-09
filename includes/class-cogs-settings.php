@@ -59,3 +59,4 @@ class SCOGS_Settings {
         );
     }
 }
+

@@ -23,6 +23,10 @@ class SCOGS_Order {
         add_action( 'woocommerce_saved_order_items', array( __CLASS__, 'recalculate_order_profit' ), 10, 2 );
         add_action( 'woocommerce_order_status_changed', array( __CLASS__, 'on_order_status_changed' ), 10, 4 );
 
+        // Save actual courier shipping cost
+        add_action( 'woocommerce_process_shop_order_meta', array( __CLASS__, 'save_order_custom_meta' ) );
+        add_action( 'woocommerce_update_order', array( __CLASS__, 'save_order_custom_meta' ) );
+
         // Admin order details screen meta box (Classic + HPOS)
         add_action( 'add_meta_boxes_shop_order', array( __CLASS__, 'register_order_meta_box' ) );
         add_action( 'add_meta_boxes_woocommerce_page_wc-orders', array( __CLASS__, 'register_order_meta_box' ) );
@@ -41,11 +45,6 @@ class SCOGS_Order {
 
     /**
      * Snapshot cost price onto line item meta at checkout
-     *
-     * @param WC_Order_Item_Product $item
-     * @param string                $cart_item_key
-     * @param array                 $values
-     * @param WC_Order              $order
      */
     public static function snapshot_line_item_cost( $item, $cart_item_key, $values, $order ) {
         $product = $item->get_product();
@@ -58,70 +57,13 @@ class SCOGS_Order {
     }
 
     /**
-     * Calculate and store total order cost & profit
+     * Calculate and store total order financial metrics
      *
-     * @param int|WC_Order $order Order ID or WC_Order instance
-     * @return array Calculated stats
+     * @param int|WC_Order $order
+     * @return array
      */
     public static function calculate_order_profit( $order ) {
-        if ( is_numeric( $order ) ) {
-            $order = wc_get_order( $order );
-        }
-
-        if ( ! $order ) {
-            return array( 'cost' => 0.0, 'profit' => 0.0, 'margin' => 0.0 );
-        }
-
-        $total_cost = 0.0;
-        $items      = $order->get_items();
-
-        foreach ( $items as $item_id => $item ) {
-            if ( ! is_a( $item, 'WC_Order_Item_Product' ) ) {
-                continue;
-            }
-
-            $cost = $item->get_meta( self::META_ITEM_COST, true );
-
-            // If not snapshotted yet, fetch current product cost as fallback
-            if ( '' === $cost || false === $cost ) {
-                $product = $item->get_product();
-                $cost    = $product ? SCOGS_Product::get_product_cost( $product ) : 0.0;
-                $item->update_meta_data( self::META_ITEM_COST, wc_format_decimal( $cost ) );
-                $item->save();
-            }
-
-            $qty         = (int) $item->get_quantity();
-            $total_cost += ( (float) $cost * $qty );
-        }
-
-        // Get revenue settings
-        $include_shipping = 'yes' === get_option( 'scogs_include_shipping', 'no' );
-        $include_tax      = 'yes' === get_option( 'scogs_include_tax', 'no' );
-
-        $revenue = (float) $order->get_subtotal();
-        if ( $include_shipping ) {
-            $revenue += (float) $order->get_shipping_total();
-        }
-        if ( $include_tax ) {
-            $revenue += (float) $order->get_total_tax();
-        }
-
-        // Net profit
-        $profit = $revenue - $total_cost;
-        $margin = $revenue > 0 ? ( $profit / $revenue ) * 100 : 0.0;
-
-        // Save order metadata (compatible with HPOS & post meta)
-        $order->update_meta_data( self::META_ORDER_COST, wc_format_decimal( $total_cost ) );
-        $order->update_meta_data( self::META_ORDER_PROFIT, wc_format_decimal( $profit ) );
-        $order->update_meta_data( self::META_ORDER_MARGIN, round( $margin, 2 ) );
-        $order->save();
-
-        return array(
-            'cost'    => $total_cost,
-            'profit'  => $profit,
-            'margin'  => $margin,
-            'revenue' => $revenue,
-        );
+        return SCOGS_Calculations::calculate_order_financials( $order );
     }
 
     /**
@@ -132,10 +74,25 @@ class SCOGS_Order {
     }
 
     /**
-     * Recalculate on status changes (like Processing, Completed)
+     * Recalculate on status changes
      */
     public static function on_order_status_changed( $order_id, $old_status, $new_status, $order ) {
         self::calculate_order_profit( $order );
+    }
+
+    /**
+     * Save actual courier shipping cost from Order edit screen
+     */
+    public static function save_order_custom_meta( $order_id ) {
+        if ( isset( $_POST['_cogs_actual_shipping_cost'] ) ) {
+            $cost = wc_clean( wp_unslash( $_POST['_cogs_actual_shipping_cost'] ) );
+            $order = wc_get_order( $order_id );
+            if ( $order ) {
+                $order->update_meta_data( '_cogs_actual_shipping_cost', '' === $cost ? '' : wc_format_decimal( $cost ) );
+                $order->save();
+                self::calculate_order_profit( $order );
+            }
+        }
     }
 
     /**
@@ -144,7 +101,7 @@ class SCOGS_Order {
     public static function register_order_meta_box() {
         add_meta_box(
             'scogs-order-profit-box',
-            __( 'Profit & Margin Breakdown', 'simple-cost-of-goods-for-woocommerce' ),
+            __( 'Net Profit & Financial Waterfall', 'simple-cost-of-goods-for-woocommerce' ),
             array( __CLASS__, 'render_order_meta_box' ),
             null,
             'side',
@@ -153,7 +110,7 @@ class SCOGS_Order {
     }
 
     /**
-     * Render Order Details Meta Box
+     * Render Order Details Meta Box (Financial Waterfall)
      */
     public static function render_order_meta_box( $post_or_order ) {
         $order = ( $post_or_order instanceof WC_Order ) ? $post_or_order : wc_get_order( $post_or_order->ID );
@@ -161,32 +118,84 @@ class SCOGS_Order {
             return;
         }
 
-        $stats = self::calculate_order_profit( $order );
+        $stats = SCOGS_Calculations::calculate_order_financials( $order );
 
-        $badge_class = $stats['margin'] >= 30 ? 'scogs-badge-green' : ( $stats['margin'] >= 15 ? 'scogs-badge-amber' : 'scogs-badge-red' );
+        $badge_class = $stats['net_margin'] >= 30 ? 'scogs-badge-green' : ( $stats['net_margin'] >= 15 ? 'scogs-badge-amber' : 'scogs-badge-red' );
+        $payment_method_title = $order->get_payment_method_title();
         ?>
         <div class="scogs-order-summary-card">
+            <!-- 1. Gross Revenue -->
             <div class="scogs-metric-row">
-                <span class="scogs-metric-label"><?php esc_html_e( 'Order Revenue:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                <span class="scogs-metric-value"><?php echo wc_price( $stats['revenue'] ); ?></span>
+                <span class="scogs-metric-label"><?php esc_html_e( 'Gross Revenue:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-metric-value"><?php echo wc_price( $stats['gross_revenue'] ); ?></span>
             </div>
-            <div class="scogs-metric-row">
-                <span class="scogs-metric-label"><?php esc_html_e( 'Cost of Goods (COGS):', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                <span class="scogs-metric-value scogs-cost-text">&minus; <?php echo wc_price( $stats['cost'] ); ?></span>
+
+            <!-- Discounts (if any) -->
+            <?php if ( $stats['discount_total'] > 0 ) : ?>
+            <div class="scogs-metric-row scogs-deduct-row">
+                <span class="scogs-metric-label">&minus; <?php esc_html_e( 'Discounts:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-metric-value scogs-cost-text">&minus;<?php echo wc_price( $stats['discount_total'] ); ?></span>
+            </div>
+            <?php endif; ?>
+
+            <!-- Total COGS -->
+            <div class="scogs-metric-row scogs-deduct-row">
+                <span class="scogs-metric-label">&minus; <?php esc_html_e( 'Total COGS:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-metric-value scogs-cost-text">&minus;<?php echo wc_price( $stats['total_cogs'] ); ?></span>
+            </div>
+
+            <!-- Subtotal: Gross Profit -->
+            <div class="scogs-divider"></div>
+            <div class="scogs-metric-row scogs-subtotal-row">
+                <span class="scogs-metric-label"><strong><?php esc_html_e( 'Gross Profit:', 'simple-cost-of-goods-for-woocommerce' ); ?></strong></span>
+                <span class="scogs-metric-value"><strong><?php echo wc_price( $stats['gross_profit'] ); ?></strong> (<?php echo esc_html( round( $stats['gross_margin'], 1 ) ); ?>%)</span>
             </div>
             <div class="scogs-divider"></div>
+
+            <!-- 2. Payment Gateway Fee -->
+            <div class="scogs-metric-row scogs-deduct-row">
+                <span class="scogs-metric-label">&minus; <?php echo esc_html( $payment_method_title ? $payment_method_title : __( 'Payment Fee', 'simple-cost-of-goods-for-woocommerce' ) ); ?>:</span>
+                <span class="scogs-metric-value scogs-cost-text">&minus;<?php echo wc_price( $stats['gateway_fee'] ); ?></span>
+            </div>
+
+            <!-- 3. Shipping Analysis -->
+            <div class="scogs-shipping-box">
+                <div class="scogs-metric-row">
+                    <span class="scogs-metric-label"><?php esc_html_e( 'Customer Shipping:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-metric-value"><?php echo wc_price( $stats['customer_paid_shipping'] ); ?></span>
+                </div>
+                <div class="scogs-metric-row">
+                    <label for="_cogs_actual_shipping_cost" class="scogs-metric-label"><?php esc_html_e( 'Actual Courier Cost:', 'simple-cost-of-goods-for-woocommerce' ); ?></label>
+                    <input type="text" 
+                           id="_cogs_actual_shipping_cost" 
+                           name="_cogs_actual_shipping_cost" 
+                           value="<?php echo esc_attr( $stats['actual_courier_cost'] > 0 ? $stats['actual_courier_cost'] : '' ); ?>" 
+                           placeholder="<?php esc_attr_e( 'e.g. 120', 'simple-cost-of-goods-for-woocommerce' ); ?>" 
+                           style="width: 80px; text-align:right; padding:2px 6px; font-size:12px;">
+                </div>
+                <?php if ( $stats['shipping_deficit'] > 0 ) : ?>
+                <div class="scogs-metric-row scogs-deduct-row" style="color:#b91c1c;">
+                    <span class="scogs-metric-label">&minus; <?php esc_html_e( 'Shipping Deficit:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                    <span class="scogs-metric-value">&minus;<?php echo wc_price( $stats['shipping_deficit'] ); ?></span>
+                </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- 4. True Net Profit -->
+            <div class="scogs-divider" style="border-top:2px solid #cbd5e1;"></div>
             <div class="scogs-metric-row scogs-profit-highlight">
-                <span class="scogs-metric-label"><?php esc_html_e( 'Net Profit:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                <span class="scogs-metric-value scogs-profit-val"><?php echo wc_price( $stats['profit'] ); ?></span>
+                <span class="scogs-metric-label"><?php esc_html_e( 'True Net Profit:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                <span class="scogs-metric-value scogs-profit-val"><?php echo wc_price( $stats['net_profit'] ); ?></span>
             </div>
             <div class="scogs-metric-row">
                 <span class="scogs-metric-label"><?php esc_html_e( 'Net Margin:', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
                 <span class="scogs-badge <?php echo esc_attr( $badge_class ); ?>">
-                    <?php echo esc_html( round( $stats['margin'], 1 ) ); ?>%
+                    <?php echo esc_html( round( $stats['net_margin'], 1 ) ); ?>%
                 </span>
             </div>
+
             <div class="scogs-meta-footer">
-                <small><?php esc_html_e( 'Automated cost tracking by NexForge AI', 'simple-cost-of-goods-for-woocommerce' ); ?></small>
+                <small><?php esc_html_e( '100% accurate financial accounting by NexForge AI', 'simple-cost-of-goods-for-woocommerce' ); ?></small>
             </div>
         </div>
         <?php
@@ -215,7 +224,7 @@ class SCOGS_Order {
 
             echo '<div class="scogs-item-cost-snippet" style="font-size:11px; color:#50575e; margin-top:4px;">';
             echo '<strong>' . esc_html__( 'COGS:', 'simple-cost-of-goods-for-woocommerce' ) . '</strong> ' . wc_price( $cost ) . ' &times; ' . esc_html( $qty ) . ' = ' . wc_price( $line_cost );
-            echo ' &bull; <strong>' . esc_html__( 'Profit:', 'simple-cost-of-goods-for-woocommerce' ) . '</strong> <span style="color:#007cba; font-weight:600;">' . wc_price( $profit ) . '</span> (' . esc_html( round( $margin, 1 ) ) . '%)';
+            echo ' &bull; <strong>' . esc_html__( 'Item Profit:', 'simple-cost-of-goods-for-woocommerce' ) . '</strong> <span style="color:#059669; font-weight:600;">' . wc_price( $profit ) . '</span> (' . esc_html( round( $margin, 1 ) ) . '%)';
             echo '</div>';
         }
     }
@@ -269,9 +278,9 @@ class SCOGS_Order {
 
         // If missing, calculate now
         if ( '' === $profit || false === $profit ) {
-            $stats  = self::calculate_order_profit( $order );
-            $profit = $stats['profit'];
-            $margin = $stats['margin'];
+            $stats  = SCOGS_Calculations::calculate_order_financials( $order );
+            $profit = $stats['net_profit'];
+            $margin = $stats['net_margin'];
         }
 
         $profit = (float) $profit;

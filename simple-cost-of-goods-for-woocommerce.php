@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Simple Cost of Goods & Profit Tracker for WooCommerce
  * Plugin URI:        https://usemarketpulse.com/plugins/simple-cost-of-goods
- * Description:       Lightweight, high-performance Cost of Goods Sold (COGS) and net profit margin tracker for WooCommerce. Track real profit per product and order with zero server bloat and 100% HPOS compatibility.
+ * Description:       Lightweight, high-performance Cost of Goods Sold (COGS) and true net profit margin tracker for WooCommerce. Track real profit per product and order with operating expenses, gateway fee auto-detection, and 100% HPOS compatibility.
  * Version:           1.0.0
  * Author:            NexForge AI
  * Author URI:        https://usemarketpulse.com
@@ -62,7 +62,16 @@ final class Simple_Cost_Of_Goods_WooCommerce {
      * Constructor
      */
     private function __construct() {
+        register_activation_hook( SCOGS_FILE, array( $this, 'activate' ) );
         add_action( 'plugins_loaded', array( $this, 'init' ) );
+    }
+
+    /**
+     * Plugin activation routine
+     */
+    public function activate() {
+        require_once SCOGS_PATH . 'includes/class-cogs-expenses.php';
+        SCOGS_Expenses::create_table();
     }
 
     /**
@@ -96,14 +105,23 @@ final class Simple_Cost_Of_Goods_WooCommerce {
      * Include required core classes
      */
     private function includes() {
+        require_once SCOGS_PATH . 'includes/class-cogs-calculations.php';
+        require_once SCOGS_PATH . 'includes/class-cogs-gateways.php';
+        require_once SCOGS_PATH . 'includes/class-cogs-expenses.php';
         require_once SCOGS_PATH . 'includes/class-cogs-product.php';
         require_once SCOGS_PATH . 'includes/class-cogs-order.php';
+        require_once SCOGS_PATH . 'includes/class-cogs-csv.php';
+        require_once SCOGS_PATH . 'includes/class-cogs-reports.php';
         require_once SCOGS_PATH . 'includes/class-cogs-dashboard.php';
         require_once SCOGS_PATH . 'includes/class-cogs-settings.php';
 
         // Initialize components
+        SCOGS_Gateways::init();
+        SCOGS_Expenses::init();
         SCOGS_Product::init();
         SCOGS_Order::init();
+        SCOGS_CSV::init();
+        SCOGS_Reports::init();
         SCOGS_Dashboard::init();
         SCOGS_Settings::init();
     }
@@ -119,7 +137,7 @@ final class Simple_Cost_Of_Goods_WooCommerce {
             return;
         }
 
-        // Only load on product, order, dashboard, and settings screens
+        // Only load on product, order, dashboard, analytics and settings screens
         $valid_screens = array(
             'product',
             'edit-product',
@@ -127,7 +145,8 @@ final class Simple_Cost_Of_Goods_WooCommerce {
             'edit-shop_order',
             'woocommerce_page_wc-orders',
             'dashboard',
-            'woocommerce_page_wc-settings'
+            'woocommerce_page_wc-settings',
+            'woocommerce_page_scogs-analytics'
         );
 
         $is_valid = in_array( $screen->id, $valid_screens, true ) || in_array( $screen->post_type, array( 'product', 'shop_order' ), true );
@@ -150,8 +169,8 @@ final class Simple_Cost_Of_Goods_WooCommerce {
      */
     public function plugin_action_links( $links ) {
         $custom_links = array(
-            '<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=products&section=scogs' ) ) . '">' . __( 'Settings', 'simple-cost-of-goods-for-woocommerce' ) . '</a>',
-            '<a href="https://usemarketpulse.com" target="_blank" style="font-weight:600; color:#2271b1;">' . __( 'NexForge AI', 'simple-cost-of-goods-for-woocommerce' ) . '</a>'
+            '<a href="' . esc_url( admin_url( 'admin.php?page=scogs-analytics' ) ) . '" style="font-weight:600;">' . __( 'Profit Analytics', 'simple-cost-of-goods-for-woocommerce' ) . '</a>',
+            '<a href="https://usemarketpulse.com" target="_blank" style="color:#2271b1;">' . __( 'NexForge AI', 'simple-cost-of-goods-for-woocommerce' ) . '</a>'
         );
         return array_merge( $custom_links, $links );
     }

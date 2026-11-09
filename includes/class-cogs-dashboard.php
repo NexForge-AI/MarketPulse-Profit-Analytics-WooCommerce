@@ -169,3 +169,4 @@ class SCOGS_Dashboard {
         <?php
     }
 }
+
