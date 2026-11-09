@@ -114,14 +114,10 @@ class SCOGS_Reports {
      */
     private static function render_overview_tab() {
         // Parse date filter
-        $range = isset( $_GET['range'] ) ? sanitize_key( wp_unslash( $_GET['range'] ) ) : 'this_month';
+        $range = isset( $_GET['range'] ) ? sanitize_key( wp_unslash( $_GET['range'] ) ) : 'today';
         $today = current_time( 'Y-m-d' );
 
         switch ( $range ) {
-            case 'today':
-                $start_date = $today;
-                $end_date   = $today;
-                break;
             case 'yesterday':
                 $start_date = date( 'Y-m-d', strtotime( '-1 day', strtotime( $today ) ) );
                 $end_date   = $start_date;
@@ -130,17 +126,21 @@ class SCOGS_Reports {
                 $start_date = date( 'Y-m-d', strtotime( '-6 days', strtotime( $today ) ) );
                 $end_date   = $today;
                 break;
+            case 'this_month':
+                $start_date = date( 'Y-m-01', strtotime( $today ) );
+                $end_date   = $today;
+                break;
             case 'last_month':
                 $start_date = date( 'Y-m-01', strtotime( 'first day of last month', strtotime( $today ) ) );
                 $end_date   = date( 'Y-m-t', strtotime( 'last day of last month', strtotime( $today ) ) );
                 break;
             case 'custom':
-                $start_date = ! empty( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : date( 'Y-m-01', strtotime( $today ) );
+                $start_date = ! empty( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : $today;
                 $end_date   = ! empty( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : $today;
                 break;
-            case 'this_month':
+            case 'today':
             default:
-                $start_date = date( 'Y-m-01', strtotime( $today ) );
+                $start_date = $today;
                 $end_date   = $today;
                 break;
         }
