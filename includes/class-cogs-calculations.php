@@ -12,15 +12,46 @@ class SCOGS_Calculations {
      * Calculate all financial metrics for a single WooCommerce order
      *
      * @param WC_Order|int $order Order object or ID
+     * @param bool         $save  Whether to persist calculated meta to database (set false for read-only reports)
      * @return array Calculated financial metrics
      */
-    public static function calculate_order_financials( $order ) {
+    public static function calculate_order_financials( $order, $save = true ) {
         if ( is_numeric( $order ) ) {
             $order = wc_get_order( $order );
         }
 
         if ( ! $order ) {
             return self::get_empty_financials();
+        }
+
+        // Fast path: If read-only mode and saved metadata already exists, read directly without re-calculating or saving
+        $saved_profit = $order->get_meta( SCOGS_Order::META_ORDER_PROFIT, true );
+        $saved_cogs   = $order->get_meta( SCOGS_Order::META_ORDER_COST, true );
+
+        if ( ! $save && '' !== $saved_profit && false !== $saved_profit && '' !== $saved_cogs && false !== $saved_cogs ) {
+            $gross_revenue    = (float) $order->get_subtotal();
+            $discount_total   = (float) $order->get_discount_total();
+            $total_cogs       = (float) $saved_cogs;
+            $net_profit       = (float) $saved_profit;
+            $net_margin       = (float) $order->get_meta( SCOGS_Order::META_ORDER_MARGIN, true );
+            $gross_profit     = (float) $order->get_meta( '_cogs_gross_profit', true );
+            $gateway_fee      = (float) $order->get_meta( '_cogs_gateway_fee', true );
+            $shipping_deficit = (float) $order->get_meta( '_cogs_shipping_deficit', true );
+
+            return array(
+                'gross_revenue'          => $gross_revenue,
+                'discount_total'         => $discount_total,
+                'total_cogs'             => $total_cogs,
+                'gross_profit'           => $gross_profit,
+                'gross_margin'           => $gross_revenue > 0 ? ( $gross_profit / $gross_revenue ) * 100 : 0.0,
+                'gateway_fee'            => $gateway_fee,
+                'customer_paid_shipping' => (float) $order->get_shipping_total(),
+                'actual_courier_cost'    => (float) $order->get_meta( '_cogs_actual_shipping_cost', true ),
+                'shipping_deficit'       => $shipping_deficit,
+                'net_profit'             => $net_profit,
+                'net_margin'             => $net_margin,
+                'order_total'            => (float) $order->get_total(),
+            );
         }
 
         // 1. Gross Revenue = Total product prices sold (before discount/tax/shipping deductions)
@@ -82,14 +113,16 @@ class SCOGS_Calculations {
         $net_profit = $gross_profit - $gateway_fee - $shipping_deficit;
         $net_margin = $gross_revenue > 0 ? ( $net_profit / $gross_revenue ) * 100 : 0.0;
 
-        // Save order metadata (compatible with HPOS & classic post meta)
-        $order->update_meta_data( SCOGS_Order::META_ORDER_COST, wc_format_decimal( $total_cogs ) );
-        $order->update_meta_data( '_cogs_gateway_fee', wc_format_decimal( $gateway_fee ) );
-        $order->update_meta_data( '_cogs_shipping_deficit', wc_format_decimal( $shipping_deficit ) );
-        $order->update_meta_data( SCOGS_Order::META_ORDER_PROFIT, wc_format_decimal( $net_profit ) );
-        $order->update_meta_data( SCOGS_Order::META_ORDER_MARGIN, round( $net_margin, 2 ) );
-        $order->update_meta_data( '_cogs_gross_profit', wc_format_decimal( $gross_profit ) );
-        $order->save();
+        // Persist order metadata only when requested (one-time on checkout/status change)
+        if ( $save ) {
+            $order->update_meta_data( SCOGS_Order::META_ORDER_COST, wc_format_decimal( $total_cogs ) );
+            $order->update_meta_data( '_cogs_gateway_fee', wc_format_decimal( $gateway_fee ) );
+            $order->update_meta_data( '_cogs_shipping_deficit', wc_format_decimal( $shipping_deficit ) );
+            $order->update_meta_data( SCOGS_Order::META_ORDER_PROFIT, wc_format_decimal( $net_profit ) );
+            $order->update_meta_data( SCOGS_Order::META_ORDER_MARGIN, round( $net_margin, 2 ) );
+            $order->update_meta_data( '_cogs_gross_profit', wc_format_decimal( $gross_profit ) );
+            $order->save();
+        }
 
         return array(
             'gross_revenue'          => $gross_revenue,

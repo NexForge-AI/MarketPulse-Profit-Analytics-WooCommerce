@@ -14,8 +14,9 @@ class SCOGS_Product {
      * Initialize product hooks
      */
     public static function init() {
-        // Simple product pricing & supplier fields
-        add_action( 'woocommerce_product_options_pricing', array( __CLASS__, 'add_simple_product_cost_field' ) );
+        // Simple product pricing & supplier fields (default under pricing for best UX, filterable for general tab)
+        $cost_hook = apply_filters( 'scogs_product_cost_field_hook', 'woocommerce_product_options_pricing' );
+        add_action( $cost_hook, array( __CLASS__, 'add_simple_product_cost_field' ) );
         add_action( 'woocommerce_process_product_meta', array( __CLASS__, 'save_simple_product_meta' ) );
 
         // Variable product pricing & supplier fields

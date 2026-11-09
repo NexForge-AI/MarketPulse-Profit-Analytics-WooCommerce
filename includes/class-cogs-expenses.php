@@ -94,8 +94,12 @@ class SCOGS_Expenses {
             array( '%s', '%s', '%s', '%f', '%s', '%s' )
         );
 
-        // Invalidate cached stats
-        delete_transient( 'scogs_dashboard_stats' );
+        // Invalidate cached stats and reports
+        if ( class_exists( 'SCOGS_Reports' ) ) {
+            SCOGS_Reports::flush_cache();
+        } else {
+            delete_transient( 'scogs_dashboard_stats' );
+        }
 
         return $inserted ? $wpdb->insert_id : false;
     }
@@ -111,7 +115,11 @@ class SCOGS_Expenses {
         $table_name = self::get_table_name();
         $deleted    = $wpdb->delete( $table_name, array( 'id' => absint( $id ) ), array( '%d' ) );
 
-        delete_transient( 'scogs_dashboard_stats' );
+        if ( class_exists( 'SCOGS_Reports' ) ) {
+            SCOGS_Reports::flush_cache();
+        } else {
+            delete_transient( 'scogs_dashboard_stats' );
+        }
         return (bool) $deleted;
     }
 

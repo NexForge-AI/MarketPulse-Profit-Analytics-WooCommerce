@@ -489,6 +489,15 @@ class SCOGS_Reports {
     }
 
     /**
+     * Flush all report, chart and dashboard transient caches
+     */
+    public static function flush_cache() {
+        global $wpdb;
+        delete_transient( 'scogs_dashboard_stats' );
+        $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_scogs_%' OR option_name LIKE '_transient_timeout_scogs_%'" );
+    }
+
+    /**
      * Handle saving gateway fee rules POST
      */
     public static function handle_save_gateways() {
@@ -500,6 +509,7 @@ class SCOGS_Reports {
 
         if ( isset( $_POST['gateways'] ) && is_array( $_POST['gateways'] ) ) {
             SCOGS_Gateways::save_rules( $_POST['gateways'] );
+            self::flush_cache();
         }
 
         wp_safe_redirect( admin_url( 'admin.php?page=scogs-analytics&tab=gateways&saved=1' ) );
@@ -510,6 +520,12 @@ class SCOGS_Reports {
      * Aggregate orders financial metrics between two dates
      */
     private static function get_aggregated_financials( $start_date, $end_date ) {
+        $cache_key = 'scogs_agg_' . md5( $start_date . '_' . $end_date );
+        $cached    = get_transient( $cache_key );
+        if ( false !== $cached ) {
+            return $cached;
+        }
+
         $orders = wc_get_orders( array(
             'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
             'status'       => array( 'wc-processing', 'wc-completed' ),
@@ -523,7 +539,8 @@ class SCOGS_Reports {
         $shipping_deficit = 0.0;
 
         foreach ( $orders as $order ) {
-            $stats = SCOGS_Calculations::calculate_order_financials( $order );
+            // Read-only pass: $save = false guarantees zero database writes during reporting
+            $stats = SCOGS_Calculations::calculate_order_financials( $order, false );
             $gross_revenue    += $stats['gross_revenue'];
             $total_cogs       += $stats['total_cogs'];
             $gross_profit     += $stats['gross_profit'];
@@ -533,7 +550,7 @@ class SCOGS_Reports {
 
         $gross_margin = $gross_revenue > 0 ? ( $gross_profit / $gross_revenue ) * 100 : 0.0;
 
-        return array(
+        $result = array(
             'order_count'      => count( $orders ),
             'gross_revenue'    => $gross_revenue,
             'total_cogs'       => $total_cogs,
@@ -542,50 +559,60 @@ class SCOGS_Reports {
             'gateway_fees'     => $gateway_fees,
             'shipping_deficit' => $shipping_deficit,
         );
+
+        set_transient( $cache_key, $result, 15 * MINUTE_IN_SECONDS );
+        return $result;
     }
 
     /**
      * Render Top / Lowest products table
      */
     private static function render_top_products_table( $start_date, $end_date, $order_dir = 'DESC' ) {
-        $orders = wc_get_orders( array(
-            'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
-            'status'       => array( 'wc-processing', 'wc-completed' ),
-            'limit'        => 500,
-        ) );
+        $stats_cache_key = 'scogs_pstats_' . md5( $start_date . '_' . $end_date );
+        $product_stats   = get_transient( $stats_cache_key );
 
-        $product_stats = array();
+        if ( false === $product_stats || ! is_array( $product_stats ) ) {
+            $orders = wc_get_orders( array(
+                'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
+                'status'       => array( 'wc-processing', 'wc-completed' ),
+                'limit'        => 500,
+            ) );
 
-        foreach ( $orders as $order ) {
-            foreach ( $order->get_items() as $item ) {
-                if ( ! is_a( $item, 'WC_Order_Item_Product' ) ) {
-                    continue;
+            $product_stats = array();
+
+            foreach ( $orders as $order ) {
+                foreach ( $order->get_items() as $item ) {
+                    if ( ! is_a( $item, 'WC_Order_Item_Product' ) ) {
+                        continue;
+                    }
+
+                    $product_id = $item->get_product_id();
+                    $name       = $item->get_name();
+                    $qty        = (int) $item->get_quantity();
+                    $line_total = (float) $item->get_total();
+
+                    $unit_cost  = (float) $item->get_meta( SCOGS_Order::META_ITEM_COST, true );
+                    $line_cost  = $unit_cost * $qty;
+                    $profit     = $line_total - $line_cost;
+
+                    if ( ! isset( $product_stats[ $product_id ] ) ) {
+                        $product_stats[ $product_id ] = array(
+                            'name'    => $name,
+                            'qty'     => 0,
+                            'revenue' => 0.0,
+                            'cost'    => 0.0,
+                            'profit'  => 0.0,
+                        );
+                    }
+
+                    $product_stats[ $product_id ]['qty']     += $qty;
+                    $product_stats[ $product_id ]['revenue'] += $line_total;
+                    $product_stats[ $product_id ]['cost']    += $line_cost;
+                    $product_stats[ $product_id ]['profit']  += $profit;
                 }
-
-                $product_id = $item->get_product_id();
-                $name       = $item->get_name();
-                $qty        = (int) $item->get_quantity();
-                $line_total = (float) $item->get_total();
-
-                $unit_cost  = (float) $item->get_meta( SCOGS_Order::META_ITEM_COST, true );
-                $line_cost  = $unit_cost * $qty;
-                $profit     = $line_total - $line_cost;
-
-                if ( ! isset( $product_stats[ $product_id ] ) ) {
-                    $product_stats[ $product_id ] = array(
-                        'name'    => $name,
-                        'qty'     => 0,
-                        'revenue' => 0.0,
-                        'cost'    => 0.0,
-                        'profit'  => 0.0,
-                    );
-                }
-
-                $product_stats[ $product_id ]['qty']     += $qty;
-                $product_stats[ $product_id ]['revenue'] += $line_total;
-                $product_stats[ $product_id ]['cost']    += $line_cost;
-                $product_stats[ $product_id ]['profit']  += $profit;
             }
+
+            set_transient( $stats_cache_key, $product_stats, 15 * MINUTE_IN_SECONDS );
         }
 
         if ( empty( $product_stats ) ) {
@@ -638,63 +665,79 @@ class SCOGS_Reports {
      * Render Interactive Daily Trend SVG Chart (Revenue vs COGS vs Net Profit)
      */
     private static function render_profit_chart( $start_date, $end_date ) {
-        // Build daily timeline array
-        $start = new DateTime( $start_date );
-        $end   = new DateTime( $end_date );
-        $end->modify( '+1 day' );
-        $interval = new DateInterval( 'P1D' );
-        $period   = new DatePeriod( $start, $interval, $end );
+        $chart_cache_key = 'scogs_chart_' . md5( $start_date . '_' . $end_date );
+        $cached_chart    = get_transient( $chart_cache_key );
 
-        $daily_data = array();
-        foreach ( $period as $dt ) {
-            $date_str = $dt->format( 'Y-m-d' );
-            $daily_data[ $date_str ] = array(
-                'date'    => $date_str,
-                'label'   => $dt->format( 'M j' ),
-                'revenue' => 0.0,
-                'cogs'    => 0.0,
-                'profit'  => 0.0,
-            );
-        }
+        if ( false !== $cached_chart && is_array( $cached_chart ) ) {
+            $daily_data = $cached_chart['data'];
+            $has_data   = $cached_chart['has_data'];
+            $max_val    = $cached_chart['max_val'];
+        } else {
+            // Build daily timeline array
+            $start = new DateTime( $start_date );
+            $end   = new DateTime( $end_date );
+            $end->modify( '+1 day' );
+            $interval = new DateInterval( 'P1D' );
+            $period   = new DatePeriod( $start, $interval, $end );
 
-        // Fetch orders in date range
-        $orders = wc_get_orders( array(
-            'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
-            'status'       => array( 'wc-processing', 'wc-completed' ),
-            'limit'        => 1000,
-        ) );
+            $daily_data = array();
+            foreach ( $period as $dt ) {
+                $date_str = $dt->format( 'Y-m-d' );
+                $daily_data[ $date_str ] = array(
+                    'date'    => $date_str,
+                    'label'   => $dt->format( 'M j' ),
+                    'revenue' => 0.0,
+                    'cogs'    => 0.0,
+                    'profit'  => 0.0,
+                );
+            }
 
-        $has_data = false;
-        foreach ( $orders as $order ) {
-            $order_date = $order->get_date_created() ? $order->get_date_created()->date( 'Y-m-d' ) : '';
-            if ( isset( $daily_data[ $order_date ] ) ) {
-                $stats = SCOGS_Calculations::calculate_order_financials( $order );
-                $daily_data[ $order_date ]['revenue'] += (float) $stats['gross_revenue'];
-                $daily_data[ $order_date ]['cogs']    += (float) $stats['total_cogs'];
-                $daily_data[ $order_date ]['profit']  += (float) $stats['net_profit'];
-                if ( $stats['gross_revenue'] > 0 || $stats['total_cogs'] > 0 || $stats['net_profit'] > 0 ) {
-                    $has_data = true;
+            // Fetch orders in date range
+            $orders = wc_get_orders( array(
+                'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
+                'status'       => array( 'wc-processing', 'wc-completed' ),
+                'limit'        => 1000,
+            ) );
+
+            $has_data = false;
+            foreach ( $orders as $order ) {
+                $order_date = $order->get_date_created() ? $order->get_date_created()->date( 'Y-m-d' ) : '';
+                if ( isset( $daily_data[ $order_date ] ) ) {
+                    // Read-only calculation: $save = false guarantees zero order saves
+                    $stats = SCOGS_Calculations::calculate_order_financials( $order, false );
+                    $daily_data[ $order_date ]['revenue'] += (float) $stats['gross_revenue'];
+                    $daily_data[ $order_date ]['cogs']    += (float) $stats['total_cogs'];
+                    $daily_data[ $order_date ]['profit']  += (float) $stats['net_profit'];
+                    if ( $stats['gross_revenue'] > 0 || $stats['total_cogs'] > 0 || $stats['net_profit'] > 0 ) {
+                        $has_data = true;
+                    }
                 }
             }
-        }
 
-        // Calculate max scale value
-        $max_val = 0.0;
-        foreach ( $daily_data as $row ) {
-            if ( $row['revenue'] > $max_val ) {
-                $max_val = $row['revenue'];
+            // Calculate max scale value
+            $max_val = 0.0;
+            foreach ( $daily_data as $row ) {
+                if ( $row['revenue'] > $max_val ) {
+                    $max_val = $row['revenue'];
+                }
+                if ( $row['cogs'] > $max_val ) {
+                    $max_val = $row['cogs'];
+                }
+                if ( $row['profit'] > $max_val ) {
+                    $max_val = $row['profit'];
+                }
             }
-            if ( $row['cogs'] > $max_val ) {
-                $max_val = $row['cogs'];
+            if ( $max_val <= 0 ) {
+                $max_val = 100;
             }
-            if ( $row['profit'] > $max_val ) {
-                $max_val = $row['profit'];
-            }
+            $max_val = ceil( $max_val * 1.15 ); // 15% top headroom
+
+            set_transient( $chart_cache_key, array(
+                'data'     => $daily_data,
+                'has_data' => $has_data,
+                'max_val'  => $max_val,
+            ), 15 * MINUTE_IN_SECONDS );
         }
-        if ( $max_val <= 0 ) {
-            $max_val = 100;
-        }
-        $max_val = ceil( $max_val * 1.15 ); // 15% top headroom
 
         // Chart SVG dimensions
         $svg_w       = 1000;

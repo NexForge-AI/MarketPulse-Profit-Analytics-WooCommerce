@@ -21,7 +21,12 @@ class SCOGS_Order {
 
         // Recalculate on manual order item save / status change
         add_action( 'woocommerce_saved_order_items', array( __CLASS__, 'recalculate_order_profit' ), 10, 2 );
-        add_action( 'woocommerce_order_status_changed', array( __CLASS__, 'on_order_status_changed' ), 10, 4 );
+
+        // Targeted status hooks: Only run one-time profit calculation when order reaches paid/active states
+        add_action( 'woocommerce_order_status_processing', array( __CLASS__, 'on_order_paid' ), 10, 2 );
+        add_action( 'woocommerce_order_status_completed', array( __CLASS__, 'on_order_paid' ), 10, 2 );
+        add_action( 'woocommerce_order_status_cancelled', array( __CLASS__, 'on_order_invalidated' ), 10, 2 );
+        add_action( 'woocommerce_order_status_refunded', array( __CLASS__, 'on_order_invalidated' ), 10, 2 );
 
         // Save actual courier shipping cost
         add_action( 'woocommerce_process_shop_order_meta', array( __CLASS__, 'save_order_custom_meta' ) );
@@ -60,24 +65,40 @@ class SCOGS_Order {
      * Calculate and store total order financial metrics
      *
      * @param int|WC_Order $order
+     * @param bool         $save  Whether to persist to database
      * @return array
      */
-    public static function calculate_order_profit( $order ) {
-        return SCOGS_Calculations::calculate_order_financials( $order );
+    public static function calculate_order_profit( $order, $save = true ) {
+        return SCOGS_Calculations::calculate_order_financials( $order, $save );
     }
 
     /**
      * Recalculate on manual order items save
      */
     public static function recalculate_order_profit( $order_id, $items ) {
-        self::calculate_order_profit( $order_id );
+        self::calculate_order_profit( $order_id, true );
+        SCOGS_Reports::flush_cache();
     }
 
     /**
-     * Recalculate on status changes
+     * Handle order paid transition (processing or completed)
+     * Performs one-time snapshot calculation and metadata persistence
      */
-    public static function on_order_status_changed( $order_id, $old_status, $new_status, $order ) {
-        self::calculate_order_profit( $order );
+    public static function on_order_paid( $order_id, $order = null ) {
+        if ( ! $order && $order_id ) {
+            $order = wc_get_order( $order_id );
+        }
+        if ( $order ) {
+            self::calculate_order_profit( $order, true );
+            SCOGS_Reports::flush_cache();
+        }
+    }
+
+    /**
+     * Invalidate cached report transients when an order is cancelled or refunded
+     */
+    public static function on_order_invalidated( $order_id, $order = null ) {
+        SCOGS_Reports::flush_cache();
     }
 
     /**
@@ -90,7 +111,8 @@ class SCOGS_Order {
             if ( $order ) {
                 $order->update_meta_data( '_cogs_actual_shipping_cost', '' === $cost ? '' : wc_format_decimal( $cost ) );
                 $order->save();
-                self::calculate_order_profit( $order );
+                self::calculate_order_profit( $order, true );
+                SCOGS_Reports::flush_cache();
             }
         }
     }
@@ -276,9 +298,9 @@ class SCOGS_Order {
         $profit = $order->get_meta( self::META_ORDER_PROFIT, true );
         $margin = $order->get_meta( self::META_ORDER_MARGIN, true );
 
-        // If missing, calculate now
+        // If missing, calculate and save once (lazy one-time initialization for historical orders)
         if ( '' === $profit || false === $profit ) {
-            $stats  = SCOGS_Calculations::calculate_order_financials( $order );
+            $stats  = SCOGS_Calculations::calculate_order_financials( $order, true );
             $profit = $stats['net_profit'];
             $margin = $stats['net_margin'];
         }
