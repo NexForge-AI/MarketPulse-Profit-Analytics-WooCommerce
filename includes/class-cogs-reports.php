@@ -521,7 +521,7 @@ class SCOGS_Reports {
                 <div class="scogs-form-card">
                     <h3><?php esc_html_e( 'Bulk CSV Inventory Tools', 'simple-cost-of-goods-for-woocommerce' ); ?></h3>
                     <p class="description">
-                        <?php esc_html_e( 'Simple Cost of Goods hooks seamlessly into WooCommerce’s native CSV Importer and Exporter. You can bulk update wholesale costs and supplier names for thousands of products in Excel or Google Sheets.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        <?php esc_html_e( 'MarketPulse hooks seamlessly into WooCommerce’s native CSV Importer and Exporter. You can bulk update wholesale costs and supplier names for thousands of products in Excel or Google Sheets.', 'simple-cost-of-goods-for-woocommerce' ); ?>
                     </p>
 
                     <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; margin: 16px 0;">
@@ -558,7 +558,7 @@ class SCOGS_Reports {
                 <div class="scogs-hero-flex">
                     <div class="scogs-hero-content">
                         <span class="scogs-hero-pill"><?php esc_html_e( 'OFFICIAL DOCUMENTATION & KNOWLEDGEBASE', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                        <h2><?php esc_html_e( 'How Simple Cost of Goods & Profit Tracker Works', 'simple-cost-of-goods-for-woocommerce' ); ?></h2>
+                        <h2><?php esc_html_e( 'How MarketPulse COGS & Profit Works', 'simple-cost-of-goods-for-woocommerce' ); ?></h2>
                         <p>
                             <?php esc_html_e( 'Welcome! This plugin provides real-time financial transparency for your WooCommerce store by replacing vanity gross revenue with mathematically accurate True Net Profit. Here is everything you need to get started in 60 seconds.', 'simple-cost-of-goods-for-woocommerce' ); ?>
                         </p>

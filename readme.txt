@@ -1,4 +1,4 @@
-=== Simple Cost of Goods & Profit Tracker for WooCommerce ===
+=== MarketPulse COGS & Profit for WooCommerce ===
 Contributors: nexforgeai
 Donate link: https://usemarketpulse.com
 Tags: cost of goods, cogs, profit tracker, profit margin, woocommerce profit
@@ -27,17 +27,17 @@ WooCommerce by default only reports your **Gross Revenue**. It completely ignore
 3. **Courier Shipping Deficits:** Subsidizing "Free Shipping" or flat-rate delivery when courier bills (Pathao, Steadfast, RedX, FedEx, DHL, UPS) are significantly higher than what the customer paid.
 4. **Operating Expenses (OpEx):** Meta Ad spend, Google Ads, TikTok ads, server hosting, staff salaries, software subscriptions, office rent, and packaging materials.
 
-**Simple Cost of Goods & Profit Tracker for WooCommerce by NexForge AI** solves this forever. It is an enterprise-grade financial intelligence engine that transforms WooCommerce into a complete, automated Profit & Loss (P&L) accounting center — **100% free, lightweight, zero frontend scripts, and 100% HPOS certified.**
+**MarketPulse COGS & Profit for WooCommerce by NexForge AI** solves this forever. It is an enterprise-grade financial intelligence engine that transforms WooCommerce into a complete, automated Profit & Loss (P&L) accounting center — **100% free, lightweight, zero frontend scripts, and 100% HPOS certified.**
 
 ---
 
-### 💎 Why Simple Cost of Goods is 10x Ahead of Traditional Plugins
+### 💎 Why MarketPulse COGS & Profit is 10x Ahead of Traditional Plugins
 
 Most older WooCommerce COGS plugins charge **$79 to $199 every single year**, freeze your database with bloated queries, or only track wholesale cost while ignoring gateway processing cuts, courier deficits, and advertising overhead.
 
-Here is how Simple Cost of Goods & Profit Tracker completely changes the game:
+Here is how MarketPulse COGS & Profit completely changes the game:
 
-| Feature / Capability | Legacy COGS Plugins ($99–$199/yr) | Simple Cost of Goods & Profit Tracker |
+| Feature / Capability | Legacy COGS Plugins ($99–$199/yr) | MarketPulse COGS & Profit |
 | :--- | :--- | :--- |
 | **Pricing & Licensing** | ❌ $79 to $199 annual renewal fees | ✅ **100% Free Forever & Open Source (GPLv2)** |
 | **P&L Accounting Scope** | ⚠️ Product COGS only (gross profit) | ✅ **True 4-Pillar Net Profit (COGS + Gateway + Shipping Deficit + OpEx)** |
@@ -67,7 +67,7 @@ Never guess your actual earnings again. The plugin calculates exact bottom-line 
 When editing any Simple or Variable product, typing a **Cost Price (COGS)** instantly computes your live Gross Margin in both currency and percentage. If your margin dips below 15%, a high-visibility alert warns you before you publish, preventing costly pricing mistakes.
 
 #### 3. Zero-Config Payment Gateway Fee Auto-Detection
-Stop calculating 2.9% + 30¢ manually. Simple Cost of Goods automatically detects the payment gateway used for each order (Stripe, PayPal, Square, bKash, Nagad, Rocket, SSLCommerz, Cash on Delivery) and applies exact percentage and fixed processing fee deductions. Custom rates can be configured with ease.
+Stop calculating 2.9% + 30¢ manually. MarketPulse automatically detects the payment gateway used for each order (Stripe, PayPal, Square, bKash, Nagad, Rocket, SSLCommerz, Cash on Delivery) and applies exact percentage and fixed processing fee deductions. Custom rates can be configured with ease.
 
 #### 4. Courier Shipping Deficit Reconciliation
 If you charge customers a flat $5.00 for delivery, but FedEx, DHL, Pathao, or Steadfast invoices you $8.50, you lost $3.50. The plugin accounts for this courier shortfall and subtracts it directly from order profit.
@@ -176,7 +176,7 @@ Absolutely not! The plugin is engineered with a strict zero-frontend footprint p
 Never. When an order is placed, unit wholesale costs, gateway fees, and shipping metrics are permanently locked into that specific order's immutable financial snapshot. Updating a product's cost price today will only apply to future orders, safeguarding your historical accounting records.
 
 = Is this plugin compatible with WooCommerce High-Performance Order Storage (HPOS)? =
-Yes! Simple Cost of Goods & Profit Tracker declares 100% native compatibility with High-Performance Order Storage (`custom_order_tables`). It works flawlessly whether your store runs in modern HPOS mode or legacy post-meta mode.
+Yes! MarketPulse COGS & Profit declares 100% native compatibility with High-Performance Order Storage (`custom_order_tables`). It works flawlessly whether your store runs in modern HPOS mode or legacy post-meta mode.
 
 = Do I need to manually configure payment gateway fees? =
 No. The plugin includes pre-configured standard transaction fees for major global and regional payment processors, including Stripe (2.9% + 30¢), PayPal (3.49% + 49¢), Square (2.6% + 10¢), bKash (1.5%), Nagad (1.2%), Rocket (1.5%), SSLCommerz (2.5%), and Cash on Delivery (COD). If you have negotiated custom volume rates with your processor, you can easily adjust them in the settings tab.

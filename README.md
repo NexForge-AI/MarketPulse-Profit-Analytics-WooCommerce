@@ -1,4 +1,4 @@
-# Simple Cost of Goods & Profit Tracker for WooCommerce
+# MarketPulse COGS & Profit for WooCommerce
 
 [![GPLv2 License](https://img.shields.io/badge/license-GPLv2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 [![WooCommerce](https://img.shields.io/badge/WooCommerce-7.0%20--%209.4+-96588a.svg)](https://woocommerce.com)

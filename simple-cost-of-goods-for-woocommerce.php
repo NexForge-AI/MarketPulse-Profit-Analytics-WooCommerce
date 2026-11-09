@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Simple Cost of Goods & Profit Tracker for WooCommerce
+ * Plugin Name:       MarketPulse COGS & Profit for WooCommerce
  * Plugin URI:        https://usemarketpulse.com/plugins/simple-cost-of-goods
  * Description:       Lightweight, high-performance Cost of Goods Sold (COGS) and true net profit margin tracker for WooCommerce. Track real profit per product and order with operating expenses, gateway fee auto-detection, and 100% HPOS compatibility.
  * Version:           1.0.0
@@ -206,7 +206,7 @@ final class Simple_Cost_Of_Goods_WooCommerce {
     public function woocommerce_missing_notice() {
         ?>
         <div class="notice notice-error is-dismissible">
-            <p><strong><?php esc_html_e( 'Simple Cost of Goods & Profit Tracker', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'requires WooCommerce to be installed and active.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
+            <p><strong><?php esc_html_e( 'MarketPulse COGS & Profit for WooCommerce', 'simple-cost-of-goods-for-woocommerce' ); ?></strong> <?php esc_html_e( 'requires WooCommerce to be installed and active.', 'simple-cost-of-goods-for-woocommerce' ); ?></p>
         </div>
         <?php
     }
