@@ -68,10 +68,10 @@ class SCOGS_Product {
         woocommerce_wp_text_input( array(
             'id'          => self::META_KEY_COST,
             'class'       => 'short ' . $cost_input_class,
-            'label'       => __( 'Cost Price (COGS)', 'marketpulse-cogs-profit' ) . ' (' . get_woocommerce_currency_symbol() . ')',
-            'placeholder' => __( 'e.g. 15.00', 'marketpulse-cogs-profit' ),
+            'label'       => __( 'Cost Price (COGS)', 'marketpulse-cogs-profit-for-woocommerce' ) . ' (' . get_woocommerce_currency_symbol() . ')',
+            'placeholder' => __( 'e.g. 15.00', 'marketpulse-cogs-profit-for-woocommerce' ),
             'desc_tip'    => true,
-            'description' => __( 'Enter the wholesale purchase or manufacturing cost per unit. Used to calculate actual net profit margins.', 'marketpulse-cogs-profit' ),
+            'description' => __( 'Enter the wholesale purchase or manufacturing cost per unit. Used to calculate actual net profit margins.', 'marketpulse-cogs-profit-for-woocommerce' ),
             'type'        => 'text',
             'data_type'   => 'price',
         ) );
@@ -82,13 +82,13 @@ class SCOGS_Product {
                 $badge_class = $margin >= 30 ? 'scogs-badge-green' : ( $margin >= 15 ? 'scogs-badge-amber' : 'scogs-badge-red' );
 
                 echo '<p class="form-field scogs-live-margin">';
-                echo '<label>' . esc_html__( 'Est. Gross Margin', 'marketpulse-cogs-profit' ) . '</label>';
+                echo '<label>' . esc_html__( 'Est. Gross Margin', 'marketpulse-cogs-profit-for-woocommerce' ) . '</label>';
                 echo '<span class="scogs-badge ' . esc_attr( $badge_class ) . '">';
                 echo wp_kses_post( wc_price( $profit ) ) . ' (' . esc_html( round( $margin, 1 ) ) . '%)';
                 echo '</span>';
                 if ( $margin < 30 ) {
                     $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_margin&utm_campaign=boost_margin';
-                    echo ' <a href="' . esc_url( $plan_url ) . '" target="_blank" rel="noopener noreferrer" class="scogs-margin-boost-tip" style="margin-left:8px;"><img src="' . esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ) . '" class="scogs-btn-brand-icon" alt="" />' . esc_html__( 'Boost margin with MarketPulse &rarr;', 'marketpulse-cogs-profit' ) . '</a>';
+                    echo ' <a href="' . esc_url( $plan_url ) . '" target="_blank" rel="noopener noreferrer" class="scogs-margin-boost-tip" style="margin-left:8px;"><img src="' . esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ) . '" class="scogs-btn-brand-icon" alt="" />' . esc_html__( 'Boost margin with MarketPulse &rarr;', 'marketpulse-cogs-profit-for-woocommerce' ) . '</a>';
                 }
                 echo '</p>';
 
@@ -99,11 +99,11 @@ class SCOGS_Product {
                     echo '<span class="scogs-callout-icon">⚠️</span>';
                     echo '<div class="scogs-callout-text">';
                     /* translators: %s: margin percentage */
-                    echo '<strong>' . sprintf( esc_html__( 'Dangerously Low Margin Alert (%s%%):', 'marketpulse-cogs-profit' ), esc_html( round( $margin, 1 ) ) ) . '</strong>';
-                    echo esc_html__( 'After payment gateway fees and courier deficits, your net take-home profit is nearly zero.', 'marketpulse-cogs-profit' );
+                    echo '<strong>' . sprintf( esc_html__( 'Dangerously Low Margin Alert (%s%%):', 'marketpulse-cogs-profit-for-woocommerce' ), esc_html( round( $margin, 1 ) ) ) . '</strong>';
+                    echo esc_html__( 'After payment gateway fees and courier deficits, your net take-home profit is nearly zero.', 'marketpulse-cogs-profit-for-woocommerce' );
                     echo '</div>';
                     echo '</div>';
-                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" rel="noopener noreferrer" class="scogs-callout-btn"><img src="' . esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ) . '" class="scogs-btn-brand-icon" alt="" />' . esc_html__( 'Protect & Reprice with MarketPulse AI &rarr;', 'marketpulse-cogs-profit' ) . '</a>';
+                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" rel="noopener noreferrer" class="scogs-callout-btn"><img src="' . esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ) . '" class="scogs-btn-brand-icon" alt="" />' . esc_html__( 'Protect & Reprice with MarketPulse AI &rarr;', 'marketpulse-cogs-profit-for-woocommerce' ) . '</a>';
                     echo '</div>';
                 } elseif ( $margin < 30 ) {
                     $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_alert&utm_campaign=boost_margin';
@@ -112,16 +112,16 @@ class SCOGS_Product {
                     echo '<span class="scogs-callout-icon">💡</span>';
                     echo '<div class="scogs-callout-text">';
                     /* translators: %s: margin percentage */
-                    echo '<strong>' . sprintf( esc_html__( 'Unlock Higher Margin (%s%%):', 'marketpulse-cogs-profit' ), esc_html( round( $margin, 1 ) ) ) . '</strong>';
-                    echo esc_html__( 'When competitors run out of stock, automated AI repricing safely lifts prices to 30%+ with zero lost sales.', 'marketpulse-cogs-profit' );
+                    echo '<strong>' . sprintf( esc_html__( 'Unlock Higher Margin (%s%%):', 'marketpulse-cogs-profit-for-woocommerce' ), esc_html( round( $margin, 1 ) ) ) . '</strong>';
+                    echo esc_html__( 'When competitors run out of stock, automated AI repricing safely lifts prices to 30%+ with zero lost sales.', 'marketpulse-cogs-profit-for-woocommerce' );
                     echo '</div>';
                     echo '</div>';
-                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" rel="noopener noreferrer" class="scogs-callout-btn"><img src="' . esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ) . '" class="scogs-btn-brand-icon" alt="" />' . esc_html__( 'Optimize Price with MarketPulse &rarr;', 'marketpulse-cogs-profit' ) . '</a>';
+                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" rel="noopener noreferrer" class="scogs-callout-btn"><img src="' . esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ) . '" class="scogs-btn-brand-icon" alt="" />' . esc_html__( 'Optimize Price with MarketPulse &rarr;', 'marketpulse-cogs-profit-for-woocommerce' ) . '</a>';
                     echo '</div>';
                 }
             } else {
                 echo '<p class="form-field scogs-live-margin" style="display:none;">';
-                echo '<label>' . esc_html__( 'Est. Gross Margin', 'marketpulse-cogs-profit' ) . '</label>';
+                echo '<label>' . esc_html__( 'Est. Gross Margin', 'marketpulse-cogs-profit-for-woocommerce' ) . '</label>';
                 echo '<span class="scogs-live-badge-wrap"></span>';
                 echo '</p>';
             }
@@ -130,10 +130,10 @@ class SCOGS_Product {
         // 2. Supplier / Vendor
         woocommerce_wp_text_input( array(
             'id'          => self::META_KEY_SUPPLIER,
-            'label'       => __( 'Supplier / Vendor', 'marketpulse-cogs-profit' ),
-            'placeholder' => __( 'e.g. Acme Wholesale Ltd.', 'marketpulse-cogs-profit' ),
+            'label'       => __( 'Supplier / Vendor', 'marketpulse-cogs-profit-for-woocommerce' ),
+            'placeholder' => __( 'e.g. Acme Wholesale Ltd.', 'marketpulse-cogs-profit-for-woocommerce' ),
             'desc_tip'    => true,
-            'description' => __( 'Track which vendor or distributor supplies this item.', 'marketpulse-cogs-profit' ),
+            'description' => __( 'Track which vendor or distributor supplies this item.', 'marketpulse-cogs-profit-for-woocommerce' ),
             'type'        => 'text',
         ) );
 
@@ -186,11 +186,11 @@ class SCOGS_Product {
 
         woocommerce_wp_text_input( array(
             'id'            => self::META_KEY_COST . '[' . $loop . ']',
-            'label'         => __( 'Cost Price (COGS)', 'marketpulse-cogs-profit' ) . ' (' . get_woocommerce_currency_symbol() . ')',
+            'label'         => __( 'Cost Price (COGS)', 'marketpulse-cogs-profit-for-woocommerce' ) . ' (' . get_woocommerce_currency_symbol() . ')',
             'value'         => $cost,
-            'placeholder'   => __( 'e.g. 10.00', 'marketpulse-cogs-profit' ),
+            'placeholder'   => __( 'e.g. 10.00', 'marketpulse-cogs-profit-for-woocommerce' ),
             'desc_tip'      => true,
-            'description'   => __( 'Wholesale purchase cost for this specific variation.', 'marketpulse-cogs-profit' ),
+            'description'   => __( 'Wholesale purchase cost for this specific variation.', 'marketpulse-cogs-profit-for-woocommerce' ),
             'wrapper_class' => 'form-row form-row-first',
             'type'          => 'text',
             'data_type'     => 'price',
@@ -198,9 +198,9 @@ class SCOGS_Product {
 
         woocommerce_wp_text_input( array(
             'id'            => self::META_KEY_SUPPLIER . '[' . $loop . ']',
-            'label'         => __( 'Supplier', 'marketpulse-cogs-profit' ),
+            'label'         => __( 'Supplier', 'marketpulse-cogs-profit-for-woocommerce' ),
             'value'         => $supplier,
-            'placeholder'   => __( 'e.g. Acme Ltd.', 'marketpulse-cogs-profit' ),
+            'placeholder'   => __( 'e.g. Acme Ltd.', 'marketpulse-cogs-profit-for-woocommerce' ),
             'wrapper_class' => 'form-row form-row-last',
             'type'          => 'text',
         ) );
@@ -250,9 +250,9 @@ class SCOGS_Product {
         foreach ( $columns as $key => $title ) {
             $new_columns[ $key ] = $title;
             if ( 'price' === $key ) {
-                $new_columns['scogs_cost']     = __( 'Cost', 'marketpulse-cogs-profit' );
-                $new_columns['scogs_margin']   = __( 'Margin', 'marketpulse-cogs-profit' );
-                $new_columns['scogs_supplier'] = __( 'Supplier', 'marketpulse-cogs-profit' );
+                $new_columns['scogs_cost']     = __( 'Cost', 'marketpulse-cogs-profit-for-woocommerce' );
+                $new_columns['scogs_margin']   = __( 'Margin', 'marketpulse-cogs-profit-for-woocommerce' );
+                $new_columns['scogs_supplier'] = __( 'Supplier', 'marketpulse-cogs-profit-for-woocommerce' );
             }
         }
 
@@ -289,15 +289,15 @@ class SCOGS_Product {
                 $badge_class = $margin >= 30 ? 'scogs-badge-green' : ( $margin >= 15 ? 'scogs-badge-amber' : 'scogs-badge-red' );
 
                 echo '<div class="scogs-margin-cell-wrap">';
-                echo '<span class="scogs-badge ' . esc_attr( $badge_class ) . '" title="' . esc_attr__( 'Gross Profit: ', 'marketpulse-cogs-profit' ) . esc_attr( wp_strip_all_tags( wc_price( $profit ) ) ) . '">';
+                echo '<span class="scogs-badge ' . esc_attr( $badge_class ) . '" title="' . esc_attr__( 'Gross Profit: ', 'marketpulse-cogs-profit-for-woocommerce' ) . esc_attr( wp_strip_all_tags( wc_price( $profit ) ) ) . '">';
                 echo esc_html( round( $margin, 1 ) ) . '%';
                 echo '</span>';
 
                 // If margin is red (<15%) or amber (<30%), display conversion tip to boost margin
                 if ( $margin < 30 ) {
                     $plan_url = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_list_margin&utm_campaign=boost_margin';
-                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" rel="noopener noreferrer" class="scogs-margin-boost-tip" title="' . esc_attr__( 'Low margin? Automatically protect COGS & optimize price with MarketPulse AI', 'marketpulse-cogs-profit' ) . '">';
-                    echo '<span class="dashicons dashicons-arrow-up-alt"></span> ' . esc_html__( 'Boost margin with MarketPulse', 'marketpulse-cogs-profit' );
+                    echo '<a href="' . esc_url( $plan_url ) . '" target="_blank" rel="noopener noreferrer" class="scogs-margin-boost-tip" title="' . esc_attr__( 'Low margin? Automatically protect COGS & optimize price with MarketPulse AI', 'marketpulse-cogs-profit-for-woocommerce' ) . '">';
+                    echo '<span class="dashicons dashicons-arrow-up-alt"></span> ' . esc_html__( 'Boost margin with MarketPulse', 'marketpulse-cogs-profit-for-woocommerce' );
                     echo '</a>';
                 }
                 echo '</div>';
@@ -327,15 +327,15 @@ class SCOGS_Product {
         ?>
         <div class="inline-edit-group scogs-quick-edit-row">
             <label class="alignleft">
-                <span class="title"><?php esc_html_e( 'Cost Price', 'marketpulse-cogs-profit' ); ?></span>
+                <span class="title"><?php esc_html_e( 'Cost Price', 'marketpulse-cogs-profit-for-woocommerce' ); ?></span>
                 <span class="input-text-wrap">
-                    <input type="text" name="<?php echo esc_attr( self::META_KEY_COST ); ?>" class="text wc_input_price" placeholder="<?php esc_attr_e( 'e.g. 15.00', 'marketpulse-cogs-profit' ); ?>" value="">
+                    <input type="text" name="<?php echo esc_attr( self::META_KEY_COST ); ?>" class="text wc_input_price" placeholder="<?php esc_attr_e( 'e.g. 15.00', 'marketpulse-cogs-profit-for-woocommerce' ); ?>" value="">
                 </span>
             </label>
             <label class="alignleft" style="margin-left:12px;">
-                <span class="title"><?php esc_html_e( 'Supplier', 'marketpulse-cogs-profit' ); ?></span>
+                <span class="title"><?php esc_html_e( 'Supplier', 'marketpulse-cogs-profit-for-woocommerce' ); ?></span>
                 <span class="input-text-wrap">
-                    <input type="text" name="<?php echo esc_attr( self::META_KEY_SUPPLIER ); ?>" class="text" placeholder="<?php esc_attr_e( 'Supplier name', 'marketpulse-cogs-profit' ); ?>" value="">
+                    <input type="text" name="<?php echo esc_attr( self::META_KEY_SUPPLIER ); ?>" class="text" placeholder="<?php esc_attr_e( 'Supplier name', 'marketpulse-cogs-profit-for-woocommerce' ); ?>" value="">
                 </span>
             </label>
         </div>
@@ -389,15 +389,15 @@ class SCOGS_Product {
         ?>
         <div class="inline-edit-group scogs-bulk-edit-row">
             <label class="alignleft">
-                <span class="title"><?php esc_html_e( 'Cost Price', 'marketpulse-cogs-profit' ); ?></span>
+                <span class="title"><?php esc_html_e( 'Cost Price', 'marketpulse-cogs-profit-for-woocommerce' ); ?></span>
                 <span class="input-text-wrap">
-                    <input type="text" name="<?php echo esc_attr( self::META_KEY_COST ); ?>" class="text wc_input_price" placeholder="<?php esc_attr_e( '— No Change —', 'marketpulse-cogs-profit' ); ?>" value="">
+                    <input type="text" name="<?php echo esc_attr( self::META_KEY_COST ); ?>" class="text wc_input_price" placeholder="<?php esc_attr_e( '— No Change —', 'marketpulse-cogs-profit-for-woocommerce' ); ?>" value="">
                 </span>
             </label>
             <label class="alignleft" style="margin-left:12px;">
-                <span class="title"><?php esc_html_e( 'Supplier', 'marketpulse-cogs-profit' ); ?></span>
+                <span class="title"><?php esc_html_e( 'Supplier', 'marketpulse-cogs-profit-for-woocommerce' ); ?></span>
                 <span class="input-text-wrap">
-                    <input type="text" name="<?php echo esc_attr( self::META_KEY_SUPPLIER ); ?>" class="text" placeholder="<?php esc_attr_e( '— No Change —', 'marketpulse-cogs-profit' ); ?>" value="">
+                    <input type="text" name="<?php echo esc_attr( self::META_KEY_SUPPLIER ); ?>" class="text" placeholder="<?php esc_attr_e( '— No Change —', 'marketpulse-cogs-profit-for-woocommerce' ); ?>" value="">
                 </span>
             </label>
         </div>
@@ -460,7 +460,7 @@ class SCOGS_Product {
         $current_supplier = isset( $_GET['filter_supplier'] ) ? sanitize_text_field( wp_unslash( $_GET['filter_supplier'] ) ) : '';
         ?>
         <select name="filter_supplier" id="filter_supplier">
-            <option value=""><?php esc_html_e( 'All Suppliers', 'marketpulse-cogs-profit' ); ?></option>
+            <option value=""><?php esc_html_e( 'All Suppliers', 'marketpulse-cogs-profit-for-woocommerce' ); ?></option>
             <?php foreach ( $suppliers as $sup ) : ?>
                 <option value="<?php echo esc_attr( $sup ); ?>" <?php selected( $current_supplier, $sup ); ?>>
                     <?php echo esc_html( $sup ); ?>

@@ -28,8 +28,8 @@ class SCOGS_CSV {
      * Add Cost & Supplier to WooCommerce Product CSV Exporter
      */
     public static function add_export_columns( $columns ) {
-        $columns['scogs_cost_price'] = __( 'Cost of Goods (COGS)', 'marketpulse-cogs-profit' );
-        $columns['scogs_supplier']   = __( 'Supplier', 'marketpulse-cogs-profit' );
+        $columns['scogs_cost_price'] = __( 'Cost of Goods (COGS)', 'marketpulse-cogs-profit-for-woocommerce' );
+        $columns['scogs_supplier']   = __( 'Supplier', 'marketpulse-cogs-profit-for-woocommerce' );
         return $columns;
     }
 
@@ -53,8 +53,8 @@ class SCOGS_CSV {
      * Add mapping options to Product CSV Importer dropdown
      */
     public static function add_import_mapping_options( $options ) {
-        $options['scogs_cost_price'] = __( 'Cost of Goods (COGS)', 'marketpulse-cogs-profit' );
-        $options['scogs_supplier']   = __( 'Supplier', 'marketpulse-cogs-profit' );
+        $options['scogs_cost_price'] = __( 'Cost of Goods (COGS)', 'marketpulse-cogs-profit-for-woocommerce' );
+        $options['scogs_supplier']   = __( 'Supplier', 'marketpulse-cogs-profit-for-woocommerce' );
         return $options;
     }
 
@@ -62,12 +62,12 @@ class SCOGS_CSV {
      * Default column mappings during CSV upload
      */
     public static function add_default_import_mappings( $mappings ) {
-        $mappings[ __( 'Cost of Goods (COGS)', 'marketpulse-cogs-profit' ) ] = 'scogs_cost_price';
+        $mappings[ __( 'Cost of Goods (COGS)', 'marketpulse-cogs-profit-for-woocommerce' ) ] = 'scogs_cost_price';
         $mappings['cogs']            = 'scogs_cost_price';
         $mappings['cost_price']      = 'scogs_cost_price';
         $mappings['cost']            = 'scogs_cost_price';
         $mappings['purchase_price']  = 'scogs_cost_price';
-        $mappings[ __( 'Supplier', 'marketpulse-cogs-profit' ) ]             = 'scogs_supplier';
+        $mappings[ __( 'Supplier', 'marketpulse-cogs-profit-for-woocommerce' ) ]             = 'scogs_supplier';
         $mappings['supplier']        = 'scogs_supplier';
         $mappings['vendor']          = 'scogs_supplier';
         return $mappings;

@@ -57,13 +57,13 @@ class SCOGS_Expenses {
      */
     public static function get_categories() {
         return array(
-            'advertising' => __( 'Advertising & Marketing (Meta/Google)', 'marketpulse-cogs-profit' ),
-            'server'      => __( 'Server, Hosting & Domains', 'marketpulse-cogs-profit' ),
-            'salaries'    => __( 'Staff Salaries & Freelancers', 'marketpulse-cogs-profit' ),
-            'rent'        => __( 'Office / Warehouse Rent & Utilities', 'marketpulse-cogs-profit' ),
-            'packaging'   => __( 'Boxes, Packaging & Printing', 'marketpulse-cogs-profit' ),
-            'software'    => __( 'Software Subscriptions & SaaS', 'marketpulse-cogs-profit' ),
-            'other'       => __( 'Other Miscellaneous Expenses', 'marketpulse-cogs-profit' ),
+            'advertising' => __( 'Advertising & Marketing (Meta/Google)', 'marketpulse-cogs-profit-for-woocommerce' ),
+            'server'      => __( 'Server, Hosting & Domains', 'marketpulse-cogs-profit-for-woocommerce' ),
+            'salaries'    => __( 'Staff Salaries & Freelancers', 'marketpulse-cogs-profit-for-woocommerce' ),
+            'rent'        => __( 'Office / Warehouse Rent & Utilities', 'marketpulse-cogs-profit-for-woocommerce' ),
+            'packaging'   => __( 'Boxes, Packaging & Printing', 'marketpulse-cogs-profit-for-woocommerce' ),
+            'software'    => __( 'Software Subscriptions & SaaS', 'marketpulse-cogs-profit-for-woocommerce' ),
+            'other'       => __( 'Other Miscellaneous Expenses', 'marketpulse-cogs-profit-for-woocommerce' ),
         );
     }
 
@@ -172,14 +172,14 @@ class SCOGS_Expenses {
      */
     public static function handle_add_expense() {
         if ( ! current_user_can( 'manage_woocommerce' ) ) {
-            wp_die( esc_html__( 'Unauthorized user.', 'marketpulse-cogs-profit' ) );
+            wp_die( esc_html__( 'Unauthorized user.', 'marketpulse-cogs-profit-for-woocommerce' ) );
         }
 
         check_admin_referer( 'scogs_add_expense_nonce' );
 
         $date     = ! empty( $_POST['expense_date'] ) ? sanitize_text_field( wp_unslash( $_POST['expense_date'] ) ) : current_time( 'Y-m-d' );
         $category = ! empty( $_POST['category'] ) ? sanitize_key( wp_unslash( $_POST['category'] ) ) : 'other';
-        $title    = ! empty( $_POST['title'] ) ? sanitize_text_field( wp_unslash( $_POST['title'] ) ) : esc_html__( 'Operating Expense', 'marketpulse-cogs-profit' );
+        $title    = ! empty( $_POST['title'] ) ? sanitize_text_field( wp_unslash( $_POST['title'] ) ) : esc_html__( 'Operating Expense', 'marketpulse-cogs-profit-for-woocommerce' );
         $amount   = ! empty( $_POST['amount'] ) ? (float) wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['amount'] ) ) ) : 0.0;
         $notes    = ! empty( $_POST['notes'] ) ? sanitize_textarea_field( wp_unslash( $_POST['notes'] ) ) : '';
 
@@ -196,7 +196,7 @@ class SCOGS_Expenses {
      */
     public static function handle_delete_expense() {
         if ( ! current_user_can( 'manage_woocommerce' ) ) {
-            wp_die( esc_html__( 'Unauthorized user.', 'marketpulse-cogs-profit' ) );
+            wp_die( esc_html__( 'Unauthorized user.', 'marketpulse-cogs-profit-for-woocommerce' ) );
         }
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended

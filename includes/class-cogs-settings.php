@@ -19,7 +19,7 @@ class SCOGS_Settings {
      * Add section tab under WooCommerce > Settings > Products
      */
     public static function add_settings_section( $sections ) {
-        $sections['scogs'] = __( 'Cost of Goods (COGS)', 'marketpulse-cogs-profit' );
+        $sections['scogs'] = __( 'Cost of Goods (COGS)', 'marketpulse-cogs-profit-for-woocommerce' );
         return $sections;
     }
 
@@ -33,21 +33,21 @@ class SCOGS_Settings {
 
         return array(
             array(
-                'title' => __( 'Cost of Goods & Profit Tracking Configuration', 'marketpulse-cogs-profit' ),
-                'desc'  => __( 'Configure how net profit and margins are calculated across your store orders. Designed with zero database bloat by NexForge AI.', 'marketpulse-cogs-profit' ),
+                'title' => __( 'Cost of Goods & Profit Tracking Configuration', 'marketpulse-cogs-profit-for-woocommerce' ),
+                'desc'  => __( 'Configure how net profit and margins are calculated across your store orders. Designed with zero database bloat by NexForge AI.', 'marketpulse-cogs-profit-for-woocommerce' ),
                 'type'  => 'title',
                 'id'    => 'scogs_settings_title',
             ),
             array(
-                'title'   => __( 'Include Shipping in Profit', 'marketpulse-cogs-profit' ),
-                'desc'    => __( 'Include customer-paid shipping charges in net revenue calculations.', 'marketpulse-cogs-profit' ),
+                'title'   => __( 'Include Shipping in Profit', 'marketpulse-cogs-profit-for-woocommerce' ),
+                'desc'    => __( 'Include customer-paid shipping charges in net revenue calculations.', 'marketpulse-cogs-profit-for-woocommerce' ),
                 'id'      => 'scogs_include_shipping',
                 'default' => 'no',
                 'type'    => 'checkbox',
             ),
             array(
-                'title'   => __( 'Include Tax in Profit', 'marketpulse-cogs-profit' ),
-                'desc'    => __( 'Include customer-paid taxes in net revenue calculations.', 'marketpulse-cogs-profit' ),
+                'title'   => __( 'Include Tax in Profit', 'marketpulse-cogs-profit-for-woocommerce' ),
+                'desc'    => __( 'Include customer-paid taxes in net revenue calculations.', 'marketpulse-cogs-profit-for-woocommerce' ),
                 'id'      => 'scogs_include_tax',
                 'default' => 'no',
                 'type'    => 'checkbox',
