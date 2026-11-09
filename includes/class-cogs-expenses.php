@@ -137,15 +137,8 @@ class SCOGS_Expenses {
         $table_name = esc_sql( self::get_table_name() );
 
         if ( ! empty( $start_date ) && ! empty( $end_date ) ) {
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-            return $wpdb->get_results(
-                $wpdb->prepare(
-                    'SELECT * FROM %i WHERE `expense_date` BETWEEN %s AND %s ORDER BY `expense_date` DESC, `id` DESC',
-                    $table_name,
-                    $start_date,
-                    $end_date
-                )
-            );
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+            return $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$table_name}` WHERE `expense_date` BETWEEN %s AND %s ORDER BY `expense_date` DESC, `id` DESC", $start_date, $end_date ) );
         }
 
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
@@ -164,15 +157,8 @@ class SCOGS_Expenses {
         $table_name = esc_sql( self::get_table_name() );
 
         if ( ! empty( $start_date ) && ! empty( $end_date ) ) {
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-            $sum = $wpdb->get_var(
-                $wpdb->prepare(
-                    'SELECT SUM(`amount`) FROM %i WHERE `expense_date` BETWEEN %s AND %s',
-                    $table_name,
-                    $start_date,
-                    $end_date
-                )
-            );
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+            $sum = $wpdb->get_var( $wpdb->prepare( "SELECT SUM(`amount`) FROM `{$table_name}` WHERE `expense_date` BETWEEN %s AND %s", $start_date, $end_date ) );
         } else {
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
             $sum = $wpdb->get_var( "SELECT SUM(`amount`) FROM `{$table_name}`" );
