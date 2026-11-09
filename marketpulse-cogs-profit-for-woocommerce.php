@@ -38,19 +38,20 @@ add_action( 'before_woocommerce_init', function () {
 /**
  * Main Plugin Class
  */
-final class Simple_Cost_Of_Goods_WooCommerce {
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+final class MarketPulse_COGS_Profit_For_WooCommerce {
 
     /**
      * Singleton instance
      *
-     * @var Simple_Cost_Of_Goods_WooCommerce
+     * @var MarketPulse_COGS_Profit_For_WooCommerce
      */
     private static $instance = null;
 
     /**
      * Get singleton instance
      *
-     * @return Simple_Cost_Of_Goods_WooCommerce
+     * @return MarketPulse_COGS_Profit_For_WooCommerce
      */
     public static function instance() {
         if ( is_null( self::$instance ) ) {
@@ -215,11 +216,14 @@ final class Simple_Cost_Of_Goods_WooCommerce {
 /**
  * Return main instance of plugin
  *
- * @return Simple_Cost_Of_Goods_WooCommerce
+ * @return MarketPulse_COGS_Profit_For_WooCommerce
  */
 function scogs() {
-    return Simple_Cost_Of_Goods_WooCommerce::instance();
+    return MarketPulse_COGS_Profit_For_WooCommerce::instance();
 }
+
+// Backwards compatibility alias
+class_alias( 'MarketPulse_COGS_Profit_For_WooCommerce', 'Simple_Cost_Of_Goods_WooCommerce' );
 
 // Kick off the plugin
 scogs();

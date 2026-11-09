@@ -2,7 +2,7 @@
 /**
  * Fired when the plugin is uninstalled.
  *
- * @package Simple_Cost_Of_Goods_WooCommerce
+ * @package MarketPulse_COGS_Profit_For_WooCommerce
  */
 
 defined( 'ABSPATH' ) || defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
