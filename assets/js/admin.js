@@ -89,13 +89,14 @@
                 let tipHtml = '';
                 let calloutHtml = '';
                 const planUrl = 'https://usemarketpulse.com/signup?plan=cmu76n3c80005n2el6itwbile&utm_source=cogs_plugin&utm_medium=product_edit_alert&utm_campaign=boost_margin';
+                const brandLogoHtml = (typeof scogsAdminParams !== 'undefined' && scogsAdminParams.logo_url) ? '<img src="' + scogsAdminParams.logo_url + '" class="scogs-btn-brand-icon" alt="" />' : '';
 
                 if (margin < 15) {
                     badgeClass = 'scogs-badge-red';
                     $costInput.removeClass('scogs-input-warning').addClass('scogs-input-danger');
                     $costInput.after('<span class="scogs-cost-inline-chip scogs-inline-danger"><span class="scogs-pulse-dot" style="width:6px;height:6px;"></span> ⚠️ ' + margin.toFixed(1) + '% Critical Margin</span>');
 
-                    tipHtml = ' <a href="' + planUrl + '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;">🚀 Boost Margin with MarketPulse &rarr;</a>';
+                    tipHtml = ' <a href="' + planUrl + '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;">' + brandLogoHtml + 'Boost Margin with MarketPulse &rarr;</a>';
                     calloutHtml = '<div class="scogs-margin-alert-callout scogs-callout-danger">' +
                         '<div class="scogs-callout-content">' +
                             '<span class="scogs-callout-icon">⚠️</span>' +
@@ -105,7 +106,7 @@
                             '</div>' +
                         '</div>' +
                         '<a href="' + planUrl + '" target="_blank" class="scogs-callout-btn">' +
-                            '🚀 Protect & Reprice with MarketPulse AI &rarr;' +
+                            brandLogoHtml + 'Protect & Reprice with MarketPulse AI &rarr;' +
                         '</a>' +
                     '</div>';
                 } else if (margin < 30) {
@@ -113,7 +114,7 @@
                     $costInput.removeClass('scogs-input-danger').addClass('scogs-input-warning');
                     $costInput.after('<span class="scogs-cost-inline-chip scogs-inline-warning">⚡ ' + margin.toFixed(1) + '% Low Margin</span>');
 
-                    tipHtml = ' <a href="' + planUrl + '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;">⚡ Boost Margin with MarketPulse &rarr;</a>';
+                    tipHtml = ' <a href="' + planUrl + '" target="_blank" class="scogs-margin-boost-tip" style="margin-left:8px;">' + brandLogoHtml + 'Boost Margin with MarketPulse &rarr;</a>';
                     calloutHtml = '<div class="scogs-margin-alert-callout scogs-callout-warning">' +
                         '<div class="scogs-callout-content">' +
                             '<span class="scogs-callout-icon">💡</span>' +
@@ -123,7 +124,7 @@
                             '</div>' +
                         '</div>' +
                         '<a href="' + planUrl + '" target="_blank" class="scogs-callout-btn">' +
-                            '⚡ Optimize Price with MarketPulse &rarr;' +
+                            brandLogoHtml + 'Optimize Price with MarketPulse &rarr;' +
                         '</a>' +
                     '</div>';
                 } else {

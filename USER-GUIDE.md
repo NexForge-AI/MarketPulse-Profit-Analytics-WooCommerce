@@ -186,3 +186,4 @@ Need help or want to suggest a new feature?
 - **Website:** [usemarketpulse.com](https://usemarketpulse.com)
 - **Email:** support@usemarketpulse.com
 - **Plugin Author:** NexForge AI
+

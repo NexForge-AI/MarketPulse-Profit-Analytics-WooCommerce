@@ -45,13 +45,19 @@ class SCOGS_Reports {
             <!-- Header -->
             <div class="scogs-header-bar">
                 <div class="scogs-header-left">
-                    <h1 class="wp-heading-inline">
-                        <?php esc_html_e( 'MarketPulse Profit Analytics & Financial Intelligence', 'simple-cost-of-goods-for-woocommerce' ); ?>
-                    </h1>
-                    <span class="scogs-version-tag">v<?php echo esc_html( SCOGS_VERSION ); ?></span>
+                    <img src="<?php echo esc_url( SCOGS_URL . 'assets/images/logo.png' ); ?>" alt="MarketPulse" class="scogs-header-brand-logo" />
+                    <div>
+                        <div class="scogs-header-title-row">
+                            <h1 class="wp-heading-inline">
+                                <?php esc_html_e( 'MarketPulse Profit Analytics & Financial Intelligence', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                            </h1>
+                            <span class="scogs-version-tag">v<?php echo esc_html( SCOGS_VERSION ); ?></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="scogs-header-right">
                     <span class="scogs-brand-pill">
+                        <img src="<?php echo esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ); ?>" alt="" class="scogs-brand-pill-logo" />
                         <?php esc_html_e( 'Powered by', 'simple-cost-of-goods-for-woocommerce' ); ?> 
                         <a href="https://usemarketpulse.com?utm_source=cogs_plugin&utm_medium=header_link" target="_blank">NexForge AI</a>
                     </span>
@@ -517,12 +523,17 @@ class SCOGS_Reports {
         <div class="scogs-guide-wrap">
             <!-- Hero Welcome Card -->
             <div class="scogs-guide-hero">
-                <div class="scogs-hero-content">
-                    <span class="scogs-hero-pill"><?php esc_html_e( 'OFFICIAL DOCUMENTATION & KNOWLEDGEBASE', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
-                    <h2><?php esc_html_e( 'How Simple Cost of Goods & Profit Tracker Works', 'simple-cost-of-goods-for-woocommerce' ); ?></h2>
-                    <p>
-                        <?php esc_html_e( 'Welcome! This plugin provides real-time financial transparency for your WooCommerce store by replacing vanity gross revenue with mathematically accurate True Net Profit. Here is everything you need to get started in 60 seconds.', 'simple-cost-of-goods-for-woocommerce' ); ?>
-                    </p>
+                <div class="scogs-hero-flex">
+                    <div class="scogs-hero-content">
+                        <span class="scogs-hero-pill"><?php esc_html_e( 'OFFICIAL DOCUMENTATION & KNOWLEDGEBASE', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
+                        <h2><?php esc_html_e( 'How Simple Cost of Goods & Profit Tracker Works', 'simple-cost-of-goods-for-woocommerce' ); ?></h2>
+                        <p>
+                            <?php esc_html_e( 'Welcome! This plugin provides real-time financial transparency for your WooCommerce store by replacing vanity gross revenue with mathematically accurate True Net Profit. Here is everything you need to get started in 60 seconds.', 'simple-cost-of-goods-for-woocommerce' ); ?>
+                        </p>
+                    </div>
+                    <div class="scogs-hero-logo-box">
+                        <img src="<?php echo esc_url( SCOGS_URL . 'assets/images/logo.png' ); ?>" alt="MarketPulse" class="scogs-guide-hero-logo" />
+                    </div>
                 </div>
             </div>
 
@@ -1193,6 +1204,7 @@ class SCOGS_Reports {
             <!-- Top Header with live pulsing dot -->
             <div class="scogs-audit-header">
                 <div class="scogs-audit-badge-wrap">
+                    <img src="<?php echo esc_url( SCOGS_URL . 'assets/images/logo-icon-64.png' ); ?>" alt="" class="scogs-audit-header-logo" />
                     <span class="scogs-pulse-dot"></span>
                     <span class="scogs-audit-badge"><?php esc_html_e( 'LIVE STORE AUDIT: ESTIMATED PROFIT LEAK', 'simple-cost-of-goods-for-woocommerce' ); ?></span>
                 </div>

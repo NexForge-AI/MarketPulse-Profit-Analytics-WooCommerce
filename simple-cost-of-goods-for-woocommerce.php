@@ -186,6 +186,7 @@ final class Simple_Cost_Of_Goods_WooCommerce {
                     'decimal_sep'     => function_exists( 'wc_get_price_decimal_separator' ) ? wc_get_price_decimal_separator() : '.',
                     'thousand_sep'    => function_exists( 'wc_get_price_thousand_separator' ) ? wc_get_price_thousand_separator() : ',',
                     'num_decimals'    => function_exists( 'wc_get_price_decimals' ) ? wc_get_price_decimals() : 2,
+                    'logo_url'        => SCOGS_URL . 'assets/images/logo-icon-64.png',
                 )
             );
         }
