@@ -759,6 +759,11 @@ class SCOGS_Reports {
 
         $filename = 'profit-report-' . $start_date . '-to-' . $end_date . '.csv';
 
+        // Clean any buffered output to prevent corrupt CSV or ERR_INVALID_RESPONSE
+        while ( ob_get_level() > 0 ) {
+            ob_end_clean();
+        }
+
         header( 'Content-Type: text/csv; charset=UTF-8' );
         header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
         header( 'Pragma: no-cache' );
@@ -779,7 +784,8 @@ class SCOGS_Reports {
         fputcsv( $output, array( '--- EXECUTIVE FINANCIAL SUMMARY ---' ) );
         fputcsv( $output, array( 'Metric', 'Amount (' . $currency . ')', 'Notes' ) );
         fputcsv( $output, array( 'Gross Revenue', number_format( $order_stats['gross_revenue'], 2, '.', '' ), $order_stats['order_count'] . ' orders placed' ) );
-        fputcsv( $output, array( 'Discounts', '-' . number_format( $order_stats['discount_total'], 2, '.', '' ), 'Coupon & item discounts' ) );
+        $discount_total = isset( $order_stats['discount_total'] ) ? $order_stats['discount_total'] : 0.0;
+        fputcsv( $output, array( 'Discounts', '-' . number_format( $discount_total, 2, '.', '' ), 'Coupon & item discounts' ) );
         fputcsv( $output, array( 'Total COGS', '-' . number_format( $order_stats['total_cogs'], 2, '.', '' ), 'Product acquisition / manufacture cost' ) );
         fputcsv( $output, array( 'Gross Profit', number_format( $order_stats['gross_profit'], 2, '.', '' ), number_format( $order_stats['gross_margin'], 1, '.', '' ) . '% Gross Margin' ) );
         fputcsv( $output, array( 'Payment Gateway Fees', '-' . number_format( $order_stats['gateway_fees'], 2, '.', '' ), 'Transaction processing fees' ) );
@@ -792,7 +798,8 @@ class SCOGS_Reports {
         fputcsv( $output, array( '--- DAILY PERFORMANCE BREAKDOWN ---' ) );
         fputcsv( $output, array( 'Date', 'Day', 'Gross Revenue (' . $currency . ')', 'Total COGS (' . $currency . ')', 'Estimated Net Profit (' . $currency . ')' ) );
 
-        $daily_stats = self::get_daily_chart_data( $start_date, $end_date );
+        $chart_info  = self::get_daily_chart_data( $start_date, $end_date );
+        $daily_stats = ! empty( $chart_info['data'] ) ? $chart_info['data'] : array();
         foreach ( $daily_stats as $date_str => $day ) {
             fputcsv( $output, array(
                 $date_str,
@@ -841,6 +848,7 @@ class SCOGS_Reports {
         ) );
 
         $gross_revenue    = 0.0;
+        $discount_total   = 0.0;
         $total_cogs       = 0.0;
         $gross_profit     = 0.0;
         $gateway_fees     = 0.0;
@@ -850,6 +858,7 @@ class SCOGS_Reports {
             // Read-only pass: $save = false guarantees zero database writes during reporting
             $stats = SCOGS_Calculations::calculate_order_financials( $order, false );
             $gross_revenue    += $stats['gross_revenue'];
+            $discount_total   += isset( $stats['discount_total'] ) ? (float) $stats['discount_total'] : 0.0;
             $total_cogs       += $stats['total_cogs'];
             $gross_profit     += $stats['gross_profit'];
             $gateway_fees     += $stats['gateway_fee'];
@@ -861,6 +870,7 @@ class SCOGS_Reports {
         $result = array(
             'order_count'      => count( $orders ),
             'gross_revenue'    => $gross_revenue,
+            'discount_total'   => $discount_total,
             'total_cogs'       => $total_cogs,
             'gross_profit'     => $gross_profit,
             'gross_margin'     => $gross_margin,
@@ -970,82 +980,97 @@ class SCOGS_Reports {
     }
 
     /**
-     * Render Interactive Daily Trend SVG Chart (Revenue vs COGS vs Net Profit)
+     * Get Daily Timeline Data for Charts and Financial Export
+     *
+     * @param string $start_date Y-m-d
+     * @param string $end_date   Y-m-d
+     * @return array Array with 'data', 'has_data', and 'max_val'
      */
-    private static function render_profit_chart( $start_date, $end_date ) {
+    public static function get_daily_chart_data( $start_date, $end_date ) {
         $chart_cache_key = 'scogs_chart_' . md5( $start_date . '_' . $end_date );
         $cached_chart    = get_transient( $chart_cache_key );
 
-        if ( false !== $cached_chart && is_array( $cached_chart ) ) {
-            $daily_data = $cached_chart['data'];
-            $has_data   = $cached_chart['has_data'];
-            $max_val    = $cached_chart['max_val'];
-        } else {
-            // Build daily timeline array
-            $start = new DateTime( $start_date );
-            $end   = new DateTime( $end_date );
-            $end->modify( '+1 day' );
-            $interval = new DateInterval( 'P1D' );
-            $period   = new DatePeriod( $start, $interval, $end );
-
-            $daily_data = array();
-            foreach ( $period as $dt ) {
-                $date_str = $dt->format( 'Y-m-d' );
-                $daily_data[ $date_str ] = array(
-                    'date'    => $date_str,
-                    'label'   => $dt->format( 'M j' ),
-                    'revenue' => 0.0,
-                    'cogs'    => 0.0,
-                    'profit'  => 0.0,
-                );
-            }
-
-            // Fetch orders in date range
-            $orders = wc_get_orders( array(
-                'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
-                'status'       => array( 'wc-processing', 'wc-completed' ),
-                'limit'        => 1000,
-            ) );
-
-            $has_data = false;
-            foreach ( $orders as $order ) {
-                $order_date = $order->get_date_created() ? $order->get_date_created()->date( 'Y-m-d' ) : '';
-                if ( isset( $daily_data[ $order_date ] ) ) {
-                    // Read-only calculation: $save = false guarantees zero order saves
-                    $stats = SCOGS_Calculations::calculate_order_financials( $order, false );
-                    $daily_data[ $order_date ]['revenue'] += (float) $stats['gross_revenue'];
-                    $daily_data[ $order_date ]['cogs']    += (float) $stats['total_cogs'];
-                    $daily_data[ $order_date ]['profit']  += (float) $stats['net_profit'];
-                    if ( $stats['gross_revenue'] > 0 || $stats['total_cogs'] > 0 || $stats['net_profit'] > 0 ) {
-                        $has_data = true;
-                    }
-                }
-            }
-
-            // Calculate max scale value
-            $max_val = 0.0;
-            foreach ( $daily_data as $row ) {
-                if ( $row['revenue'] > $max_val ) {
-                    $max_val = $row['revenue'];
-                }
-                if ( $row['cogs'] > $max_val ) {
-                    $max_val = $row['cogs'];
-                }
-                if ( $row['profit'] > $max_val ) {
-                    $max_val = $row['profit'];
-                }
-            }
-            if ( $max_val <= 0 ) {
-                $max_val = 100;
-            }
-            $max_val = ceil( $max_val * 1.15 ); // 15% top headroom
-
-            set_transient( $chart_cache_key, array(
-                'data'     => $daily_data,
-                'has_data' => $has_data,
-                'max_val'  => $max_val,
-            ), 15 * MINUTE_IN_SECONDS );
+        if ( false !== $cached_chart && is_array( $cached_chart ) && isset( $cached_chart['data'] ) ) {
+            return $cached_chart;
         }
+
+        // Build daily timeline array
+        $start = new DateTime( $start_date );
+        $end   = new DateTime( $end_date );
+        $end->modify( '+1 day' );
+        $interval = new DateInterval( 'P1D' );
+        $period   = new DatePeriod( $start, $interval, $end );
+
+        $daily_data = array();
+        foreach ( $period as $dt ) {
+            $date_str = $dt->format( 'Y-m-d' );
+            $daily_data[ $date_str ] = array(
+                'date'    => $date_str,
+                'label'   => $dt->format( 'M j' ),
+                'revenue' => 0.0,
+                'cogs'    => 0.0,
+                'profit'  => 0.0,
+            );
+        }
+
+        // Fetch orders in date range
+        $orders = wc_get_orders( array(
+            'date_created' => $start_date . ' 00:00:00...' . $end_date . ' 23:59:59',
+            'status'       => array( 'wc-processing', 'wc-completed' ),
+            'limit'        => 1000,
+        ) );
+
+        $has_data = false;
+        foreach ( $orders as $order ) {
+            $order_date = $order->get_date_created() ? $order->get_date_created()->date( 'Y-m-d' ) : '';
+            if ( isset( $daily_data[ $order_date ] ) ) {
+                // Read-only calculation: $save = false guarantees zero order saves
+                $stats = SCOGS_Calculations::calculate_order_financials( $order, false );
+                $daily_data[ $order_date ]['revenue'] += (float) $stats['gross_revenue'];
+                $daily_data[ $order_date ]['cogs']    += (float) $stats['total_cogs'];
+                $daily_data[ $order_date ]['profit']  += (float) $stats['net_profit'];
+                if ( $stats['gross_revenue'] > 0 || $stats['total_cogs'] > 0 || $stats['net_profit'] > 0 ) {
+                    $has_data = true;
+                }
+            }
+        }
+
+        // Calculate max scale value
+        $max_val = 0.0;
+        foreach ( $daily_data as $row ) {
+            if ( $row['revenue'] > $max_val ) {
+                $max_val = $row['revenue'];
+            }
+            if ( $row['cogs'] > $max_val ) {
+                $max_val = $row['cogs'];
+            }
+            if ( $row['profit'] > $max_val ) {
+                $max_val = $row['profit'];
+            }
+        }
+        if ( $max_val <= 0 ) {
+            $max_val = 100;
+        }
+        $max_val = ceil( $max_val * 1.15 ); // 15% top headroom
+
+        $result = array(
+            'data'     => $daily_data,
+            'has_data' => $has_data,
+            'max_val'  => $max_val,
+        );
+
+        set_transient( $chart_cache_key, $result, 15 * MINUTE_IN_SECONDS );
+        return $result;
+    }
+
+    /**
+     * Render Interactive Daily Trend SVG Chart (Revenue vs COGS vs Net Profit)
+     */
+    private static function render_profit_chart( $start_date, $end_date ) {
+        $chart_info = self::get_daily_chart_data( $start_date, $end_date );
+        $daily_data = $chart_info['data'];
+        $has_data   = $chart_info['has_data'];
+        $max_val    = $chart_info['max_val'];
 
         // Chart SVG dimensions
         $svg_w       = 1000;
