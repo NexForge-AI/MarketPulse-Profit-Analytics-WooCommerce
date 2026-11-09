@@ -139,9 +139,9 @@ class SCOGS_Expenses {
         if ( ! empty( $start_date ) && ! empty( $end_date ) ) {
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             return $wpdb->get_results(
-                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
                 $wpdb->prepare(
-                    "SELECT * FROM `{$table_name}` WHERE `expense_date` BETWEEN %s AND %s ORDER BY `expense_date` DESC, `id` DESC",
+                    'SELECT * FROM %i WHERE `expense_date` BETWEEN %s AND %s ORDER BY `expense_date` DESC, `id` DESC',
+                    $table_name,
                     $start_date,
                     $end_date
                 )
@@ -166,9 +166,9 @@ class SCOGS_Expenses {
         if ( ! empty( $start_date ) && ! empty( $end_date ) ) {
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             $sum = $wpdb->get_var(
-                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
                 $wpdb->prepare(
-                    "SELECT SUM(`amount`) FROM `{$table_name}` WHERE `expense_date` BETWEEN %s AND %s",
+                    'SELECT SUM(`amount`) FROM %i WHERE `expense_date` BETWEEN %s AND %s',
+                    $table_name,
                     $start_date,
                     $end_date
                 )

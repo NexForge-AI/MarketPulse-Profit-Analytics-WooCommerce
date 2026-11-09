@@ -32,6 +32,6 @@ $wpdb->query(
 
 // Drop operating expenses table
 $scogs_table_expenses = esc_sql( $wpdb->prefix . 'scogs_expenses' );
-// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 $wpdb->query( "DROP TABLE IF EXISTS `{$scogs_table_expenses}`" );
 
