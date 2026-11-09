@@ -165,6 +165,8 @@ class SCOGS_Product {
                 update_post_meta( $post_id, self::META_KEY_SUPPLIER, $supplier );
             }
         }
+
+        SCOGS_Reports::flush_cache();
     }
 
     /**
@@ -221,6 +223,8 @@ class SCOGS_Product {
                 update_post_meta( $variation_id, self::META_KEY_SUPPLIER, $supplier );
             }
         }
+
+        SCOGS_Reports::flush_cache();
     }
 
     /**
@@ -328,18 +332,31 @@ class SCOGS_Product {
      * Save Quick Edit fields
      */
     public static function save_quick_edit_field( $product ) {
+        $changed = false;
+
         if ( isset( $_REQUEST[ self::META_KEY_COST ] ) ) {
             $cost = wc_clean( wp_unslash( $_REQUEST[ self::META_KEY_COST ] ) );
             if ( '' !== $cost ) {
                 $product->update_meta_data( self::META_KEY_COST, wc_format_decimal( $cost ) );
+            } else {
+                $product->delete_meta_data( self::META_KEY_COST );
             }
+            $changed = true;
         }
 
         if ( isset( $_REQUEST[ self::META_KEY_SUPPLIER ] ) ) {
             $supplier = sanitize_text_field( wp_unslash( $_REQUEST[ self::META_KEY_SUPPLIER ] ) );
             if ( '' !== $supplier ) {
                 $product->update_meta_data( self::META_KEY_SUPPLIER, $supplier );
+            } else {
+                $product->delete_meta_data( self::META_KEY_SUPPLIER );
             }
+            $changed = true;
+        }
+
+        if ( $changed ) {
+            $product->save();
+            SCOGS_Reports::flush_cache();
         }
     }
 
@@ -369,14 +386,23 @@ class SCOGS_Product {
      * Save Bulk Edit fields
      */
     public static function save_bulk_edit_fields( $product ) {
+        $changed = false;
+
         if ( isset( $_REQUEST[ self::META_KEY_COST ] ) && '' !== $_REQUEST[ self::META_KEY_COST ] ) {
             $cost = wc_clean( wp_unslash( $_REQUEST[ self::META_KEY_COST ] ) );
             $product->update_meta_data( self::META_KEY_COST, wc_format_decimal( $cost ) );
+            $changed = true;
         }
 
         if ( isset( $_REQUEST[ self::META_KEY_SUPPLIER ] ) && '' !== $_REQUEST[ self::META_KEY_SUPPLIER ] ) {
             $supplier = sanitize_text_field( wp_unslash( $_REQUEST[ self::META_KEY_SUPPLIER ] ) );
             $product->update_meta_data( self::META_KEY_SUPPLIER, $supplier );
+            $changed = true;
+        }
+
+        if ( $changed ) {
+            $product->save();
+            SCOGS_Reports::flush_cache();
         }
     }
 
