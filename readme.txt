@@ -3,7 +3,7 @@ Contributors: nexforgeai
 Donate link: https://usemarketpulse.com
 Tags: cost of goods, cogs, profit tracker, profit margin, woocommerce profit
 Requires at least: 5.8
-Tested up to: 6.7
+Tested up to: 7.1
 Requires PHP: 7.4
 Requires Plugins: woocommerce
 WC requires at least: 7.0
