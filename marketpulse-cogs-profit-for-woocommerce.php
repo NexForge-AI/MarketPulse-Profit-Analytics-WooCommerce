@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       MarketPulse COGS & Profit for WooCommerce
- * Plugin URI:        https://usemarketpulse.com/plugins/simple-cost-of-goods
+ * Plugin URI:        https://usemarketpulse.com
  * Description:       Lightweight, high-performance Cost of Goods Sold (COGS) and true net profit margin tracker for WooCommerce by NexForge AI, creators of MarketPulse. Track real profit per product and order with operating expenses, gateway fee auto-detection, and 100% HPOS compatibility.
  * Version:           1.0.0
  * Author:            NexForge AI
@@ -12,6 +12,7 @@
  * Domain Path:       /languages
  * Requires at least: 5.8
  * Requires PHP:      7.4
+ * Requires Plugins:  woocommerce
  * WC requires at least: 7.0
  * WC tested up to:   9.4
  */

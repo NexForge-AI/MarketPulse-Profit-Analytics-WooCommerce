@@ -5,8 +5,7 @@
  * @package MarketPulse_COGS_Profit_For_WooCommerce
  */
 
-defined( 'ABSPATH' ) || defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
-
+// If uninstall not called from WordPress, exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
     exit;
 }

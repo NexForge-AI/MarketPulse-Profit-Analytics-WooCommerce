@@ -5,6 +5,7 @@ Tags: cost of goods, cogs, profit tracker, profit margin, woocommerce profit
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
+Requires Plugins: woocommerce
 WC requires at least: 7.0
 WC tested up to: 9.4
 Stable tag: 1.0.0
@@ -27,30 +28,24 @@ WooCommerce by default only reports your **Gross Revenue**. It completely ignore
 3. **Courier Shipping Deficits:** Subsidizing "Free Shipping" or flat-rate delivery when courier bills (Pathao, Steadfast, RedX, FedEx, DHL, UPS) are significantly higher than what the customer paid.
 4. **Operating Expenses (OpEx):** Meta Ad spend, Google Ads, TikTok ads, server hosting, staff salaries, software subscriptions, office rent, and packaging materials.
 
-**MarketPulse COGS & Profit for WooCommerce by NexForge AI** solves this forever. It is an enterprise-grade financial intelligence engine that transforms WooCommerce into a complete, automated Profit & Loss (P&L) accounting center — **100% free, lightweight, zero frontend scripts, and 100% HPOS certified.**
+**MarketPulse COGS & Profit for WooCommerce by NexForge AI** addresses this challenge. It provides an automated Profit & Loss (P&L) tracking workflow — lightweight, with zero frontend scripts, and 100% HPOS compatible.
 
 ---
 
-### 💎 Why MarketPulse COGS & Profit is 10x Ahead of Traditional Plugins
+### 💎 Core Accounting & Analytics Features
 
-Most older WooCommerce COGS plugins charge **$79 to $199 every single year**, freeze your database with bloated queries, or only track wholesale cost while ignoring gateway processing cuts, courier deficits, and advertising overhead.
+MarketPulse COGS & Profit provides an end-to-end financial intelligence workflow:
 
-Here is how MarketPulse COGS & Profit completely changes the game:
-
-| Feature / Capability | Legacy COGS Plugins ($99–$199/yr) | MarketPulse COGS & Profit |
-| :--- | :--- | :--- |
-| **Pricing & Licensing** | ❌ $79 to $199 annual renewal fees | ✅ **100% Free Forever & Open Source (GPLv2)** |
-| **P&L Accounting Scope** | ⚠️ Product COGS only (gross profit) | ✅ **True 4-Pillar Net Profit (COGS + Gateway + Shipping Deficit + OpEx)** |
-| **Hosting & Storefront Speed**| ⚠️ Bulky frontend assets & slow queries | ✅ **Zero Frontend Bloat (0 JS, 0 CSS, Pure SVG Admin Charts)** |
-| **Order Cost Snapshotting** | ⚠️ Past reports corrupt if product prices change | ✅ **Immutable Line-Item Snapshots (Historical integrity locked)** |
-| **Payment Gateway Auto-Detection** | ❌ Manual spreadsheet calculation | ✅ **Built-in Auto-Detection (Stripe, PayPal, bKash, Nagad, Square, COD)** |
-| **Courier Deficit Tracking** | ❌ Completely ignored | ✅ **Real-Time Courier Deficit Reconciliation on every order** |
-| **Operating Expenses (OpEx)** | ❌ Not available or separate paid addon | ✅ **Built-in Overhead Ledger with monthly amortization** |
-| **Real-Time Margin Warning** | ❌ Silent sales at negative margins | ✅ **Live % preview + High-Visibility <15% Margin Floor Alert** |
-| **WooCommerce HPOS Support** | ⚠️ Legacy wp_postmeta only | ✅ **100% Native High-Performance Order Storage (HPOS) Certified** |
-| **Supplier Directory & Restocking**| ❌ Basic field or missing | ✅ **Integrated Vendor Directory & 1-Click Restocking Sheets** |
-| **Dynamic AI Repricing Lift** | ❌ Static numbers only | ✅ **Direct Integration with MarketPulse AI Dynamic Repricer** |
-| **In-Dashboard Documentation** | ❌ Complex external links | ✅ **Integrated In-Dashboard User Guide & Accounting Knowledgebase** |
+* **True 4-Pillar Net Profit Scope**: Deducts product wholesale costs, payment gateway transaction fees, shipping deficits, and operating expenses.
+* **Storefront Speed Focused**: Zero frontend JavaScript or CSS assets, with pure SVG administrative charts.
+* **Order Cost Snapshots**: Line-item wholesale costs are snapshotted at time of purchase, preserving historical accounting integrity.
+* **Payment Gateway Rules**: Built-in fee calculation rules for Stripe, PayPal, Square, Cash on Delivery, and custom merchant gateways.
+* **Courier Deficit Tracking**: Automatically reconciles customer-paid shipping charges against actual out-of-pocket courier invoices.
+* **Operating Expenses Ledger**: Track recurring and one-off operating overhead such as advertising, hosting, software, and salaries.
+* **Real-Time Margin Feedback**: Calculates gross margin percentage on product edit screens with alert guidance if margins drop below 15%.
+* **High-Performance Order Storage (HPOS)**: 100% compatible with WooCommerce custom order tables and standard post-meta storage.
+* **Supplier Management**: Track vendor information and generate inventory restocking reports.
+* **In-Dashboard Documentation**: Built-in user guide and FAQs directly within the WordPress admin.
 
 ---
 
@@ -176,7 +171,7 @@ Absolutely not! The plugin is engineered with a strict zero-frontend footprint p
 Never. When an order is placed, unit wholesale costs, gateway fees, and shipping metrics are permanently locked into that specific order's immutable financial snapshot. Updating a product's cost price today will only apply to future orders, safeguarding your historical accounting records.
 
 = Is this plugin compatible with WooCommerce High-Performance Order Storage (HPOS)? =
-Yes! MarketPulse COGS & Profit declares 100% native compatibility with High-Performance Order Storage (`custom_order_tables`). It works flawlessly whether your store runs in modern HPOS mode or legacy post-meta mode.
+Yes! MarketPulse COGS & Profit declares 100% native compatibility with High-Performance Order Storage (`custom_order_tables`). It works whether your store runs in modern HPOS mode or standard post-meta mode.
 
 = Do I need to manually configure payment gateway fees? =
 No. The plugin includes pre-configured standard transaction fees for major global and regional payment processors, including Stripe (2.9% + 30¢), PayPal (3.49% + 49¢), Square (2.6% + 10¢), bKash (1.5%), Nagad (1.2%), Rocket (1.5%), SSLCommerz (2.5%), and Cash on Delivery (COD). If you have negotiated custom volume rates with your processor, you can easily adjust them in the settings tab.
@@ -200,7 +195,7 @@ Gross Profit only subtracts the wholesale product cost (COGS) from your selling 
 Yes, 100% free and open-source under the GNU General Public License v2 (GPL-2.0).
 
 == About the Developer & Brand Ownership ==
-MarketPulse (https://usemarketpulse.com) is an e-commerce intelligence brand owned and engineered by NexForge AI (https://nexforgehq.com). NexForge AI is a specialized software product lab building high-performance, bloat-free tools for WooCommerce store owners. 
+MarketPulse (https://usemarketpulse.com) is an e-commerce intelligence brand owned and engineered by NexForge AI (https://nexforgehq.com). NexForge AI is a specialized software product lab building high-performance, lightweight tools for WooCommerce store owners. 
 
 For technical support, custom integrations, or store audits, visit https://usemarketpulse.com or contact hello@nexforgehq.com.
 
@@ -229,7 +224,7 @@ For technical support, custom integrations, or store audits, visit https://usema
 * Payment Gateway Fee auto-detection (Stripe, PayPal, bKash, Nagad, Square, COD).
 * Courier shipping deficit tracking and reconciliation.
 * Operating Expenses (OpEx) ledger for overhead amortization.
-* Pure SVG daily trendline chart (Revenue vs COGS vs Net Profit) with 0 JS bloat.
+* Pure SVG daily trendline chart (Revenue vs COGS vs Net Profit) with zero external script dependencies.
 * Color-coded profit margin badges (Green 30%+, Amber 15-30%, Red <15%).
 * Simple & Variable product Cost Price (COGS) and Supplier fields with live margin calculation.
 * Native WooCommerce Product CSV Importer & Exporter integration.

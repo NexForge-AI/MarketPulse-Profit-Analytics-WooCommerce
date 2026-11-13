@@ -66,6 +66,7 @@ class SCOGS_Calculation_Tests {
         $this->test_gross_profit_formula();
         $this->test_shipping_deficit_calculation();
         $this->test_true_net_profit_waterfall();
+        $this->test_include_shipping_and_tax_options();
         $this->test_refund_object_safety();
 
         echo "\n--------------------------------------------------------\n";
@@ -159,6 +160,25 @@ class SCOGS_Calculation_Tests {
 
         $this->assert_equals( 64.22, $true_net_profit, 'True Net Profit Waterfall: $120 rev - $50 cogs - $3.78 fee - $2 deficit = $64.22' );
         $this->assert_equals( 53.517, round( $net_margin, 3 ), 'Net Profit Margin % = (64.22 / 120) * 100 = 53.517%' );
+    }
+
+    private function test_include_shipping_and_tax_options() {
+        // Test base revenue without shipping or tax
+        $base_revenue = 100.0;
+        $shipping     = 15.0;
+        $tax          = 8.0;
+
+        // When include shipping is true:
+        $rev_with_shipping = $base_revenue + $shipping;
+        $this->assert_equals( 115.0, $rev_with_shipping, 'Include shipping adds shipping total to gross revenue' );
+
+        // When include tax is true:
+        $rev_with_tax = $base_revenue + $tax;
+        $this->assert_equals( 108.0, $rev_with_tax, 'Include tax adds tax total to gross revenue' );
+
+        // When both are true:
+        $rev_with_both = $base_revenue + $shipping + $tax;
+        $this->assert_equals( 123.0, $rev_with_both, 'Include both adds shipping + tax to gross revenue' );
     }
 
     private function test_refund_object_safety() {

@@ -5,9 +5,9 @@
 [![HPOS Ready](https://img.shields.io/badge/HPOS-100%25%20Compatible-brightgreen.svg)](https://developer.woocommerce.com/docs/hpos-order-storage/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%20--%208.3+-777bb4.svg)](https://php.net)
 
-**A clean, zero-bloat Cost of Goods Sold (COGS) and true net profit margin tracker for WooCommerce.**
+**A lightweight Cost of Goods Sold (COGS) and true net profit margin tracker for WooCommerce.**
 
-Revenue is vanity; **profit is sanity**. Most Cost of Goods plugins for WooCommerce charge $79 to $199/year or bundle bloated ERP systems that drag down database performance. **Simple Cost of Goods** does one job with mathematical accuracy, elegant UX, and lightning-fast speed.
+Revenue is vanity; **profit is sanity**. **MarketPulse COGS & Profit** tracks your real take-home earnings with mathematical precision, clean UX, and high performance.
 
 ---
 
@@ -28,7 +28,7 @@ Revenue is vanity; **profit is sanity**. Most Cost of Goods plugins for WooComme
 - **Supplier Directory & Filtering:** Associate products with vendors and filter catalog items by supplier with one click.
 - **Native WooCommerce CSV Import & Export:** Bulk upload and download COGS and Suppliers via native WooCommerce product CSV tools.
 - **Executive Dashboard Widget:** Real-time Today's and This Month's Net Profit summary cached intelligently to ensure zero database bottlenecks.
-- **100% HPOS Ready:** Full native support for WooCommerce High-Performance Order Storage (custom order tables) and legacy post-meta.
+- **100% HPOS Ready:** Full native support for WooCommerce High-Performance Order Storage (custom order tables) and standard post-meta.
 - **Zero Frontend Overhead:** Less than 50 KB in total size. Zero scripts loaded on customer-facing pages.
 
 ---
@@ -59,7 +59,7 @@ Revenue is vanity; **profit is sanity**. Most Cost of Goods plugins for WooComme
 ## 🔒 Performance & Privacy
 
 - **No External Cloud Calls:** Operates 100% locally on your WordPress server.
-- **Zero Database Bloat:** Stores costs cleanly inside standard WooCommerce meta and snapshots them per order line item. Operating expenses use a single lightweight indexed table (`wp_scogs_expenses`).
+- **Optimized Storage:** Stores costs cleanly inside standard WooCommerce meta and snapshots them per order line item. Operating expenses use a single lightweight indexed table (`wp_scogs_expenses`).
 - **Smart Transients:** Dashboard profit queries are cached for 10 minutes, avoiding repeated heavy database aggregate queries.
 
 ---

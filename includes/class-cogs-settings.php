@@ -13,6 +13,17 @@ class SCOGS_Settings {
     public static function init() {
         add_filter( 'woocommerce_get_sections_products', array( __CLASS__, 'add_settings_section' ) );
         add_filter( 'woocommerce_get_settings_products', array( __CLASS__, 'get_settings' ), 10, 2 );
+        add_action( 'woocommerce_update_options_products_scogs', array( __CLASS__, 'save_settings' ) );
+    }
+
+    /**
+     * Save settings and flush cached analytics reports
+     */
+    public static function save_settings() {
+        woocommerce_update_options( self::get_settings( array(), 'scogs' ) );
+        if ( class_exists( 'SCOGS_Reports' ) && method_exists( 'SCOGS_Reports', 'flush_cache' ) ) {
+            SCOGS_Reports::flush_cache();
+        }
     }
 
     /**

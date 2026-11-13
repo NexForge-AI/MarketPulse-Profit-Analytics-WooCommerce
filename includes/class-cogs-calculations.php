@@ -31,15 +31,31 @@ class SCOGS_Calculations {
 
         $refunded_total = method_exists( $order, 'get_total_refunded' ) ? (float) $order->get_total_refunded() : 0.0;
 
+        // Configuration: whether to include customer shipping and/or taxes in gross revenue & profit
+        $include_shipping = 'yes' === get_option( 'scogs_include_shipping', 'no' );
+        $include_tax      = 'yes' === get_option( 'scogs_include_tax', 'no' );
+
+        // Customer shipping (accounting for shipping refunds)
+        $customer_paid_shipping = method_exists( $order, 'get_shipping_total' ) ? (float) $order->get_shipping_total() : 0.0;
+        $shipping_refunded      = method_exists( $order, 'get_total_shipping_refunded' ) ? abs( (float) $order->get_total_shipping_refunded() ) : 0.0;
+        $customer_paid_shipping = max( 0.0, $customer_paid_shipping - $shipping_refunded );
+
+        // Customer tax (accounting for tax refunds)
+        $customer_paid_tax = 0.0;
+        if ( method_exists( $order, 'get_total_tax' ) ) {
+            $tax_total         = (float) $order->get_total_tax();
+            $tax_refunded      = method_exists( $order, 'get_total_tax_refunded' ) ? abs( (float) $order->get_total_tax_refunded() ) : 0.0;
+            $customer_paid_tax = max( 0.0, $tax_total - $tax_refunded );
+        }
+
         // Fast path: If read-only mode and saved metadata already exists (and no refunds exist), read directly without re-calculating or saving
         $saved_profit = $order->get_meta( SCOGS_Order::META_ORDER_PROFIT, true );
         $saved_cogs   = $order->get_meta( SCOGS_Order::META_ORDER_COST, true );
 
-        if ( ! $save && $refunded_total <= 0 && '' !== $saved_profit && false !== $saved_profit && '' !== $saved_cogs && false !== $saved_cogs ) {
+        if ( ! $save && $refunded_total <= 0 && '' !== $saved_profit && false !== $saved_profit && '' !== $saved_cogs && false !== $saved_cogs && ! $include_shipping && ! $include_tax ) {
             $gross_revenue          = (float) $order->get_subtotal();
             $discount_total         = (float) $order->get_discount_total();
             $total_cogs             = (float) $saved_cogs;
-            $customer_paid_shipping = (float) $order->get_shipping_total();
             $actual_courier_cost    = (float) $order->get_meta( '_cogs_actual_shipping_cost', true );
 
             // Dynamically calculate shipping deficit from actual courier cost and customer paid shipping
@@ -69,6 +85,9 @@ class SCOGS_Calculations {
                 'gross_margin'           => $gross_margin,
                 'gateway_fee'            => $gateway_fee,
                 'customer_paid_shipping' => $customer_paid_shipping,
+                'customer_paid_tax'      => $customer_paid_tax,
+                'include_shipping'       => $include_shipping,
+                'include_tax'            => $include_tax,
                 'actual_courier_cost'    => $actual_courier_cost,
                 'shipping_deficit'       => $shipping_deficit,
                 'net_profit'             => $net_profit,
@@ -125,22 +144,28 @@ class SCOGS_Calculations {
         // Discounts given
         $discount_total = (float) $order->get_discount_total();
 
-        // 2. Gross Profit = Gross Revenue - Discounts - Total COGS
+        // 2. Incorporate customer shipping and tax into gross revenue when configured in settings
+        if ( $include_shipping ) {
+            $gross_revenue += $customer_paid_shipping;
+        }
+
+        if ( $include_tax ) {
+            $gross_revenue += $customer_paid_tax;
+        }
+
+        // 3. Gross Profit = Gross Revenue - Discounts - Total COGS
         $gross_profit = $gross_revenue - $discount_total - $total_cogs;
         $gross_margin = $gross_revenue > 0 ? ( $gross_profit / $gross_revenue ) * 100 : 0.0;
 
-        // 3. Payment Gateway Fee Auto-detection
-        $payment_method = method_exists( $order, 'get_payment_method' ) ? $order->get_payment_method() : '';
-        $order_total    = method_exists( $order, 'get_total' ) ? (float) $order->get_total() : 0.0;
+        // 4. Payment Gateway Fee Auto-detection
+        $payment_method  = method_exists( $order, 'get_payment_method' ) ? $order->get_payment_method() : '';
+        $order_total     = method_exists( $order, 'get_total' ) ? (float) $order->get_total() : 0.0;
         $net_order_total = max( 0.0, $order_total - $refunded_total );
-        $gateway_fee    = SCOGS_Gateways::calculate_fee( $payment_method, $net_order_total );
+        $gateway_fee     = SCOGS_Gateways::calculate_fee( $payment_method, $net_order_total );
 
-        // 4. Shipping Deficit / Surplus
-        $customer_paid_shipping = method_exists( $order, 'get_shipping_total' ) ? (float) $order->get_shipping_total() : 0.0;
-        $shipping_refunded      = method_exists( $order, 'get_total_shipping_refunded' ) ? abs( (float) $order->get_total_shipping_refunded() ) : 0.0;
-        $customer_paid_shipping = max( 0.0, $customer_paid_shipping - $shipping_refunded );
-        $actual_courier_cost    = $order->get_meta( '_cogs_actual_shipping_cost', true );
-        $shipping_deficit       = 0.0;
+        // 5. Shipping Deficit / Surplus
+        $actual_courier_cost = $order->get_meta( '_cogs_actual_shipping_cost', true );
+        $shipping_deficit    = 0.0;
 
         if ( '' !== $actual_courier_cost && false !== $actual_courier_cost ) {
             $actual_courier_cost = (float) $actual_courier_cost;
@@ -152,7 +177,7 @@ class SCOGS_Calculations {
             $actual_courier_cost = 0.0;
         }
 
-        // 5. True Net Profit = Gross Profit - Payment Fees - Shipping Deficit
+        // 6. True Net Profit = Gross Profit - Payment Fees - Shipping Deficit
         $net_profit = $gross_profit - $gateway_fee - $shipping_deficit;
         $net_margin = $gross_revenue > 0 ? ( $net_profit / $gross_revenue ) * 100 : 0.0;
 
@@ -175,6 +200,9 @@ class SCOGS_Calculations {
             'gross_margin'           => $gross_margin,
             'gateway_fee'            => $gateway_fee,
             'customer_paid_shipping' => $customer_paid_shipping,
+            'customer_paid_tax'      => $customer_paid_tax,
+            'include_shipping'       => $include_shipping,
+            'include_tax'            => $include_tax,
             'actual_courier_cost'    => $actual_courier_cost,
             'shipping_deficit'       => $shipping_deficit,
             'net_profit'             => $net_profit,
@@ -197,6 +225,9 @@ class SCOGS_Calculations {
             'gross_margin'           => 0.0,
             'gateway_fee'            => 0.0,
             'customer_paid_shipping' => 0.0,
+            'customer_paid_tax'      => 0.0,
+            'include_shipping'       => false,
+            'include_tax'            => false,
             'actual_courier_cost'    => 0.0,
             'shipping_deficit'       => 0.0,
             'net_profit'             => 0.0,

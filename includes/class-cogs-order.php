@@ -152,8 +152,15 @@ class SCOGS_Order {
             return;
         }
 
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WooCommerce core prior to firing woocommerce_process_shop_order_meta.
         if ( ! isset( $_POST['_cogs_actual_shipping_cost'] ) ) {
+            return;
+        }
+
+        if ( ! isset( $_POST['scogs_order_meta_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['scogs_order_meta_nonce'] ) ), 'scogs_save_order_meta_action' ) ) {
+            return;
+        }
+
+        if ( ! current_user_can( 'edit_shop_orders' ) && ! current_user_can( 'manage_woocommerce' ) ) {
             return;
         }
 
@@ -164,7 +171,6 @@ class SCOGS_Order {
 
         self::$is_saving_order_meta = true;
 
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing
         $cost           = wc_clean( sanitize_text_field( wp_unslash( $_POST['_cogs_actual_shipping_cost'] ) ) );
         $formatted_cost = ( '' === $cost || false === $cost ) ? '' : wc_format_decimal( $cost );
 
@@ -208,6 +214,7 @@ class SCOGS_Order {
         $payment_method_title = $order->get_payment_method_title();
         ?>
         <div class="scogs-order-summary-card">
+            <?php wp_nonce_field( 'scogs_save_order_meta_action', 'scogs_order_meta_nonce' ); ?>
             <!-- 1. Gross Revenue -->
             <div class="scogs-metric-row">
                 <span class="scogs-metric-label"><?php esc_html_e( 'Gross Revenue:', 'marketpulse-cogs-profit-for-woocommerce' ); ?></span>
