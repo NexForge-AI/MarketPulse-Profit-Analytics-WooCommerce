@@ -5,7 +5,7 @@
  * Description:       Lightweight, high-performance Cost of Goods Sold (COGS) and true net profit margin tracker for WooCommerce by NexForge AI, creators of MarketPulse. Track real profit per product and order with operating expenses, gateway fee auto-detection, and 100% HPOS compatibility.
  * Version:           1.0.0
  * Author:            NexForge AI
- * Author URI:        https://usemarketpulse.com
+ * Author URI:        https://nexforgehq.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       marketpulse-cogs-profit-for-woocommerce
