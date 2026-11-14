@@ -7,4 +7,6 @@ vendor/
 .idea/
 .vscode/
 *.zip
+push-to-svn.bat
+
 
